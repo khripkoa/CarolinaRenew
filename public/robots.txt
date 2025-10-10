@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://carolinarenew.com/sitemap-index.xml
+Sitemap: https://carolinarenew.com/sitemap-0.xml
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /portfolio
+Allow: /blog
+Allow: /contact
+Allow: /local/
+Allow: /services/
+
+# Crawl-delay (optional, helps with server load)
+Crawl-delay: 1

@@ -1,0 +1,94 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const { 
+  title, 
+  description = "Carolina Renew - Professional painting and remodeling services in Charlotte, NC and surrounding areas. Interior painting, exterior painting, kitchen remodeling, bathroom remodeling.",
+  keywords = "painting services, interior painting, exterior painting, kitchen remodeling, bathroom remodeling, Charlotte NC, Gastonia, Concord, Matthews, Huntersville, Rock Hill",
+  ogImage = "/og-image.jpg",
+  canonicalUrl = Astro.url.href
+} = Astro.props;
+
+import '../styles/global.css'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Carolina Renew",
+        "description": "Professional painting and remodeling services",
+        "url": "https://carolinarenew.com",
+        "telephone": "+1-704-XXX-XXXX",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Main Street",
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "postalCode": "28202",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "35.2271",
+          "longitude": "-80.8431"
+        },
+        "openingHours": "Mo-Fr 08:00-18:00, Sa 09:00-16:00",
+        "serviceArea": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": "35.2271",
+            "longitude": "-80.8431"
+          },
+          "geoRadius": "100000"
+        },
+        "services": [
+          "Interior Painting",
+          "Exterior Painting", 
+          "Kitchen Remodeling",
+          "Bathroom Remodeling"
+        ]
+      }
+    </script>
+    
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-white">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimpleHeader from '../components/SimpleHeader.jsx';
+import SimpleFooter from '../components/SimpleFooter.jsx';
+
+// Импорт изображений
+import interiorAfter from '../assets/interior_painting_after.png';
+import exteriorAfter from '../assets/exterior_painting_after.png';
+import kitchenAfter from '../assets/kitchen_remodel_after.png';
+import bathroomAfter from '../assets/bathroom_remodel_after.png';
+import employee1 from '../assets/employee_1.png';
+import employee2 from '../assets/employee_2.png';
+import employee3 from '../assets/employee_3.png';
+
+// Данные для страницы
+const services = [
+  {
+    title: 'Interior Painting',
+    description: 'Professional painting of walls, ceilings, and trim',
+    image: interiorAfter,
+    slug: 'interior-painting'
+  },
+  {
+    title: 'Exterior Painting', 
+    description: 'Protect and refresh the exterior of your home',
+    image: exteriorAfter,
+    slug: 'exterior-painting'
+  },
+  {
+    title: 'Kitchen Remodeling',
+    description: 'Complete kitchen transformation',
+    image: kitchenAfter,
+    slug: 'kitchen-remodeling'
+  },
+  {
+    title: 'Bathroom Remodeling',
+    description: 'Full-service bathroom renovation and waterproofing',
+    image: bathroomAfter,
+    slug: 'bathroom-remodeling'
+  },
+];
+
+const stats = [
+  { number: '500+', label: 'Projects Completed' },
+  { number: '50+', label: 'Happy Clients' },
+  { number: '10+', label: 'Years Experience' },
+  { number: '100%', label: 'Satisfaction Rate' }
+];
+
+const employees = [
+  { name: 'John Smith', role: 'Lead Painter', image: employee1 },
+  { name: 'Mike Johnson', role: 'Project Manager', image: employee2 },
+  { name: 'Sarah Wilson', role: 'Interior Designer', image: employee3 }
+];
+
+const testimonials = [
+  {
+    name: 'Jennifer Martinez',
+    text: 'Carolina Renew transformed our home completely. The attention to detail and quality of work exceeded our expectations.',
+    rating: 5
+  },
+  {
+    name: 'Robert Chen',
+    text: 'Professional, reliable, and excellent results. Our kitchen remodel was completed on time and within budget.',
+    rating: 5
+  },
+  {
+    name: 'Lisa Thompson',
+    text: 'The best painting service in Charlotte! They painted our entire house interior and it looks amazing.',
+    rating: 5
+  }
+];
+---
+
+<Layout 
+  title="Carolina Renew - Professional Painting & Remodeling Services in Charlotte, NC"
+  description="Transform your home with Carolina Renew's professional painting and remodeling services. Serving Charlotte, Gastonia, Concord, Matthews, Huntersville, and Rock Hill. Get your free estimate today!"
+  keywords="painting services Charlotte NC, interior painting, exterior painting, kitchen remodeling, bathroom remodeling, home renovation Charlotte, professional painters"
+>
+    <SimpleHeader />
+    
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Transform Your Home with 
+            <span class="text-yellow-400">Professional</span> 
+            Painting & Remodeling
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-blue-100">
+            Serving Charlotte, NC and surrounding areas with quality craftsmanship and exceptional service for over 10 years
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              Get Free Estimate
+            </button>
+            <a href="/portfolio" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              View Our Work
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat) => (
+            <div class="text-center">
+              <div class="text-4xl md:text-5xl font-bold text-blue-900 mb-2">{stat.number}</div>
+              <div class="text-gray-600 font-medium">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Services</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            From interior and exterior painting to complete kitchen and bathroom remodels, 
+            we provide comprehensive home improvement solutions.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service) => (
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <img 
+                src={service.image.src} 
+                alt={service.title}
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                <p class="text-gray-600 mb-4">{service.description}</p>
+                <a 
+                  href={`/services/${service.slug}`}
+                  class="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Learn More →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our experienced professionals are dedicated to delivering exceptional results for every project.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          {employees.map((employee) => (
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden text-center">
+              <img 
+                src={employee.image.src} 
+                alt={employee.name}
+                class="w-full h-64 object-cover"
+              />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-1">{employee.name}</h3>
+                <p class="text-blue-600 font-medium">{employee.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial) => (
+            <div class="bg-white rounded-lg shadow-lg p-8">
+              <div class="flex mb-4">
+                {Array.from({ length: testimonial.rating }).map((_, i) => (
+                  <svg key={i} class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                  </svg>
+                ))}
+              </div>
+              <p class="text-gray-600 mb-4 italic">"{testimonial.text}"</p>
+              <p class="font-bold text-gray-900">- {testimonial.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blue-900 text-white">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Home?</h2>
+        <p class="text-xl mb-8 text-blue-100">
+          Get your free estimate today and see why we're Charlotte's trusted painting and remodeling experts.
+        </p>
+        <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+          Get Free Estimate
+        </button>
+      </div>
+    </section>
+
+    <SimpleFooter />
+</Layout>
