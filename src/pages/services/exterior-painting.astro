@@ -1,0 +1,320 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SimpleHeader from '../../components/SimpleHeader.jsx';
+import SimpleFooter from '../../components/SimpleFooter.jsx';
+
+// Импорт изображений
+import exteriorBefore from '../../assets/exterior_painting_before.png';
+import exteriorAfter from '../../assets/exterior_painting_after.png';
+
+const processSteps = [
+  {
+    step: 1,
+    title: 'Property Assessment',
+    description: 'We inspect your exterior surfaces and provide a detailed estimate with material recommendations.'
+  },
+  {
+    step: 2,
+    title: 'Surface Preparation',
+    description: 'Power washing, scraping, sanding, and priming to ensure optimal paint adhesion.'
+  },
+  {
+    step: 3,
+    title: 'Weather Protection',
+    description: 'We monitor weather conditions and protect your property during the painting process.'
+  },
+  {
+    step: 4,
+    title: 'Professional Application',
+    description: 'Expert application of premium exterior paints using professional techniques and equipment.'
+  },
+  {
+    step: 5,
+    title: 'Final Inspection & Cleanup',
+    description: 'Thorough inspection and complete cleanup, leaving your property looking pristine.'
+  }
+];
+
+const benefits = [
+  'Enhanced curb appeal and property value',
+  'Protection from weather and UV damage',
+  'Long-lasting, durable finish',
+  'Professional color consultation',
+  'Premium weather-resistant paints',
+  '5-year warranty on workmanship'
+];
+
+const paintTypes = [
+  {
+    name: 'Acrylic Latex Paint',
+    description: 'Best for most exterior surfaces, excellent durability and color retention',
+    bestFor: 'Siding, trim, doors'
+  },
+  {
+    name: 'Oil-Based Paint',
+    description: 'Superior adhesion and smooth finish, ideal for high-wear areas',
+    bestFor: 'Metal surfaces, trim work'
+  },
+  {
+    name: 'Elastomeric Paint',
+    description: 'Flexible coating that bridges small cracks and provides waterproofing',
+    bestFor: 'Stucco, masonry, concrete'
+  },
+  {
+    name: 'Specialty Coatings',
+    description: 'Anti-mildew, anti-fade, and other specialized protective coatings',
+    bestFor: 'Specific environmental conditions'
+  }
+];
+---
+
+<Layout 
+  title="Professional Exterior Painting Services | Carolina Renew"
+  description="Protect and beautify your home's exterior with Carolina Renew's professional exterior painting services. Weather-resistant paints, expert preparation, and guaranteed results in Charlotte, NC."
+  keywords="exterior painting, house painting, exterior paint, siding painting, trim painting, deck staining, professional exterior painters, Charlotte NC exterior painting"
+  canonicalUrl="https://carolinarenew.com/services/exterior-painting"
+>
+  <SimpleHeader />
+  
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          Professional 
+          <span class="text-yellow-400">Exterior Painting</span> 
+          Services
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100">
+          Protect and beautify your home's exterior with our expert painting services. Weather-resistant materials and professional craftsmanship guaranteed.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            Get Free Estimate
+          </button>
+          <a href="/portfolio" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            View Our Work
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before/After Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Dramatic Exterior Transformations</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          See how professional exterior painting can completely transform your home's appearance and protect your investment.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={exteriorBefore.src} 
+            alt="Exterior before painting"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Before</h3>
+            <p class="text-gray-600">Faded, weathered exterior paint</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={exteriorAfter.src} 
+            alt="Exterior after painting"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">After</h3>
+            <p class="text-gray-600">Fresh, protected, and beautiful</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Exterior Painting Process</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          We follow a comprehensive process to ensure your exterior paint job lasts for years to come.
+        </p>
+      </div>
+      
+      <div class="max-w-4xl mx-auto">
+        {processSteps.map((step, index) => (
+          <div class="flex items-start mb-8 last:mb-0">
+            <div class="bg-blue-900 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-6 flex-shrink-0">
+              {step.step}
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">{step.title}</h3>
+              <p class="text-gray-600 text-lg">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Paint Types Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Premium Exterior Paint Options</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          We use only the highest quality exterior paints designed to withstand North Carolina's climate.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {paintTypes.map((paint) => (
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">{paint.name}</h3>
+            <p class="text-gray-600 mb-4">{paint.description}</p>
+            <div class="bg-blue-50 rounded-lg p-4">
+              <p class="text-sm font-semibold text-blue-900 mb-1">Best For:</p>
+              <p class="text-blue-800">{paint.bestFor}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Benefits of Professional Exterior Painting</h2>
+      </div>
+      
+      <div class="max-w-4xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8">
+          {benefits.map((benefit) => (
+            <div class="flex items-start">
+              <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <p class="text-gray-700 text-lg">{benefit}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Exterior Painting Service Areas</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          We provide professional exterior painting services throughout the Charlotte metro area.
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Primary Service Areas</h3>
+            <ul class="text-gray-600 space-y-2">
+              <li>• Charlotte, NC</li>
+              <li>• Gastonia, NC</li>
+              <li>• Concord, NC</li>
+              <li>• Matthews, NC</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Extended Service Areas</h3>
+            <ul class="text-gray-600 space-y-2">
+              <li>• Huntersville, NC</li>
+              <li>• Rock Hill, SC</li>
+              <li>• Cornelius, NC</li>
+              <li>• Davidson, NC</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Exterior Services</h3>
+            <ul class="text-gray-600 space-y-2">
+              <li>• House Painting</li>
+              <li>• Siding Painting</li>
+              <li>• Trim & Door Painting</li>
+              <li>• Deck & Fence Staining</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weather Considerations -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Weather-Smart Exterior Painting</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          We understand North Carolina's climate and plan our exterior painting projects accordingly.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Weather Monitoring</h3>
+          <p class="text-gray-600">We track weather conditions and adjust our schedule to ensure optimal painting conditions</p>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">UV Protection</h3>
+          <p class="text-gray-600">Our premium paints include UV inhibitors to prevent fading and chalking</p>
+        </div>
+        
+        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Moisture Resistance</h3>
+          <p class="text-gray-600">Specially formulated paints that resist moisture and prevent mold and mildew</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-blue-900 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Home's Exterior?</h2>
+      <p class="text-xl mb-8 text-blue-100">
+        Contact Carolina Renew today for your free exterior painting estimate. Protect and beautify your home with professional results.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+          Get Free Estimate
+        </button>
+        <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+          Contact Us Today
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SimpleFooter />
+</Layout>
