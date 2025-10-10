@@ -1,0 +1,44 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  class: className = '', 
+  loading = 'lazy',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+} = Astro.props;
+
+// Получаем имя файла без расширения
+const fileName = src.split('/').pop()?.replace(/\.(png|jpg|jpeg)$/i, '');
+const webpSrc = `/src/assets-optimized/${fileName}.webp`;
+const fallbackSrc = `/src/assets-optimized/${fileName}.png`;
+---
+
+<picture class={className}>
+  <source 
+    srcset={webpSrc} 
+    type="image/webp"
+    sizes={sizes}
+  />
+  <img 
+    src={fallbackSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+    sizes={sizes}
+    class="w-full h-auto"
+  />
+</picture>

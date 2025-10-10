@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SimpleHeader from '../../components/SimpleHeader.jsx';
+import SimpleFooter from '../../components/SimpleFooter.jsx';
+
+// Импорт изображений
+import interiorAfter from '../../assets/interior_painting_after.png';
+import exteriorAfter from '../../assets/exterior_painting_after.png';
+import kitchenAfter from '../../assets/kitchen_remodel_after.png';
+import bathroomAfter from '../../assets/bathroom_remodel_after.png';
+
+const services = [
+  {
+    title: 'Interior Painting in Gastonia',
+    description: 'Professional interior painting services for Gastonia homes and businesses',
+    image: interiorAfter,
+    slug: 'interior-painting'
+  },
+  {
+    title: 'Exterior Painting in Gastonia', 
+    description: 'Protect your Gastonia property with quality exterior painting',
+    image: exteriorAfter,
+    slug: 'exterior-painting'
+  },
+  {
+    title: 'Kitchen Remodeling in Gastonia',
+    description: 'Transform your Gastonia kitchen with our remodeling expertise',
+    image: kitchenAfter,
+    slug: 'kitchen-remodeling'
+  },
+  {
+    title: 'Bathroom Remodeling in Gastonia',
+    description: 'Complete bathroom renovations for Gastonia residents',
+    image: bathroomAfter,
+    slug: 'bathroom-remodeling'
+  },
+];
+
+const localFeatures = [
+  'Licensed and insured in Gastonia, NC',
+  'Free estimates for all Gastonia residents',
+  'Local team familiar with Gastonia neighborhoods',
+  'Quick response times in Gastonia area',
+  'Knowledge of local building codes and regulations',
+  'Established relationships with Gastonia suppliers'
+];
+---
+
+<Layout 
+  title="Professional Painting & Remodeling Services in Gastonia, NC | Carolina Renew"
+  description="Expert painting and remodeling services in Gastonia, NC. Interior painting, exterior painting, kitchen and bathroom remodeling. Licensed, insured, and locally trusted. Free estimates!"
+  keywords="painting services Gastonia NC, interior painting Gastonia, exterior painting Gastonia, kitchen remodeling Gastonia, bathroom remodeling Gastonia, home renovation Gastonia, professional painters Gastonia"
+  canonicalUrl="https://carolinarenew.com/local/gastonia"
+>
+    <SimpleHeader />
+    
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Professional Painting & Remodeling Services in 
+            <span class="text-yellow-400">Gastonia, NC</span>
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-blue-100">
+            Trusted by Gastonia homeowners and businesses for over 10 years. Quality craftsmanship, reliable service, and competitive pricing.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              Get Free Gastonia Estimate
+            </button>
+            <a href="/portfolio" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              View Gastonia Projects
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Local Services Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Gastonia Services</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Carolina Renew provides comprehensive painting and remodeling services throughout Gastonia, NC and surrounding areas.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          {services.map((service) => (
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <img 
+                src={service.image.src} 
+                alt={service.title}
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                <p class="text-gray-600 mb-4">{service.description}</p>
+                <a 
+                  href={`/services/${service.slug}`}
+                  class="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Learn More →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us for Gastonia Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why Choose Carolina Renew in Gastonia?</h2>
+            <p class="text-xl text-gray-600">
+              We understand the unique needs of Gastonia properties and provide personalized service to every client.
+            </p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            {localFeatures.map((feature) => (
+              <div class="flex items-start">
+                <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <p class="text-gray-700 text-lg">{feature}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gastonia Neighborhoods Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Serving All Gastonia Neighborhoods</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            From downtown Gastonia to suburban communities, we provide professional painting and remodeling services throughout the area.
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Central Gastonia</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• Downtown Gastonia</li>
+                <li>• Historic District</li>
+                <li>• Franklin Square</li>
+                <li>• West End</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">North Gastonia</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• Robinwood</li>
+                <li>• Northpark</li>
+                <li>• Highland</li>
+                <li>• Belmont Road Area</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">South Gastonia</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• South Point</li>
+                <li>• Crowders Mountain Area</li>
+                <li>• New Hope Road</li>
+                <li>• York Road Corridor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blue-900 text-white">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Start Your Gastonia Project?</h2>
+        <p class="text-xl mb-8 text-blue-100">
+          Contact Carolina Renew today for your free estimate. We're proud to serve the Gastonia community with exceptional painting and remodeling services.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            Get Free Gastonia Estimate
+          </button>
+          <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            Contact Us Today
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <SimpleFooter />
+</Layout>

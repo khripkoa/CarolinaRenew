@@ -1,0 +1,328 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimpleHeader from '../components/SimpleHeader.jsx';
+import SimpleFooter from '../components/SimpleFooter.jsx';
+
+// Импорт изображений проектов
+import interiorBefore from '../assets/interior_painting_before.png';
+import interiorAfter from '../assets/interior_painting_after.png';
+import exteriorBefore from '../assets/exterior_painting_before.png';
+import exteriorAfter from '../assets/exterior_painting_after.png';
+import kitchenBefore from '../assets/kitchen_remodel_before.png';
+import kitchenAfter from '../assets/kitchen_remodel_after.png';
+import bathroomBefore from '../assets/kitchen_remodel_before.png';
+import bathroomAfter from '../assets/bathroom_remodel_after.png';
+
+const projects = [
+  {
+    id: 1,
+    title: 'Modern Living Room Transformation',
+    category: 'interior',
+    location: 'Charlotte, NC',
+    date: '2024',
+    client: 'The Johnson Family',
+    description: 'Complete interior painting with accent walls and modern color scheme',
+    beforeImage: interiorBefore,
+    afterImage: interiorAfter,
+    services: ['Interior Painting', 'Color Consultation', 'Wall Preparation'],
+    duration: '3 days'
+  },
+  {
+    id: 2,
+    title: 'Victorian Home Exterior Refresh',
+    category: 'exterior',
+    location: 'Gastonia, NC',
+    date: '2024',
+    client: 'Historic Home Owner',
+    description: 'Exterior painting with period-appropriate colors and trim work',
+    beforeImage: exteriorBefore,
+    afterImage: exteriorAfter,
+    services: ['Exterior Painting', 'Trim Work', 'Surface Preparation'],
+    duration: '5 days'
+  },
+  {
+    id: 3,
+    title: 'Contemporary Kitchen Remodel',
+    category: 'kitchen',
+    location: 'Concord, NC',
+    date: '2024',
+    client: 'The Martinez Family',
+    description: 'Complete kitchen renovation with modern cabinets and countertops',
+    beforeImage: kitchenBefore,
+    afterImage: kitchenAfter,
+    services: ['Kitchen Remodeling', 'Cabinet Installation', 'Countertop Installation'],
+    duration: '2 weeks'
+  },
+  {
+    id: 4,
+    title: 'Luxury Bathroom Renovation',
+    category: 'bathroom',
+    location: 'Matthews, NC',
+    date: '2024',
+    client: 'The Chen Family',
+    description: 'Full bathroom remodel with tile work and modern fixtures',
+    beforeImage: bathroomBefore,
+    afterImage: bathroomAfter,
+    services: ['Bathroom Remodeling', 'Tile Installation', 'Fixture Installation'],
+    duration: '10 days'
+  },
+  {
+    id: 5,
+    title: 'Office Building Exterior',
+    category: 'commercial',
+    location: 'Charlotte, NC',
+    date: '2024',
+    client: 'ABC Corporation',
+    description: 'Commercial exterior painting for professional office building',
+    beforeImage: exteriorBefore,
+    afterImage: exteriorAfter,
+    services: ['Commercial Painting', 'Power Washing', 'Surface Preparation'],
+    duration: '1 week'
+  },
+  {
+    id: 6,
+    title: 'Family Home Interior',
+    category: 'interior',
+    location: 'Huntersville, NC',
+    date: '2024',
+    client: 'The Wilson Family',
+    description: 'Multi-room interior painting with custom color matching',
+    beforeImage: interiorBefore,
+    afterImage: interiorAfter,
+    services: ['Interior Painting', 'Color Matching', 'Ceiling Painting'],
+    duration: '4 days'
+  }
+];
+
+const categories = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'interior', label: 'Interior Painting' },
+  { id: 'exterior', label: 'Exterior Painting' },
+  { id: 'kitchen', label: 'Kitchen Remodeling' },
+  { id: 'bathroom', label: 'Bathroom Remodeling' },
+  { id: 'commercial', label: 'Commercial Projects' }
+];
+---
+
+<Layout 
+  title="Portfolio - Our Completed Projects | Carolina Renew"
+  description="View our portfolio of completed painting and remodeling projects in Charlotte, NC and surrounding areas. Before and after photos of interior painting, exterior painting, kitchen and bathroom remodels."
+  keywords="portfolio, completed projects, before after photos, interior painting projects, exterior painting projects, kitchen remodeling projects, bathroom remodeling projects, Charlotte NC"
+  canonicalUrl="https://carolinarenew.com/portfolio"
+>
+  <SimpleHeader />
+  
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          Our Portfolio
+        </h1>
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+          Explore our completed projects and see the quality of our work. Each project tells a story of successful transformation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap justify-center gap-4">
+        {categories.map((category) => (
+          <button class="px-6 py-2 rounded-full border-2 border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white transition-colors font-medium">
+            {category.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((project) => (
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <!-- Before/After Images -->
+            <div class="relative">
+              <div class="grid grid-cols-2">
+                <div class="relative">
+                  <img 
+                    src={project.beforeImage.src} 
+                    alt={`${project.title} before`}
+                    class="w-full h-32 object-cover"
+                  />
+                  <div class="absolute bottom-1 left-1 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                    Before
+                  </div>
+                </div>
+                <div class="relative">
+                  <img 
+                    src={project.afterImage.src} 
+                    alt={`${project.title} after`}
+                    class="w-full h-32 object-cover"
+                  />
+                  <div class="absolute bottom-1 left-1 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                    After
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Category Badge -->
+              <div class="absolute top-2 right-2">
+                <span class="bg-blue-900 text-white px-2 py-1 rounded text-xs font-medium capitalize">
+                  {project.category}
+                </span>
+              </div>
+            </div>
+            
+            <!-- Project Info -->
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+              <p class="text-gray-600 mb-3">{project.description}</p>
+              
+              <!-- Project Details -->
+              <div class="space-y-2 text-sm text-gray-500 mb-4">
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  {project.location}
+                </div>
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  {project.date} • {project.duration}
+                </div>
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  {project.client}
+                </div>
+              </div>
+              
+              <!-- Services -->
+              <div class="mb-4">
+                <div class="flex flex-wrap gap-1">
+                  {project.services.map((service) => (
+                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                      {service}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <!-- View Details Button -->
+              <button class="w-full bg-blue-900 hover:bg-blue-800 text-white py-2 px-4 rounded font-medium transition-colors">
+                View Project Details
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Track Record</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-900 mb-2">500+</div>
+          <div class="text-gray-600 font-medium">Projects Completed</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-900 mb-2">50+</div>
+          <div class="text-gray-600 font-medium">Happy Clients</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-900 mb-2">10+</div>
+          <div class="text-gray-600 font-medium">Years Experience</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-900 mb-2">100%</div>
+          <div class="text-gray-600 font-medium">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div class="flex mb-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg key={i} class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+              </svg>
+            ))}
+          </div>
+          <p class="text-gray-600 mb-4 italic">"Carolina Renew transformed our kitchen beyond our expectations. The attention to detail and professionalism was outstanding."</p>
+          <p class="font-bold text-gray-900">- Sarah Johnson</p>
+          <p class="text-sm text-gray-500">Kitchen Remodeling, Charlotte</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div class="flex mb-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg key={i} class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+              </svg>
+            ))}
+          </div>
+          <p class="text-gray-600 mb-4 italic">"Excellent exterior painting work. They were professional, on time, and the results speak for themselves."</p>
+          <p class="font-bold text-gray-900">- Mike Rodriguez</p>
+          <p class="text-sm text-gray-500">Exterior Painting, Gastonia</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div class="flex mb-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg key={i} class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+              </svg>
+            ))}
+          </div>
+          <p class="text-gray-600 mb-4 italic">"Our bathroom remodel was completed on time and within budget. Highly recommend Carolina Renew!"</p>
+          <p class="font-bold text-gray-900">- Lisa Chen</p>
+          <p class="text-sm text-gray-500">Bathroom Remodeling, Concord</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-blue-900 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
+      <p class="text-xl mb-8 text-blue-100">
+        Let us transform your space like we did for these satisfied customers
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+          Get Free Estimate
+        </button>
+        <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+          Contact Us Today
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SimpleFooter />
+</Layout>

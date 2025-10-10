@@ -1,0 +1,289 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimpleHeader from '../components/SimpleHeader.jsx';
+import SimpleFooter from '../components/SimpleFooter.jsx';
+
+const contactInfo = {
+  phone: '(704) 123-4567',
+  email: 'info@carolinarenew.com',
+  address: '123 Main Street, Charlotte, NC 28202',
+  hours: {
+    weekdays: 'Monday - Friday: 8:00 AM - 6:00 PM',
+    saturday: 'Saturday: 9:00 AM - 4:00 PM',
+    sunday: 'Sunday: Closed'
+  }
+};
+
+const serviceAreas = [
+  'Charlotte, NC', 'Gastonia, NC', 'Concord, NC', 'Matthews, NC',
+  'Huntersville, NC', 'Rock Hill, SC', 'Cornelius, NC', 'Davidson, NC',
+  'Mooresville, NC', 'Kannapolis, NC', 'Mint Hill, NC', 'Fort Mill, SC'
+];
+---
+
+<Layout 
+  title="Contact Carolina Renew - Get Your Free Estimate Today"
+  description="Contact Carolina Renew for professional painting and remodeling services in Charlotte, NC. Call (704) 123-4567 or request your free estimate online. Licensed and insured."
+  keywords="contact Carolina Renew, free estimate, painting contractor Charlotte, phone number, address, hours, get quote"
+  canonicalUrl="https://carolinarenew.com/contact"
+>
+  <SimpleHeader />
+  
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          Contact 
+          <span class="text-yellow-400">Carolina Renew</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100">
+          Ready to transform your space? Get in touch for your free estimate and consultation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Information -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Get Your Free Estimate</h2>
+          <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                <input 
+                  type="text" 
+                  id="firstName" 
+                  name="firstName" 
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                <input 
+                  type="text" 
+                  id="lastName" 
+                  name="lastName" 
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Property Address</label>
+              <input 
+                type="text" 
+                id="address" 
+                name="address"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Service Needed *</label>
+              <select 
+                id="service" 
+                name="service" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">Select a service</option>
+                <option value="interior-painting">Interior Painting</option>
+                <option value="exterior-painting">Exterior Painting</option>
+                <option value="kitchen-remodeling">Kitchen Remodeling</option>
+                <option value="bathroom-remodeling">Bathroom Remodeling</option>
+                <option value="multiple-services">Multiple Services</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Project Details</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="4"
+                placeholder="Please describe your project, timeline, and any specific requirements..."
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit"
+              class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-lg text-lg transition-colors"
+            >
+              Request Free Estimate
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Details -->
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
+          
+          <!-- Contact Methods -->
+          <div class="space-y-6 mb-8">
+            <div class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-3 mr-4">
+                <svg class="w-6 h-6 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Phone</h3>
+                <p class="text-gray-600">{contactInfo.phone}</p>
+                <p class="text-sm text-gray-500">Call for immediate assistance</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-3 mr-4">
+                <svg class="w-6 h-6 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Email</h3>
+                <p class="text-gray-600">{contactInfo.email}</p>
+                <p class="text-sm text-gray-500">We respond within 24 hours</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-blue-100 rounded-full p-3 mr-4">
+                <svg class="w-6 h-6 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">Address</h3>
+                <p class="text-gray-600">{contactInfo.address}</p>
+                <p class="text-sm text-gray-500">Visit our showroom</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Hours -->
+          <div class="bg-gray-50 rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Business Hours</h3>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Monday - Friday:</span>
+                <span class="font-medium text-gray-900">8:00 AM - 6:00 PM</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Saturday:</span>
+                <span class="font-medium text-gray-900">9:00 AM - 4:00 PM</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Sunday:</span>
+                <span class="font-medium text-gray-900">Closed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Contact -->
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-red-900 mb-2">Emergency Services</h3>
+            <p class="text-red-700 mb-2">For urgent painting or water damage repairs:</p>
+            <p class="text-xl font-bold text-red-900">{contactInfo.phone}</p>
+            <p class="text-sm text-red-600">Available 24/7 for emergencies</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">We Serve These Areas</h2>
+        <p class="text-lg text-gray-600">
+          Professional painting and remodeling services throughout the Charlotte metro area
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {serviceAreas.map((area) => (
+          <div class="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow">
+            <svg class="w-5 h-5 text-blue-900 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <p class="font-medium text-gray-900">{area}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div class="text-center mt-8">
+        <p class="text-gray-600 mb-4">Don't see your area listed?</p>
+        <a href="/locations" class="text-blue-900 hover:text-blue-700 font-medium">
+          View all service areas →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+      </div>
+      
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">How quickly can you provide an estimate?</h3>
+          <p class="text-gray-600">We typically provide estimates within 24-48 hours of your initial contact. For urgent projects, we can often schedule same-day estimates.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Are you licensed and insured?</h3>
+          <p class="text-gray-600">Yes, Carolina Renew is fully licensed and insured. We carry general liability insurance and workers' compensation for your protection and peace of mind.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Do you offer warranties on your work?</h3>
+          <p class="text-gray-600">We stand behind our work with comprehensive warranties. Interior painting comes with a 2-year warranty, exterior painting with a 5-year warranty, and remodeling projects with custom warranty terms.</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">What payment methods do you accept?</h3>
+          <p class="text-gray-600">We accept cash, check, and all major credit cards. We also offer financing options for larger projects through our approved partners.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SimpleFooter />
+</Layout>

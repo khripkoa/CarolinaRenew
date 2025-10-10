@@ -1,0 +1,257 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeaderWithRegions from '../components/HeaderWithRegions.jsx';
+import SimpleFooter from '../components/SimpleFooter.jsx';
+import RegionsBlock from '../components/RegionsBlock.jsx';
+
+// Импорт изображений для статей
+import interiorAfter from '../assets/interior_painting_after.png';
+import exteriorAfter from '../assets/exterior_painting_after.png';
+import kitchenAfter from '../assets/kitchen_remodel_after.png';
+
+const blogPosts = [
+  {
+    id: 1,
+    title: '10 Interior Paint Colors That Will Transform Your Home in 2024',
+    excerpt: 'Discover the trending paint colors that interior designers are using to create stunning, modern spaces this year.',
+    image: interiorAfter,
+    category: 'Interior Design',
+    date: '2024-03-15',
+    readTime: '5 min read',
+    slug: 'interior-paint-colors-2024'
+  },
+  {
+    id: 2,
+    title: 'How to Prepare Your Home\'s Exterior for Professional Painting',
+    excerpt: 'Learn the essential steps homeowners should take before exterior painting begins to ensure the best possible results.',
+    image: exteriorAfter,
+    category: 'Exterior Painting',
+    date: '2024-03-10',
+    readTime: '7 min read',
+    slug: 'prepare-exterior-painting'
+  },
+  {
+    id: 3,
+    title: 'Kitchen Remodeling Trends: What\'s Hot in Charlotte Homes',
+    excerpt: 'Explore the latest kitchen design trends that Charlotte homeowners are embracing in their remodeling projects.',
+    image: kitchenAfter,
+    category: 'Kitchen Remodeling',
+    date: '2024-03-05',
+    readTime: '6 min read',
+    slug: 'kitchen-remodeling-trends-charlotte'
+  },
+  {
+    id: 4,
+    title: 'The Complete Guide to Choosing Paint Finishes for Every Room',
+    excerpt: 'Understanding the differences between matte, satin, semi-gloss, and gloss finishes and where to use each one.',
+    image: interiorAfter,
+    category: 'Painting Tips',
+    date: '2024-02-28',
+    readTime: '8 min read',
+    slug: 'paint-finishes-guide'
+  },
+  {
+    id: 5,
+    title: 'Why Professional Painters Are Worth the Investment',
+    excerpt: 'Discover the benefits of hiring professional painters versus DIY painting and how it saves you time and money.',
+    image: exteriorAfter,
+    category: 'Professional Services',
+    date: '2024-02-20',
+    readTime: '4 min read',
+    slug: 'professional-painters-worth-investment'
+  },
+  {
+    id: 6,
+    title: 'Seasonal Painting: Best Times to Paint Your Home\'s Exterior in NC',
+    excerpt: 'Learn about North Carolina\'s climate and the optimal seasons for exterior painting projects.',
+    image: exteriorAfter,
+    category: 'Exterior Painting',
+    date: '2024-02-15',
+    readTime: '5 min read',
+    slug: 'seasonal-painting-north-carolina'
+  }
+];
+
+const categories = [
+  'All Posts',
+  'Interior Design',
+  'Exterior Painting',
+  'Kitchen Remodeling',
+  'Painting Tips',
+  'Professional Services'
+];
+
+const featuredPost = blogPosts[0];
+const recentPosts = blogPosts.slice(1);
+---
+
+<Layout 
+  title="Painting & Remodeling Blog | Carolina Renew - Expert Tips & Trends"
+  description="Get expert painting and remodeling tips, trends, and advice from Carolina Renew. Learn about paint colors, techniques, and home improvement ideas for Charlotte area homes."
+  keywords="painting blog, home improvement tips, paint colors, remodeling advice, Charlotte home improvement, painting techniques, interior design trends"
+  canonicalUrl="https://carolinarenew.com/blog"
+>
+  <HeaderWithRegions client:load />
+  
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          Painting & Remodeling 
+          <span class="text-yellow-400">Blog</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100">
+          Expert tips, trends, and insights from Charlotte's trusted painting and remodeling professionals.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Article</h2>
+        
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="grid lg:grid-cols-2 gap-0">
+            <div class="relative">
+              <img 
+                src={featuredPost.image.src} 
+                alt={featuredPost.title}
+                class="w-full h-64 lg:h-full object-cover"
+              />
+              <div class="absolute top-4 left-4">
+                <span class="bg-blue-900 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  {featuredPost.category}
+                </span>
+              </div>
+            </div>
+            <div class="p-8 lg:p-12 flex flex-col justify-center">
+              <div class="flex items-center text-sm text-gray-500 mb-4">
+                <span>{new Date(featuredPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <span class="mx-2">•</span>
+                <span>{featuredPost.readTime}</span>
+              </div>
+              <h3 class="text-3xl font-bold text-gray-900 mb-4">{featuredPost.title}</h3>
+              <p class="text-lg text-gray-600 mb-6">{featuredPost.excerpt}</p>
+              <a 
+                href={`/blog/${featuredPost.slug}`}
+                class="inline-flex items-center bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              >
+                Read Full Article
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Filter -->
+  <section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-4">
+          {categories.map((category) => (
+            <button class="px-6 py-2 rounded-full border-2 border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white transition-colors font-medium">
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Posts -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12">Recent Articles</h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentPosts.map((post) => (
+            <article class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div class="relative">
+                <img 
+                  src={post.image.src} 
+                  alt={post.title}
+                  class="w-full h-48 object-cover"
+                />
+                <div class="absolute top-4 left-4">
+                  <span class="bg-blue-900 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {post.category}
+                  </span>
+                </div>
+              </div>
+              
+              <div class="p-6">
+                <div class="flex items-center text-sm text-gray-500 mb-3">
+                  <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  <span class="mx-2">•</span>
+                  <span>{post.readTime}</span>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{post.title}</h3>
+                <p class="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+                
+                <a 
+                  href={`/blog/${post.slug}`}
+                  class="inline-flex items-center text-blue-900 hover:text-blue-700 font-medium transition-colors"
+                >
+                  Read More
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="py-20 bg-blue-900 text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6">Stay Updated with Our Latest Tips</h2>
+        <p class="text-xl text-blue-100 mb-8">
+          Get expert painting and remodeling advice delivered to your inbox monthly.
+        </p>
+        
+        <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <input 
+            type="email" 
+            placeholder="Enter your email address"
+            class="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+          />
+          <button 
+            type="submit"
+            class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            Subscribe
+          </button>
+        </form>
+        
+        <p class="text-sm text-blue-200 mt-4">
+          No spam, unsubscribe at any time. We respect your privacy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regions Block -->
+  <RegionsBlock 
+    client:load
+    title="Serving Communities Across Charlotte Metro"
+    subtitle="Read our location-specific tips and see our work in your area"
+  />
+
+  <SimpleFooter />
+</Layout>

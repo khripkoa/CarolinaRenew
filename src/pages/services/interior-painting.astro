@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SimpleHeader from '../../components/SimpleHeader.jsx';
+import SimpleFooter from '../../components/SimpleFooter.jsx';
+
+// Импорт изображений
+import interiorBefore from '../../assets/interior_painting_before.png';
+import interiorAfter from '../../assets/interior_painting_after.png';
+
+const processSteps = [
+  {
+    step: 1,
+    title: 'Consultation & Estimate',
+    description: 'We visit your property to assess the project scope and provide a detailed, free estimate.'
+  },
+  {
+    step: 2,
+    title: 'Color Selection & Planning',
+    description: 'Our experts help you choose the perfect colors and finishes for your space.'
+  },
+  {
+    step: 3,
+    title: 'Surface Preparation',
+    description: 'We properly prepare all surfaces including cleaning, sanding, and priming as needed.'
+  },
+  {
+    step: 4,
+    title: 'Professional Painting',
+    description: 'Our skilled painters apply premium paints using professional techniques for a flawless finish.'
+  },
+  {
+    step: 5,
+    title: 'Final Inspection & Cleanup',
+    description: 'We conduct a thorough inspection and complete cleanup, leaving your home spotless.'
+  }
+];
+
+const benefits = [
+  'Increased home value',
+  'Fresh, updated appearance',
+  'Protection for walls and surfaces',
+  'Improved indoor air quality with low-VOC paints',
+  'Professional color consultation included',
+  'Warranty on all work performed'
+];
+---
+
+<Layout 
+  title="Professional Interior Painting Services | Carolina Renew"
+  description="Transform your home with Carolina Renew's professional interior painting services. Expert painters, premium paints, and exceptional results. Serving Charlotte, NC and surrounding areas."
+  keywords="interior painting, house painting, wall painting, residential painting, professional painters, Charlotte NC interior painting, home painting services"
+  canonicalUrl="https://carolinarenew.com/services/interior-painting"
+>
+    <SimpleHeader />
+    
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Professional 
+            <span class="text-yellow-400">Interior Painting</span> 
+            Services
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-blue-100">
+            Transform your home's interior with our expert painting services. Quality craftsmanship, premium materials, and exceptional results guaranteed.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              Get Free Estimate
+            </button>
+            <a href="/portfolio" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+              View Our Work
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Before/After Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">See the Transformation</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our professional interior painting services can completely transform your living space.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src={interiorBefore.src} 
+              alt="Interior before painting"
+              class="w-full h-64 object-cover"
+            />
+            <div class="p-6 text-center">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">Before</h3>
+              <p class="text-gray-600">Outdated and worn interior walls</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src={interiorAfter.src} 
+              alt="Interior after painting"
+              class="w-full h-64 object-cover"
+            />
+            <div class="p-6 text-center">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">After</h3>
+              <p class="text-gray-600">Fresh, modern, and beautifully painted</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Interior Painting Process</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            We follow a proven process to ensure exceptional results on every interior painting project.
+          </p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+          {processSteps.map((step, index) => (
+            <div class="flex items-start mb-8 last:mb-0">
+              <div class="bg-blue-900 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-6 flex-shrink-0">
+                {step.step}
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                <p class="text-gray-600 text-lg">{step.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Benefits of Professional Interior Painting</h2>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+          <div class="grid md:grid-cols-2 gap-8">
+            {benefits.map((benefit) => (
+              <div class="flex items-start">
+                <svg class="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <p class="text-gray-700 text-lg">{benefit}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Areas Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Interior Painting Service Areas</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            We provide professional interior painting services throughout the Charlotte metro area.
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="grid md:grid-cols-3 gap-6">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Primary Service Areas</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• Charlotte, NC</li>
+                <li>• Gastonia, NC</li>
+                <li>• Concord, NC</li>
+                <li>• Matthews, NC</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Extended Service Areas</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• Huntersville, NC</li>
+                <li>• Rock Hill, SC</li>
+                <li>• Cornelius, NC</li>
+                <li>• Davidson, NC</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Service Types</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li>• Residential Interior Painting</li>
+                <li>• Commercial Interior Painting</li>
+                <li>• Color Consultation</li>
+                <li>• Wall Preparation & Repair</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blue-900 text-white">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Interior?</h2>
+        <p class="text-xl mb-8 text-blue-100">
+          Contact Carolina Renew today for your free interior painting estimate. Let us help you create the perfect living space.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            Get Free Estimate
+          </button>
+          <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+            Contact Us Today
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <SimpleFooter />
+</Layout>
