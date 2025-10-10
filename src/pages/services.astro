@@ -1,17 +1,17 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SimpleHeader from '../components/SimpleHeader.jsx';
-import SimpleFooter from '../components/SimpleFooter.jsx';
+import Layout from '@/layouts/Layout.astro';
+import SimpleHeader from '@/components/SimpleHeader.jsx';
+import SimpleFooter from '@/components/SimpleFooter.jsx';
 
 // Импорт изображений
-import interiorBefore from '../assets/interior_painting_before.png';
-import interiorAfter from '../assets/interior_painting_after.png';
-import exteriorBefore from '../assets/exterior_painting_before.png';
-import exteriorAfter from '../assets/exterior_painting_after.png';
-import kitchenBefore from '../assets/kitchen_remodel_before.png';
-import kitchenAfter from '../assets/kitchen_remodel_after.png';
-import bathroomBefore from '../assets/kitchen_remodel_before.png';
-import bathroomAfter from '../assets/bathroom_remodel_after.png';
+import interiorBefore from '@/assets/interior_painting_before.png';
+import interiorAfter from '@/assets/interior_painting_after.png';
+import exteriorBefore from '@/assets/exterior_painting_before.png';
+import exteriorAfter from '@/assets/exterior_painting_after.png';
+import kitchenBefore from '@/assets/kitchen_remodel_before.png';
+import kitchenAfter from '@/assets/kitchen_remodel_after.png';
+import bathroomBefore from '@/assets/kitchen_remodel_before.png';
+import bathroomAfter from '@/assets/bathroom_remodel_after.png';
 
 const services = [
   {
@@ -94,7 +94,6 @@ const serviceAreas = [
 >
   <SimpleHeader />
   
-  <!-- Hero Section -->
   <section class="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
     <div class="container mx-auto px-4">
       <div class="text-center">
@@ -109,13 +108,11 @@ const serviceAreas = [
     </div>
   </section>
 
-  <!-- Services Grid -->
   <section class="py-20">
     <div class="container mx-auto px-4">
       <div class="grid lg:grid-cols-2 gap-12">
         {services.map((service) => (
           <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <!-- Before/After Images -->
             <div class="grid grid-cols-2">
               <div class="relative">
                 <img 
@@ -139,12 +136,10 @@ const serviceAreas = [
               </div>
             </div>
             
-            <!-- Service Content -->
             <div class="p-6">
               <h3 class="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
               <p class="text-gray-600 mb-4">{service.description}</p>
               
-              <!-- Features -->
               <div class="mb-4">
                 <h4 class="font-semibold text-gray-900 mb-2">What's Included:</h4>
                 <ul class="grid grid-cols-2 gap-1 text-sm text-gray-600">
@@ -159,7 +154,6 @@ const serviceAreas = [
                 </ul>
               </div>
               
-              <!-- Price and CTA -->
               <div class="flex items-center justify-between">
                 <div class="text-lg font-bold text-blue-900">{service.price}</div>
                 <a 
@@ -176,7 +170,6 @@ const serviceAreas = [
     </div>
   </section>
 
-  <!-- Service Areas -->
   <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-16">
@@ -200,7 +193,6 @@ const serviceAreas = [
     </div>
   </section>
 
-  <!-- Why Choose Us -->
   <section class="py-20">
     <div class="container mx-auto px-4">
       <div class="text-center mb-16">
@@ -241,7 +233,6 @@ const serviceAreas = [
     </div>
   </section>
 
-  <!-- CTA Section -->
   <section class="py-20 bg-blue-900 text-white">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
