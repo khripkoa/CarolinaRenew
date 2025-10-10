@@ -1,0 +1,321 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeaderWithRegions from '../components/HeaderWithRegions.jsx';
+import RegionsBlock from '../components/RegionsBlock.jsx';
+import SimpleFooter from '../components/SimpleFooter.jsx';
+
+// Import optimized WebP images
+import interiorPainting from '../assets-optimized/interior_painting_after.webp';
+import exteriorPainting from '../assets-optimized/exterior_painting_after.webp';
+import kitchenRemodel from '../assets-optimized/kitchen_remodel_after.webp';
+import bathroomRemodel from '../assets-optimized/bathroom_remodel_after.webp';
+---
+
+<Layout 
+  title="Professional Painting & Remodeling Services | Carolina Renew"
+  description="Complete painting and remodeling services in Charlotte, NC. Interior painting, exterior painting, kitchen remodeling, bathroom renovation. Licensed & insured."
+  keywords="painting services Charlotte NC, interior painting, exterior painting, kitchen remodeling, bathroom renovation, home improvement"
+>
+  <HeaderWithRegions client:load />
+  
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">
+        Professional Painting & Remodeling Services
+      </h1>
+      <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
+        Transform your home with our comprehensive range of painting and remodeling services. 
+        Quality craftsmanship, premium materials, and exceptional customer service.
+      </p>
+      <a href="/contact" class="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors">
+        Get Free Estimate
+      </a>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Interior Painting -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={interiorPainting} 
+            alt="Professional interior painting service"
+            width="600"
+            height="300"
+            loading="lazy"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Interior Painting</h2>
+            <p class="text-gray-600 mb-6">
+              Transform your living spaces with our professional interior painting services. 
+              We use premium paints and expert techniques to deliver flawless results that last.
+            </p>
+            
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
+            <ul class="text-gray-600 mb-6 space-y-2">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Color consultation and design advice
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Surface preparation and priming
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Premium paint application
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Complete cleanup and protection
+              </li>
+            </ul>
+            
+            <a href="/services/interior-painting" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+              Learn More About Interior Painting →
+            </a>
+          </div>
+        </div>
+
+        <!-- Exterior Painting -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={exteriorPainting} 
+            alt="Professional exterior painting service"
+            width="600"
+            height="300"
+            loading="lazy"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Exterior Painting</h2>
+            <p class="text-gray-600 mb-6">
+              Protect and beautify your home's exterior with our weather-resistant painting solutions. 
+              We use high-quality paints designed to withstand North Carolina's climate.
+            </p>
+            
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
+            <ul class="text-gray-600 mb-6 space-y-2">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Pressure washing and surface prep
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Caulking and minor repairs
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Weather-resistant paint systems
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Landscaping protection
+              </li>
+            </ul>
+            
+            <a href="/services/exterior-painting" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+              Learn More About Exterior Painting →
+            </a>
+          </div>
+        </div>
+
+        <!-- Kitchen Remodeling -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={kitchenRemodel} 
+            alt="Professional kitchen remodeling service"
+            width="600"
+            height="300"
+            loading="lazy"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Kitchen Remodeling</h2>
+            <p class="text-gray-600 mb-6">
+              Create the kitchen of your dreams with our comprehensive remodeling services. 
+              From design to completion, we handle every aspect of your kitchen transformation.
+            </p>
+            
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
+            <ul class="text-gray-600 mb-6 space-y-2">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Custom design and planning
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Cabinet installation or refacing
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Countertop installation
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Flooring and backsplash
+              </li>
+            </ul>
+            
+            <a href="/contact" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+              Get Kitchen Remodel Quote →
+            </a>
+          </div>
+        </div>
+
+        <!-- Bathroom Remodeling -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img 
+            src={bathroomRemodel} 
+            alt="Professional bathroom remodeling service"
+            width="600"
+            height="300"
+            loading="lazy"
+            class="w-full h-64 object-cover"
+          />
+          <div class="p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Bathroom Remodeling</h2>
+            <p class="text-gray-600 mb-6">
+              Transform your bathroom into a luxurious retreat with our complete renovation services. 
+              Modern designs, quality fixtures, and expert craftsmanship.
+            </p>
+            
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
+            <ul class="text-gray-600 mb-6 space-y-2">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Complete design consultation
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Tile and flooring installation
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Fixture and vanity installation
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Plumbing and electrical work
+              </li>
+            </ul>
+            
+            <a href="/contact" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+              Get Bathroom Remodel Quote →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Our Process
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          From initial consultation to project completion, we ensure a smooth and professional experience
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            1
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Consultation</h3>
+          <p class="text-gray-600">Free in-home consultation to discuss your vision and provide detailed estimate</p>
+        </div>
+
+        <div class="text-center">
+          <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            2
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Planning</h3>
+          <p class="text-gray-600">Detailed project planning, material selection, and timeline coordination</p>
+        </div>
+
+        <div class="text-center">
+          <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            3
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Execution</h3>
+          <p class="text-gray-600">Professional execution with daily progress updates and quality control</p>
+        </div>
+
+        <div class="text-center">
+          <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+            4
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Completion</h3>
+          <p class="text-gray-600">Final walkthrough, cleanup, and warranty information for your peace of mind</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas -->
+  <RegionsBlock client:load />
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-blue-900 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Ready to Start Your Project?
+      </h2>
+      <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+        Contact us today for a free consultation and detailed estimate for your painting or remodeling project
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors">
+          Get Free Estimate
+        </a>
+        <a href="/portfolio" class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-900 transition-colors">
+          View Our Work
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SimpleFooter />
+</Layout>
