@@ -1,97 +1,89 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import SimpleHeader from '@/components/SimpleHeader.jsx';
-import SimpleFooter from '@/components/SimpleFooter.jsx';
+// src/pages/services.astro
 
-// Импорт изображений в формате WebP
-import interiorBefore from '@/assets/interior_painting_before.webp';
-import interiorAfter from '@/assets/interior_painting_after.webp';
-import exteriorBefore from '@/assets/exterior_painting_before.webp';
-import exteriorAfter from '@/assets/exterior_painting_after.webp';
-import kitchenBefore from '@/assets/kitchen_remodel_before.webp';
-import kitchenAfter from '@/assets/kitchen_remodel_after.webp';
-import bathroomBefore from '@/assets/kitchen_remodel_before.webp'; // Используем картинку кухни, как и раньше
-import bathroomAfter from '@/assets/bathroom_remodel_after.webp';
+// 1. Оставляем только основной шаблон
+import Layout from '@/layouts/Layout.astro';
+// КОМПОНЕНТ OptimizedImage УДАЛЕН.
+
+// 2. УДАЛЕНЫ: Header, Footer, GeoBlock (они в Layout)
+
+// 3. ИМПОРТЫ ИЗОБРАЖЕНИЙ: Используем алиас @/assets и формат .webp
+// ВАЖНО: Убедитесь, что ваш алиас '@/assets' настроен на папку /src/assets.
+
+// --- ИМПОРТЫ AFTER ИЗОБРАЖЕНИЙ ---
+import interiorPaintingAfter from '@/assets/interior_painting_after.webp';
+import exteriorPaintingAfter from '@/assets/exterior_painting_after.webp';
+import kitchenRemodelAfter from '@/assets/kitchen_remodel_after.webp';
+import bathroomRemodelAfter from '@/assets/bathroom_remodel_after.webp';
+
+// --- ИМПОРТЫ BEFORE ИЗОБРАЖЕНИЙ ---
+import interiorPaintingBefore from '@/assets/interior_painting_before.webp';
+import exteriorPaintingBefore from '@/assets/exterior_painting_before.webp';
+import kitchenRemodelBefore from '@/assets/kitchen_remodel_before.webp';
+import bathroomRemodelBefore from '@/assets/bathroom_remodel_before.webp';
+
+
+// --- Восстановленные массивы данных services ---
 
 const services = [
   {
-    title: 'Interior Painting',
-    description: 'Professional painting of walls, ceilings, trim, and furniture indoors',
-    features: [
-      'Surface preparation',
-      'Priming and spackling',
-      'Wall and ceiling painting',
-      'Decorative finishes',
-      'Cabinet and door painting',
-      'Protective coatings'
-    ],
-    beforeImage: interiorBefore,
-    afterImage: interiorAfter,
-    price: 'from $2-5 per sq ft',
-    slug: 'interior-painting'
+    title: "Interior Painting",
+    description: "Professional painting of walls, ceilings, trim, and furniture indoors",
+    price: "from $2-5 per sq ft",
+    link: "/services/interior-painting",
+    imageAfter: interiorPaintingAfter,
+    imageBefore: interiorPaintingBefore,
+    included: [
+      "Surface preparation", "Priming and spackling", "Wall and ceiling painting",
+      "Decorative finishes", "Cabinet and door painting", "Protective coatings"
+    ]
   },
   {
-    title: 'Exterior Painting',
-    description: 'Protect and beautify your home\'s exterior with professional painting',
-    features: [
-      'Power washing',
-      'Surface preparation',
-      'Weather-resistant paints',
-      'Trim and siding painting',
-      'Deck and fence staining',
-      'Protective sealants'
-    ],
-    beforeImage: exteriorBefore,
-    afterImage: exteriorAfter,
-    price: 'from $3-6 per sq ft',
-    slug: 'exterior-painting'
+    title: "Exterior Painting",
+    description: "Protect and beautify your home's exterior with professional painting",
+    price: "from $3-6 per sq ft",
+    link: "/services/exterior-painting",
+    imageAfter: exteriorPaintingAfter,
+    imageBefore: exteriorPaintingBefore,
+    included: [
+      "Power washing", "Surface preparation", "Weather-resistant paints",
+      "Trim and siding painting", "Deck and fence staining", "Protective sealants"
+    ]
   },
   {
-    title: 'Kitchen Remodeling',
-    description: 'Complete kitchen transformation with modern design and functionality',
-    features: [
-      'Cabinet refacing/replacement',
-      'Countertop installation',
-      'Backsplash design',
-      'Flooring installation',
-      'Lighting upgrades',
-      'Plumbing updates'
-    ],
-    beforeImage: kitchenBefore,
-    afterImage: kitchenAfter,
-    price: 'from $15,000-50,000',
-    slug: 'kitchen-remodeling'
+    title: "Kitchen Remodeling",
+    description: "Complete kitchen transformation with modern design and functionality",
+    price: "from $15,000-50,000",
+    link: "/services/kitchen-remodeling",
+    imageAfter: kitchenRemodelAfter,
+    imageBefore: kitchenRemodelBefore,
+    included: [
+      "Cabinet refacing/replacement", "Countertop installation", "Backsplash design",
+      "Flooring installation", "Lighting upgrades", "Plumbing updates"
+    ]
   },
   {
-    title: 'Bathroom Remodeling',
-    description: 'Full-service bathroom renovation and waterproofing',
-    features: [
-      'Tile installation',
-      'Fixture replacement',
-      'Vanity installation',
-      'Shower/tub renovation',
-      'Waterproofing',
-      'Ventilation upgrades'
-    ],
-    beforeImage: bathroomBefore,
-    afterImage: bathroomAfter,
-    price: 'from $8,000-25,000',
-    slug: 'bathroom-remodeling'
+    title: "Bathroom Remodeling",
+    description: "Full-service bathroom renovation and waterproofing",
+    price: "from $8,000-25,000",
+    link: "/services/bathroom-remodeling",
+    imageAfter: bathroomRemodelAfter,
+    imageBefore: bathroomRemodelBefore,
+    included: [
+      "Tile installation", "Fixture replacement", "Vanity installation",
+      "Shower/tub renovation", "Waterproofing", "Ventilation upgrades"
+    ]
   }
 ];
-const serviceAreas = [
-  'Charlotte, NC', 'Gastonia, NC', 'Concord, NC', 'Matthews, NC',
-  'Huntersville, NC', 'Rock Hill, SC', 'Cornelius, NC', 'Davidson, NC'
-];
+
+const processSteps = [];
 ---
 
 <Layout
   title="Professional Painting & Remodeling Services | Carolina Renew"
-  description="Comprehensive painting and remodeling services in Charlotte, NC. Interior painting, exterior painting, kitchen remodeling, bathroom remodeling. Licensed, insured, and trusted."
-  keywords="painting services, interior painting, exterior painting, kitchen remodeling, bathroom remodeling, home renovation, Charlotte NC services, professional contractors"
-  canonicalUrl="https://carolinarenew.com/services"
+  description="Complete painting and remodeling services in Charlotte, NC. Interior painting, exterior painting, kitchen remodeling, bathroom renovation. Licensed & insured."
+  keywords="painting services Charlotte NC, interior painting, exterior painting, kitchen remodeling, bathroom renovation, home improvement"
 >
-  <SimpleHeader />
 
   <section class="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
     <div class="container mx-auto px-4">
@@ -107,130 +99,114 @@ const serviceAreas = [
     </div>
   </section>
 
-  <section class="py-20">
+  <div class="py-20">
     <div class="container mx-auto px-4">
-      <div class="grid lg:grid-cols-2 gap-12">
-        {services.map((service) => (
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="grid grid-cols-2">
-              <div class="relative">
-                <img
-                  src={service.beforeImage.src}
-                  alt={`${service.title} before`}
-                  class="w-full h-48 object-cover"
-                />
-                <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
-                  Before
+
+      <section class="pb-16">
+        <div class="grid lg:grid-cols-2 gap-12">
+          {services.map((service) => (
+            <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+              <div class="grid grid-cols-2">
+
+                {/* Image Before - Используем стандартный <img> */}
+                <div class="relative">
+                  <img
+                    src={service.imageBefore.src}
+                    alt={`${service.title} before`}
+                    width={320}
+                    height={192}
+                    class="w-full h-48 object-cover"
+                    loading="eager"
+                  />
+                  <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
+                    Before
+                  </div>
                 </div>
+
+                {/* Image After - Используем стандартный <img> */}
+                <div class="relative">
+                  <img
+                    src={service.imageAfter.src}
+                    alt={`${service.title} after`}
+                    width={320}
+                    height={192}
+                    class="w-full h-48 object-cover"
+                    loading="eager"
+                  />
+                  <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
+                    After
+                  </div>
+                </div>
+
               </div>
-              <div class="relative">
-                <img
-                  src={service.afterImage.src}
-                  alt={`${service.title} after`}
-                  class="w-full h-48 object-cover"
-                />
-                <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
-                  After
+              <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
+                <p class="text-gray-600 mb-4">{service.description}</p>
+                <div class="mb-4">
+                  <h4 class="font-semibold text-gray-900 mb-2">What's Included:</h4>
+                  <ul class="grid grid-cols-2 gap-1 text-sm text-gray-600">
+                    {service.included.map((item) => (
+                      <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="text-lg font-bold text-blue-900">{service.price}</div>
+                  <a href={service.link} class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded font-medium transition-colors">
+                    Learn More
+                  </a>
                 </div>
               </div>
             </div>
+          ))}
+        </div>
+      </section>
 
-            <div class="p-6">
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p class="text-gray-600 mb-4">{service.description}</p>
-
-              <div class="mb-4">
-                <h4 class="font-semibold text-gray-900 mb-2">What's Included:</h4>
-                <ul class="grid grid-cols-2 gap-1 text-sm text-gray-600">
-                  {service.features.map((feature) => (
-                    <li class="flex items-center">
-                      <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <div class="text-lg font-bold text-blue-900">{service.price}</div>
-                <a
-                  href={`/services/${service.slug}`}
-                  class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded font-medium transition-colors"
-                >
-                  Learn More
-                </a>
-              </div>
+      <section class="py-16">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose Carolina Renew?</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          {/* Licensed & Insured */}
+          <div class="text-center">
+            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Licensed & Insured</h3>
+            <p class="text-gray-600">Fully licensed and insured for your peace of mind</p>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Service Areas</h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          We proudly serve the Charlotte metro area and surrounding communities
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-4 gap-4">
-        {serviceAreas.map((area) => (
-          <div class="bg-white rounded-lg p-4 text-center shadow-sm">
-            <svg class="w-6 h-6 text-blue-900 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-            <p class="font-medium text-gray-900">{area}</p>
+          {/* 10+ Years Experience */}
+          <div class="text-center">
+            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">10+ Years Experience</h3>
+            <p class="text-gray-600">Over a decade of professional service in the Charlotte area</p>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose Carolina Renew?</h2>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+          {/* 100% Satisfaction */}
+          <div class="text-center">
+            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">100% Satisfaction</h3>
+            <p class="text-gray-600">We guarantee your complete satisfaction with every project</p>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Licensed & Insured</h3>
-          <p class="text-gray-600">Fully licensed and insured for your peace of mind</p>
         </div>
+      </section>
 
-        <div class="text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">10+ Years Experience</h3>
-          <p class="text-gray-600">Over a decade of professional service in the Charlotte area</p>
-        </div>
-
-        <div class="text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">100% Satisfaction</h3>
-          <p class="text-gray-600">We guarantee your complete satisfaction with every project</p>
-        </div>
-      </div>
     </div>
-  </section>
+  </div>
 
   <section class="py-20 bg-blue-900 text-white">
     <div class="container mx-auto px-4 text-center">
@@ -249,5 +225,4 @@ const serviceAreas = [
     </div>
   </section>
 
-  <SimpleFooter />
 </Layout>

@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+// ИМПОРТ: Импортируем централизованные данные
+import { cityLocations, serviceCategories, getCityData } from '../../data/localAreas.js';
+
+// --- getStaticPaths: Генерация страниц городов (Хабов) ---
+export async function getStaticPaths() {
+    return cityLocations.map((area) => ({
+        params: { city: area.city_slug },
+        props: { cityData: area },
+    }));
+}
+
+const { city } = Astro.params;
+const { cityData } = Astro.props;
+
+if (!cityData) return new Response('404 Not Found', { status: 404 });
+
+// 1. Логика перенаправления для Charlotte
+if (cityData.redirect) {
+    return new Response(null, {
+        status: 301,
+        headers: {
+            Location: '/', // Redirect to homepage
+        },
+    });
+}
+
+// 2. Форматирование данных
+const CapitalizedCity = cityData.city_display;
+const state = cityData.state_abbr;
+const cityCategories = serviceCategories; // All categories available
+
+const pageTitle = `Professional Services in ${CapitalizedCity}, ${state} | Carolina Renew`;
+const description = `Expert painting and remodeling services in ${CapitalizedCity}, ${state}. Get your free estimate today.`;
+---
+
+<Layout
+    title={pageTitle}
+    description={description}
+    currentLocation={`${CapitalizedCity}, ${state}`}
+>
+    <section class="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                Professional Services in {CapitalizedCity}, {state}
+            </h1>
+        </div>
+    </section>
+
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Select a Service Category in {CapitalizedCity}</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {cityCategories.map(category => (
+                    <a
+                        href={`/local/${cityData.city_slug}/${category.category_slug}`}
+                        class="block p-6 border rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white"
+                    >
+                        <h3 class="text-xl font-semibold text-blue-900">{category.category_display}</h3>
+                        <p class="mt-2 text-gray-600">View all {category.category_display.toLowerCase()} options for {CapitalizedCity}.</p>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </section>
+
+</Layout>

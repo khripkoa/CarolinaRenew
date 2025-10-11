@@ -1,0 +1,37 @@
+---
+// ИМПОРТ: Теперь импортируем cityLocations из вашего центрального файла данных
+import { cityLocations } from '../data/localAreas.js';
+
+// Фильтруем города, чтобы исключить Charlotte, который перенаправляется,
+// или любые другие города, которые вы не хотите показывать в общем списке.
+// ВАЖНО: Используем 'cityLocations' для отображения
+const displayedCities = cityLocations.filter(city => !city.redirect);
+---
+
+<section class="py-12 md:py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+                Serving Communities Across Charlotte Metro
+            </h2>
+            <p class="text-lg text-gray-600 mt-2">
+                Read our location-specific tips and see our work in your area
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {displayedCities.map((area) => (
+                <a
+                    href={`/local/${area.city_slug}`}
+                    class="block p-4 text-center bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+                >
+                    <div class="flex flex-col items-center">
+                        <svg class="w-6 h-6 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.899a2 2 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span class="font-semibold text-gray-800">{area.city_display}</span>
+                        <span class="text-sm text-gray-500">{area.state_abbr}</span>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</section>

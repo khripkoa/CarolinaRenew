@@ -1,0 +1,69 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { cityLocations, serviceCategories, allServices, getCityData } from '../../../data/localAreas.js';
+
+// --- getStaticPaths: Генерируем все возможные пары Город/Категория ---
+export async function getStaticPaths() {
+    const paths = [];
+
+    // Проходим по всем городам
+    cityLocations.forEach(cityData => {
+        if (!cityData.redirect) {
+            // Проходим по всем категориям
+            serviceCategories.forEach(categoryData => {
+                paths.push({
+                    params: { city: cityData.city_slug, category: categoryData.category_slug },
+                    props: { citySlug: cityData.city_slug, categorySlug: categoryData.category_slug }
+                });
+            });
+        }
+    });
+
+    return paths;
+}
+
+const { city, category } = Astro.params;
+const { citySlug, categorySlug } = Astro.props;
+
+const cityData = getCityData(citySlug);
+const categoryData = serviceCategories.find(c => c.category_slug === categorySlug);
+const availableServices = allServices.filter(s => s.category_slug === categorySlug);
+
+// Защита: если данные не найдены
+if (!cityData || !categoryData) {
+    return new Response('404 Not Found', { status: 404 });
+}
+
+const CapitalizedCity = cityData.city_display;
+const state = cityData.state_abbr;
+const CapitalizedCategory = categoryData.category_display;
+
+const pageTitle = `${CapitalizedCategory} Services in ${CapitalizedCity}, ${state} | Carolina Renew`;
+const description = `The main page for ${CapitalizedCategory} services in ${CapitalizedCity}, ${state}. See all detailed service options.`;
+---
+
+<Layout title={pageTitle} description={description}>
+    <section class="bg-gray-100 py-20 text-center">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+                {CapitalizedCategory} in {CapitalizedCity}, {state}
+            </h1>
+            <p class="text-xl text-gray-700">
+                Select a specific service you need, or view our general portfolio in {CapitalizedCity}.
+            </p>
+
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-4xl">
+                {availableServices.map(service => (
+                    <a href={`/local/${city}/${category}/${service.service_slug}`}
+                       class="bg-white hover:bg-blue-100 text-blue-900 font-medium py-3 px-4 rounded-lg border border-blue-200 transition-colors shadow-md">
+                        {service.service_display}
+                    </a>
+                ))}
+            </div>
+
+            <a href={`/local/${city}`} class="mt-8 inline-block text-blue-600 hover:underline">
+                ← Back to {CapitalizedCity} Home
+            </a>
+        </div>
+    </section>
+</Layout>

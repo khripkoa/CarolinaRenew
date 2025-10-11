@@ -1,244 +1,67 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SimpleHeader from '../components/SimpleHeader.jsx';
-import SimpleFooter from '../components/SimpleFooter.jsx';
+// ИМПОРТ: Импортируем централизованный список городов из localAreas.js
+// (Предполагая, что locations.astro находится в src/pages/)
+import { cityLocations } from '../data/localAreas.js';
 
-const localAreas = [
-  // North Carolina
-  { name: 'Charlotte', state: 'NC', key: 'charlotte', population: '874,579', description: 'Major metropolitan area and business hub' },
-  { name: 'Gastonia', state: 'NC', key: 'gastonia', population: '80,411', description: 'Historic textile city with growing residential areas' },
-  { name: 'Concord', state: 'NC', key: 'concord', population: '96,341', description: 'Home to Charlotte Motor Speedway and growing suburbs' },
-  { name: 'Matthews', state: 'NC', key: 'matthews', population: '32,684', description: 'Charming small town with historic downtown' },
-  { name: 'Huntersville', state: 'NC', key: 'huntersville', population: '61,376', description: 'Rapidly growing northern suburb of Charlotte' },
-  { name: 'Cornelius', state: 'NC', key: 'cornelius', population: '31,412', description: 'Lakefront community on Lake Norman' },
-  { name: 'Davidson', state: 'NC', key: 'davidson', population: '13,054', description: 'College town with historic charm' },
-  { name: 'Mooresville', state: 'NC', key: 'mooresville', population: '50,193', description: 'Race City USA with NASCAR heritage' },
-  { name: 'Kannapolis', state: 'NC', key: 'kannapolis', population: '51,468', description: 'Historic mill town undergoing revitalization' },
-  { name: 'Mint Hill', state: 'NC', key: 'mint-hill', population: '27,258', description: 'Suburban community with rural feel' },
-  
-  // South Carolina
-  { name: 'Rock Hill', state: 'SC', key: 'rock-hill', population: '74,372', description: 'Historic city with growing arts scene' },
-  { name: 'Fort Mill', state: 'SC', key: 'fort-mill', population: '22,284', description: 'Historic town with modern amenities' },
-  { name: 'Indian Land', state: 'SC', key: 'indian-land', population: '15,000', description: 'Rapidly growing unincorporated community' },
-  { name: 'Tega Cay', state: 'SC', key: 'tega-cay', population: '12,441', description: 'Lakefront community with resort-style living' },
-  { name: 'Waxhaw', state: 'NC', key: 'waxhaw', population: '18,500', description: 'Historic town with antique shops and charm' }
-];
+// Проверяем, что cityLocations существует, и создаем копию,
+// чтобы избежать ошибки, если массив undefined
+const rawCities = cityLocations ? [...cityLocations] : [];
 
-// Группировка по штатам
-const groupedAreas = localAreas.reduce((acc, area) => {
-  if (!acc[area.state]) {
-    acc[area.state] = [];
-  }
-  acc[area.state].push(area);
-  return acc;
+// 1. Фильтруем города, исключая те, которые перенаправляют (Charlotte)
+const filteredCities = rawCities.filter(city => !city.redirect);
+
+// 2. Сортируем города по названию (city_display)
+const sortedCities = filteredCities.sort((a, b) =>
+    a.city_display.localeCompare(b.city_display)
+);
+
+// 3. Группируем города по штатам (NC, SC)
+const groupedLocations = sortedCities.reduce((acc, city) => {
+    const state = city.state_abbr;
+    if (!acc[state]) {
+        acc[state] = [];
+    }
+    acc[state].push(city);
+    return acc;
 }, {});
 
-// Сортировка городов внутри каждой группы
-Object.keys(groupedAreas).forEach(state => {
-  groupedAreas[state].sort((a, b) => a.name.localeCompare(b.name));
-});
-
-const getAreaLink = (key) => (key === 'charlotte' ? '/' : `/local/${key}`);
+const title = "Our Service Areas & Locations | Carolina Renew";
+const description = "We proudly serve communities across North Carolina (NC) and South Carolina (SC) for all your painting and remodeling needs.";
 ---
 
-<Layout 
-  title="Service Areas - Charlotte Metro & Surrounding Communities | Carolina Renew"
-  description="Carolina Renew provides professional painting and remodeling services throughout the Charlotte metro area including Gastonia, Concord, Matthews, Huntersville, Rock Hill and surrounding communities in NC and SC."
-  keywords="service areas, Charlotte metro, painting services NC SC, Gastonia painting, Concord painting, Matthews painting, Huntersville painting, Rock Hill painting, local painting contractors"
-  canonicalUrl="https://carolinarenew.com/locations"
->
-  <SimpleHeader />
-  
-  <!-- Hero Section -->
-  <section class="bg-blue-900 text-white py-16">
-    <div class="container mx-auto px-4 text-center">
-      <svg class="h-10 w-10 mx-auto mb-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-      </svg>
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">
-        Our Full Service Area
-      </h1>
-      <p class="text-xl text-blue-100 max-w-3xl mx-auto">
-        Providing professional painting and remodeling services in {localAreas.length}+ communities across North and South Carolina.
-      </p>
-    </div>
-  </section>
-
-  <!-- Service Area Overview -->
-  <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Serving the Greater Charlotte Metro Area</h2>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          With over 10 years of experience, Carolina Renew has built a reputation for excellence throughout the Charlotte region. 
-          We understand the unique character of each community we serve and tailor our services to meet local needs.
-        </p>
-      </div>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H9m0 0H5m0 0h2M7 7h10M7 11h10M7 15h10"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Residential Services</h3>
-          <p class="text-gray-600">Interior and exterior painting, kitchen and bathroom remodeling for homeowners</p>
-        </div>
-        
-        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H9m0 0H5m0 0h2M7 7h10M7 11h10M7 15h10"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Commercial Services</h3>
-          <p class="text-gray-600">Professional painting and renovation services for businesses and commercial properties</p>
-        </div>
-        
-        <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Emergency Services</h3>
-          <p class="text-gray-600">Quick response for urgent painting and repair needs throughout our service area</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Locations Grid -->
-  <section class="py-16">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Select Your City for Local Service Details</h2>
-        <p class="text-lg text-gray-600">
-          Click on your city to learn more about our services in your area
-        </p>
-      </div>
-      
-      {Object.entries(groupedAreas).map(([state, areas]) => (
-        <div class="mb-12">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
-            {state === 'NC' ? 'North Carolina' : 'South Carolina'}
-          </h3>
-          
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {areas.map((area) => (
-              <a 
-                href={getAreaLink(area.key)}
-                class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow border-l-4 border-blue-900"
-              >
-                <div class="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 class="text-xl font-bold text-gray-900">{area.name}</h4>
-                    <p class="text-sm text-gray-500">{area.state}</p>
-                  </div>
-                  <svg class="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
-                </div>
-                
-                <p class="text-gray-600 text-sm mb-3">{area.description}</p>
-                
-                <div class="flex items-center text-sm text-gray-500">
-                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                  </svg>
-                  Population: {area.population}
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- Service Radius -->
-  <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">100-Mile Service Radius</h2>
-        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          Based in Charlotte, NC, we provide services within a 100-mile radius, ensuring we can serve 
-          both urban and rural communities throughout the greater Charlotte metropolitan area.
-        </p>
-      </div>
-      
-      <div class="bg-white rounded-lg p-8 shadow-sm">
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Why Choose Local?</h3>
-            <ul class="space-y-3">
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-gray-700">Quick response times for estimates and service calls</span>
-              </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-gray-700">Understanding of local building codes and regulations</span>
-              </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-gray-700">Established relationships with local suppliers</span>
-              </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-gray-700">Knowledge of regional weather and environmental factors</span>
-              </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="text-gray-700">Supporting the local economy and community</span>
-              </li>
-            </ul>
-          </div>
-          
-          <div class="text-center">
-            <div class="bg-blue-100 rounded-full w-32 h-32 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-16 h-16 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              </svg>
+<Layout title={title} description={description} currentLocation="All Locations">
+    <section class="py-20 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-blue-900">
+                    Our Service Areas
+                </h1>
+                <p class="mt-4 text-xl text-gray-600">
+                    We cover the entire Charlotte Metro area, including parts of North and South Carolina.
+                </p>
             </div>
-            <p class="text-lg font-semibold text-gray-900">Serving 100+ Communities</p>
-            <p class="text-gray-600">Within 100 miles of Charlotte, NC</p>
-          </div>
+
+            <div class="max-w-4xl mx-auto">
+                {Object.keys(groupedLocations).sort().map((state) => (
+                    <div class="mb-10 p-6 border border-gray-200 rounded-lg bg-gray-50">
+                        <h2 class="text-3xl font-bold text-blue-800 mb-6 border-b pb-2">
+                            {state === 'NC' ? 'North Carolina' : 'South Carolina'} ({state})
+                        </h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {groupedLocations[state].map((city) => (
+                                <a
+                                    href={`/local/${city.city_slug}`}
+                                    class="text-lg text-gray-700 hover:text-blue-600 font-medium"
+                                >
+                                    {city.city_display} →
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="py-20 bg-blue-900 text-white">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold mb-6">Don't See Your City Listed?</h2>
-      <p class="text-xl mb-8 text-blue-100">
-        We may still serve your area! Contact us to check if we provide services in your location.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-          Get Free Estimate
-        </button>
-        <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-          Contact Us Today
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <SimpleFooter />
+    </section>
 </Layout>

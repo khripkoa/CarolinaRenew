@@ -1,259 +1,33 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SimpleHeader from '../components/SimpleHeader.jsx';
-import SimpleFooter from '../components/SimpleFooter.jsx';
-
-// Импорт изображений
-import employee1 from '../assets/employee_1.png';
-import employee2 from '../assets/employee_2.png';
-import employee3 from '../assets/employee_3.png';
-import officeInterior from '../assets/office_interior.png';
-
-const teamMembers = [
-  {
-    name: 'John Smith',
-    position: 'Founder & CEO',
-    experience: '15+ years',
-    image: employee1,
-    description: 'Licensed contractor with extensive experience in residential and commercial painting.'
-  },
-  {
-    name: 'Maria Rodriguez',
-    position: 'Project Manager',
-    experience: '8+ years',
-    image: employee2,
-    description: 'Ensures every project meets our high standards and is completed on time.'
-  },
-  {
-    name: 'David Johnson',
-    position: 'Lead Painter',
-    experience: '12+ years',
-    image: employee3,
-    description: 'Master craftsman specializing in interior and exterior painting techniques.'
-  }
-];
-
-const achievements = [
-  { number: '500+', label: 'Projects Completed' },
-  { number: '50+', label: 'Happy Clients' },
-  { number: '10+', label: 'Years in Business' },
-  { number: '100%', label: 'Satisfaction Rate' }
-];
-
-const certifications = [
-  'North Carolina General Contractor License',
-  'EPA Lead-Safe Certified',
-  'OSHA Safety Certified',
-  'Better Business Bureau A+ Rating',
-  'Angie\'s List Super Service Award',
-  'HomeAdvisor Elite Service Provider'
-];
+import Layout from '@/layouts/Layout.astro';
+import founderPhoto from '@/assets/founder.WebP';
 ---
-
-<Layout 
-  title="About Carolina Renew - Professional Painting & Remodeling Company"
-  description="Learn about Carolina Renew's 10+ years of experience in professional painting and remodeling services. Licensed, insured, and trusted by Charlotte area homeowners since 2014."
-  keywords="about Carolina Renew, painting company Charlotte, professional painters, licensed contractors, home remodeling company, painting business history"
-  canonicalUrl="https://carolinarenew.com/about"
+<Layout
+  title="About Us | Carolina Renew"
+  description="Learn more about Carolina Renew, Charlotte's trusted painting and remodeling contractor."
+  currentLocation="Charlotte"
 >
-  <SimpleHeader />
-  
-  <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-          About 
-          <span class="text-yellow-400">Carolina Renew</span>
-        </h1>
-        <p class="text-xl md:text-2xl mb-8 text-blue-100">
-          Over 10 years of transforming homes and businesses across the Charlotte metro area with quality craftsmanship and exceptional service.
-        </p>
-      </div>
-    </div>
-  </section>
+  <div class="bg-blue-800 text-white py-20 text-center">
+    <h1 class="text-5xl font-bold">About Carolina Renew</h1>
+    <p class="text-xl mt-4">Your trusted partner in home transformation since 2015.</p>
+  </div>
 
-  <!-- Company Story -->
   <section class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
-          <p class="text-lg text-gray-600 mb-6">
-            Carolina Renew was founded in 2014 with a simple mission: to provide the Charlotte area with 
-            honest, reliable, and high-quality painting and remodeling services. What started as a small 
-            family business has grown into one of the most trusted names in home improvement across North and South Carolina.
-          </p>
-          <p class="text-lg text-gray-600 mb-6">
-            Our founder, John Smith, began his career as an apprentice painter over 15 years ago. Through 
-            dedication to craftsmanship and customer service, he built Carolina Renew on the principles of 
-            integrity, quality, and community involvement.
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/3 flex-shrink-0">
+          <img src={founderPhoto.src} alt="Stanislav Putilov, Founder" class="rounded-full shadow-xl w-full max-w-xs mx-auto" />
+        </div>
+        <div class="md:w-2/3">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Story</h2>
+          <p class="text-lg text-gray-600 mb-4">
+            Founded by Stanislav Putilov in 2015, Carolina Renew was built on a simple promise: to deliver exceptional craftsmanship and unparalleled customer service to every client. We saw a need in the Charlotte area for a reliable, professional contractor that treats every home with the respect it deserves.
           </p>
           <p class="text-lg text-gray-600">
-            Today, we're proud to serve over 100 communities across the Charlotte metro area, with a team 
-            of skilled professionals who share our commitment to excellence.
+            Today, that promise is the foundation of everything we do. From small painting jobs to full-scale kitchen remodels, our team is dedicated to bringing your vision to life with quality materials and meticulous attention to detail.
           </p>
         </div>
-        <div>
-          <img 
-            src={officeInterior.src} 
-            alt="Carolina Renew office interior"
-            class="w-full rounded-lg shadow-lg"
-          />
-        </div>
       </div>
     </div>
   </section>
-
-  <!-- Achievements -->
-  <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Achievements</h2>
-        <p class="text-lg text-gray-600">Numbers that reflect our commitment to excellence</p>
-      </div>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        {achievements.map((achievement) => (
-          <div class="text-center">
-            <div class="text-4xl md:text-5xl font-bold text-blue-900 mb-2">{achievement.number}</div>
-            <div class="text-gray-600 font-medium">{achievement.label}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Team Section -->
-  <section class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          Our experienced professionals are the heart of Carolina Renew. Each team member brings expertise, 
-          dedication, and a commitment to delivering exceptional results.
-        </p>
-      </div>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        {teamMembers.map((member) => (
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img 
-              src={member.image.src} 
-              alt={member.name}
-              class="w-full h-64 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-2xl font-bold text-gray-900 mb-2">{member.name}</h3>
-              <p class="text-blue-900 font-semibold mb-2">{member.position}</p>
-              <p class="text-sm text-gray-500 mb-3">{member.experience} experience</p>
-              <p class="text-gray-600">{member.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Mission & Values -->
-  <section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Mission & Values</h2>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Quality First</h3>
-            <p class="text-gray-600">We never compromise on quality. Every project receives our full attention and expertise.</p>
-          </div>
-          
-          <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Customer Focus</h3>
-            <p class="text-gray-600">Your satisfaction is our priority. We listen, communicate, and deliver beyond expectations.</p>
-          </div>
-          
-          <div class="bg-white rounded-lg p-6 shadow-sm text-center">
-            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Community</h3>
-            <p class="text-gray-600">We're proud to be part of the Charlotte community and give back whenever possible.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Certifications -->
-  <section class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">Licenses & Certifications</h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          We maintain all necessary licenses and certifications to ensure professional, safe, and compliant work.
-        </p>
-      </div>
-      
-      <div class="max-w-4xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-6">
-          {certifications.map((cert) => (
-            <div class="flex items-center bg-white rounded-lg p-4 shadow-sm">
-              <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span class="text-gray-700 font-medium">{cert}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Service Philosophy -->
-  <section class="py-20 bg-blue-900 text-white">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold mb-6">Our Service Philosophy</h2>
-        <p class="text-xl text-blue-100 mb-8">
-          "We don't just paint walls or remodel rooms – we transform spaces and enhance lives. 
-          Every project is an opportunity to exceed expectations and build lasting relationships with our community."
-        </p>
-        <p class="text-lg text-blue-200 italic">- John Smith, Founder & CEO</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="py-20">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold text-gray-900 mb-6">Ready to Work with Carolina Renew?</h2>
-      <p class="text-xl text-gray-600 mb-8">
-        Experience the difference that quality craftsmanship and exceptional service can make for your home.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-          Get Free Estimate
-        </button>
-        <a href="/contact" class="border-2 border-blue-900 hover:bg-blue-900 hover:text-white text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-          Contact Us Today
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <SimpleFooter />
 </Layout>

@@ -1,0 +1,50 @@
+---
+const contactInfo = {
+  phone: "+1 980-408-8122",
+  phoneLink: "tel:+19804088122",
+  address: "11734 Fernhurst Ln, Charlotte, NC 28277",
+  email: "info@carolinarenew.com"
+};
+
+const year = new Date().getFullYear();
+---
+<footer class="bg-blue-900 text-blue-200">
+  <div class="container mx-auto px-4 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold text-white mb-4">Carolina Renew</h3>
+        <p>Professional painting and remodeling in Charlotte, NC and surrounding areas.</p>
+        <p class="mt-2 text-sm">Licensed - Insured - Trusted</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Our Services</h3>
+        <ul class="space-y-2">
+          <li><a href="/services/interior-painting" class="hover:text-white">Interior Painting</a></li>
+          <li><a href="/services/exterior-painting" class="hover:text-white">Exterior Painting</a></li>
+          <li><a href="/services" class="hover:text-white">Kitchen Remodeling</a></li>
+          <li><a href="/services" class="hover:text-white">Bathroom Remodeling</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Service Areas</h3>
+        <ul class="space-y-2">
+          <li><a href="/local/charlotte" class="hover:text-white">Charlotte, NC</a></li>
+          <li><a href="/local/gastonia" class="hover:text-white">Gastonia, NC</a></li>
+          <li><a href="/local/concord" class="hover:text-white">Concord, NC</a></li>
+          <li><a href="/local/matthews" class="hover:text-white">Matthews, NC</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Contact Us</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center"><a href={contactInfo.phoneLink} class="hover:text-white">{contactInfo.phone}</a></li>
+          <li class="flex items-center"><a href={`mailto:${contactInfo.email}`} class="hover:text-white">{contactInfo.email}</a></li>
+          <li class="flex items-start">{contactInfo.address}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-16 pt-8 border-t border-blue-800 text-center text-sm">
+      <p>&copy; {year} Carolina Renew. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>

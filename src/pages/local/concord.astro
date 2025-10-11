@@ -1,9 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import SimpleHeader from '../../components/SimpleHeader.jsx';
-import SimpleFooter from '../../components/SimpleFooter.jsx';
 
-// Импорт изображений
 import interiorAfter from '../../assets/interior_painting_after.png';
 import exteriorAfter from '../../assets/exterior_painting_after.png';
 import kitchenAfter from '../../assets/kitchen_remodel_after.png';
@@ -17,7 +14,7 @@ const services = [
     slug: 'interior-painting'
   },
   {
-    title: 'Exterior Painting in Concord', 
+    title: 'Exterior Painting in Concord',
     description: 'Protect your Concord property with quality exterior painting',
     image: exteriorAfter,
     slug: 'exterior-painting'
@@ -35,134 +32,21 @@ const services = [
     slug: 'bathroom-remodeling'
   },
 ];
+
+// ДОБАВЛЕНО для передачи города в Layout (исправление из предыдущего шага)
+const localInfo = {
+  city: 'Concord',
+};
 ---
 
-<Layout 
-  title="Professional Painting & Remodeling Services in Concord, NC | Carolina Renew"
-  description="Expert painting and remodeling services in Concord, NC. Interior painting, exterior painting, kitchen and bathroom remodeling. Licensed, insured, and locally trusted. Free estimates!"
-  keywords="painting services Concord NC, interior painting Concord, exterior painting Concord, kitchen remodeling Concord, bathroom remodeling Concord, home renovation Concord, professional painters Concord"
-  canonicalUrl="https://carolinarenew.com/local/concord"
+<Layout
+  title="Professional Painting & Remodeling Services in Concord, NC"
+  description="Expert painting and remodeling services in Concord, NC. Interior painting, exterior painting, kitchen and bathroom remodeling. Licensed, insured."
+  // ПЕРЕДАЧА ГОРОДА
+  currentLocation={localInfo.city}
 >
-    <SimpleHeader />
-    
-    <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            Professional Painting & Remodeling Services in 
-            <span class="text-yellow-400">Concord, NC</span>
-          </h1>
-          <p class="text-xl md:text-2xl mb-8 text-blue-100">
-            Serving Concord homeowners and businesses with quality craftsmanship and reliable service for over 10 years.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-              Get Free Concord Estimate
-            </button>
-            <a href="/portfolio" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-              View Concord Projects
-            </a>
-          </div>
-        </div>
-      </div>
+
+  <section class="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
     </section>
 
-    <!-- Local Services Section -->
-    <section class="py-20">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Concord Services</h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            Carolina Renew provides comprehensive painting and remodeling services throughout Concord, NC and surrounding areas.
-          </p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-8">
-          {services.map((service) => (
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <img 
-                src={service.image.src} 
-                alt={service.title}
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                <p class="text-gray-600 mb-4">{service.description}</p>
-                <a 
-                  href={`/services/${service.slug}`}
-                  class="text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  Learn More →
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Concord Neighborhoods Section -->
-    <section class="py-20 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Serving All Concord Neighborhoods</h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            From historic downtown Concord to new developments, we provide professional painting and remodeling services throughout the area.
-          </p>
-        </div>
-        
-        <div class="bg-white rounded-lg shadow-lg p-8">
-          <div class="grid md:grid-cols-3 gap-6">
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 mb-4">Central Concord</h3>
-              <ul class="text-gray-600 space-y-2">
-                <li>• Downtown Concord</li>
-                <li>• Historic District</li>
-                <li>• Gibson Village</li>
-                <li>• Cabarrus Avenue</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 mb-4">North Concord</h3>
-              <ul class="text-gray-600 space-y-2">
-                <li>• Afton Village</li>
-                <li>• Christenbury</li>
-                <li>• Poplar Tent</li>
-                <li>• Rocky River</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 mb-4">South Concord</h3>
-              <ul class="text-gray-600 space-y-2">
-                <li>• Concord Mills Area</li>
-                <li>• Bruton Smith Boulevard</li>
-                <li>• Speedway Area</li>
-                <li>• Weddington Chase</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 bg-blue-900 text-white">
-      <div class="container mx-auto px-4 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Start Your Concord Project?</h2>
-        <p class="text-xl mb-8 text-blue-100">
-          Contact Carolina Renew today for your free estimate. We're proud to serve the Concord community with exceptional painting and remodeling services.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <button class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-            Get Free Concord Estimate
-          </button>
-          <a href="/contact" class="border-2 border-white hover:bg-white hover:text-blue-900 font-bold py-4 px-8 rounded-lg text-lg transition-colors">
-            Contact Us Today
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <SimpleFooter />
 </Layout>

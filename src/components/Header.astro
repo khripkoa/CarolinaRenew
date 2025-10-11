@@ -1,0 +1,75 @@
+---
+// 1. ИМПОРТ: Импортируем централизованный список регионов
+import { cityLocations } from '../data/localAreas.js';
+
+// 2. ИСПРАВЛЕНИЕ ОШИБКИ: Объявляем currentLocation в пропсах (Astro.props)
+const { currentLocation = "Charlotte" } = Astro.props;
+
+// Сохраняем логику, которая была в шапке
+const serviceAreas = cityLocations;
+
+const contactInfo = {
+  phone: "+1 980-408-8122",
+  phoneLink: "tel:+19804088122",
+};
+---
+<header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+  <div class="container mx-auto px-4 flex justify-between items-center py-4">
+    <a href="/" class="text-2xl font-bold text-blue-900">Carolina Renew</a>
+
+    <nav class="hidden md:flex items-center space-x-6 text-gray-700">
+      <a href="/about" class="hover:text-blue-900">About</a>
+      <a href="/services" class="hover:text-blue-900">Services</a>
+      <a href="/portfolio" class="hover:text-blue-900">Portfolio</a>
+      <a href="/blog" class="hover:text-blue-900">Blog</a>
+
+      {/* Location Dropdown */}
+      <div class="group relative">
+        <button class="flex items-center hover:text-blue-900 font-medium">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.899a2 2 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span class="capitalize">{currentLocation}</span>
+          <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        {/* Dropdown Menu - Исправлено смещение для устранения проблемы быстрого закрытия */}
+        <div class="absolute right-0 w-64
+                    pt-4 pb-4
+                    -top-3
+
+                    bg-white border border-gray-200 rounded-lg shadow-xl
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                    transition-all duration-300 pointer-events-none group-hover:pointer-events-auto"
+        >
+          {/* Фактическое содержимое меню смещено вниз на размер padding-top */}
+          <div class="grid grid-cols-2 p-3 gap-1 mt-3">
+            {serviceAreas.map((area) => (
+              <a
+                href={`/local/${area.city_slug}`}
+                class="col-span-1 p-2 text-sm text-gray-700 hover:bg-blue-50"
+              >
+                {area.city_display}
+              </a>
+            ))}
+            <a
+              href="/locations"
+              class="col-span-2 text-center text-sm font-semibold text-blue-600 hover:text-blue-800 pt-2 border-t mt-2"
+            >
+              View All Areas →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Phone number & CTA */}
+      <a href={contactInfo.phoneLink}
+      class="hidden xl:flex items-center text-blue-800 hover:text-blue-600 font-semibold">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C11.66 21 3 12.34 3 5z"></path></svg>
+        {contactInfo.phone}
+      </a>
+
+    </nav>
+
+    {/* Mobile Menu Button (if needed) */}
+    {/* ... */}
+  </div>
+</header>

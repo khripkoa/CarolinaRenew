@@ -1,108 +1,68 @@
 ---
-export interface Props {
-  title: string;
-  description?: string;
-  keywords?: string;
-  ogImage?: string;
-  canonicalUrl?: string;
-}
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import GeoBlock from '@/components/GeoBlock.astro';
+// Импортируем CSS-файл для стилизации (чтобы не было мигания)
+import '../styles/global.css';
+// Импортируем функцию для поиска по ключу
+import { getLocalAreaByKey } from '@/data/localAreas.js';
 
-const { 
-  title, 
-  description = "Carolina Renew - Professional painting and remodeling services in Charlotte, NC and surrounding areas. Interior painting, exterior painting, kitchen remodeling, bathroom remodeling.",
-  keywords = "painting services, interior painting, exterior painting, kitchen remodeling, bathroom remodeling, Charlotte NC, Gastonia, Concord, Matthews, Huntersville, Rock Hill",
-  ogImage = "/og-image.jpg",
-  canonicalUrl = Astro.url.href
+
+const {
+  title = 'Carolina Renew | Painting & Remodeling',
+  description = 'Carolina Renew provides quality interior and exterior painting, kitchen and bathroom remodeling in Charlotte and surrounding areas. Free estimates, quality guarantee.',
+  keywords = 'painting, remodeling, Charlotte, North Carolina, painters, renovation, interior, exterior, kitchen, bathroom',
+  canonicalUrl,
+  // Дефолтное значение остается, но будет переопределено
+  currentLocation = 'Charlotte',
 } = Astro.props;
 
-import '../styles/global.css'
----
 
+// --- ЛОГИКА ОПРЕДЕЛЕНИЯ АКТУАЛЬНОЙ ЛОКАЦИИ (Финальная версия) ---
+let activeLocation = currentLocation;
+
+// 1. Проверяем, есть ли динамический параметр "key" в роуте (для страниц типа /local/gastonia)
+if (Astro.params.key) {
+  const loc = getLocalAreaByKey(Astro.params.key);
+  if (loc) {
+    activeLocation = loc.name;
+  }
+}
+// 2. Если нет динамического параметра, но есть пропс currentLocation, используем его
+else if (currentLocation) {
+    activeLocation = currentLocation;
+}
+// ---------------------------------
+
+// Формируем полный заголовок для SEO
+const finalTitle = title.includes('Carolina Renew') ? title : `${title} | Carolina Renew`;
+---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{finalTitle}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    
-    <!-- Критический CSS для быстрой загрузки -->
-    <style>
-      /* Critical CSS - инлайн для устранения блокировки рендера */
-      *{box-sizing:border-box}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}body{margin:0;padding:0;background-color:#fff;color:#1f2937}header{background-color:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:50}.hero-section{background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 50%,#1d4ed8 100%);color:#fff;padding:5rem 1rem;text-align:center}.hero-title{font-size:3rem;font-weight:700;margin-bottom:1.5rem;line-height:1.2}.hero-subtitle{font-size:1.25rem;margin-bottom:2rem;opacity:.9}.btn-primary{background-color:#eab308;color:#1e3a8a;padding:1rem 2rem;border-radius:.5rem;font-weight:700;text-decoration:none;display:inline-block;transition:background-color .2s}.btn-primary:hover{background-color:#ca8a04}.container{max-width:1200px;margin:0 auto;padding:0 1rem}img{max-width:100%;height:auto}@media (max-width:768px){.hero-title{font-size:2rem}.hero-subtitle{font-size:1rem}.hero-section{padding:3rem 1rem}}
-    </style>
-    
-    <!-- Preload критических ресурсов -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- DNS prefetch для внешних ресурсов -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalUrl} />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
-    
-    <!-- Local Business Schema -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Carolina Renew",
-        "description": "Professional painting and remodeling services",
-        "url": "https://carolinarenew.com",
-        "telephone": "+1-704-XXX-XXXX",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "123 Main Street",
-          "addressLocality": "Charlotte",
-          "addressRegion": "NC",
-          "postalCode": "28202",
-          "addressCountry": "US"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "35.2271",
-          "longitude": "-80.8431"
-        },
-        "openingHours": "Mo-Fr 08:00-18:00, Sa 09:00-16:00",
-        "serviceArea": {
-          "@type": "GeoCircle",
-          "geoMidpoint": {
-            "@type": "GeoCoordinates",
-            "latitude": "35.2271",
-            "longitude": "-80.8431"
-          },
-          "geoRadius": "100000"
-        },
-        "services": [
-          "Interior Painting",
-          "Exterior Painting", 
-          "Kitchen Remodeling",
-          "Bathroom Remodeling"
-        ]
-      }
-    </script>
-    
-    <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-white">
-    <slot />
+  <body class="bg-white text-gray-800">
+
+    {/* !!! ПЕРЕДАЕМ АКТУАЛЬНУЮ ЛОКАЦИЮ !!! */}
+    <Header currentLocation={activeLocation} />
+
+    <main>
+      <slot />
+    </main>
+
+    <GeoBlock />
+
+    <Footer />
+
   </body>
 </html>
