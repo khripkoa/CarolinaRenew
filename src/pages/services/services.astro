@@ -1,6 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import HeaderWithRegions from '@/components/HeaderWithRegions.jsx';
 import RegionsBlock from '@/components/RegionsBlock.jsx';
 import SimpleFooter from '@/components/SimpleFooter.jsx';
 
@@ -11,13 +10,12 @@ import kitchenRemodel from '@/assets-optimized/kitchen_remodel_after.webp';
 import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
 ---
 
-<Layout 
+<Layout
   title="Professional Painting & Remodeling Services | Carolina Renew"
   description="Complete painting and remodeling services in Charlotte, NC. Interior painting, exterior painting, kitchen remodeling, bathroom renovation. Licensed & insured."
   keywords="painting services Charlotte NC, interior painting, exterior painting, kitchen remodeling, bathroom renovation, home improvement"
 >
-  <HeaderWithRegions client:load />
-  
+
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
     <div class="container mx-auto px-4 text-center">
@@ -25,7 +23,7 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
         Professional Painting & Remodeling Services
       </h1>
       <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-        Transform your home with our comprehensive range of painting and remodeling services. 
+        Transform your home with our comprehensive range of painting and remodeling services.
         Quality craftsmanship, premium materials, and exceptional customer service.
       </p>
       <a href="/contact" class="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition-colors">
@@ -38,11 +36,11 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
   <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
+
         <!-- Interior Painting -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-          <img 
-            src={interiorPainting} 
+          <img
+            src={interiorPainting}
             alt="Professional interior painting service"
             width="600"
             height="300"
@@ -52,10 +50,10 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
           <div class="p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Interior Painting</h2>
             <p class="text-gray-600 mb-6">
-              Transform your living spaces with our professional interior painting services. 
+              Transform your living spaces with our professional interior painting services.
               We use premium paints and expert techniques to deliver flawless results that last.
             </p>
-            
+
             <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
             <ul class="text-gray-600 mb-6 space-y-2">
               <li class="flex items-center">
@@ -83,7 +81,7 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
                 Complete cleanup and protection
               </li>
             </ul>
-            
+
             <a href="/services/interior-painting" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
               Learn More About Interior Painting →
             </a>
@@ -92,8 +90,8 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
 
         <!-- Exterior Painting -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-          <img 
-            src={exteriorPainting} 
+          <img
+            src={exteriorPainting}
             alt="Professional exterior painting service"
             width="600"
             height="300"
@@ -103,10 +101,10 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
           <div class="p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Exterior Painting</h2>
             <p class="text-gray-600 mb-6">
-              Protect and beautify your home's exterior with our weather-resistant painting solutions. 
+              Protect and beautify your home's exterior with our weather-resistant painting solutions.
               We use high-quality paints designed to withstand North Carolina's climate.
             </p>
-            
+
             <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
             <ul class="text-gray-600 mb-6 space-y-2">
               <li class="flex items-center">
@@ -134,7 +132,7 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
                 Landscaping protection
               </li>
             </ul>
-            
+
             <a href="/services/exterior-painting" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
               Learn More About Exterior Painting →
             </a>
@@ -143,8 +141,8 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
 
         <!-- Kitchen Remodeling -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-          <img 
-            src={kitchenRemodel} 
+          <img
+            src={kitchenRemodel}
             alt="Professional kitchen remodeling service"
             width="600"
             height="300"
@@ -154,10 +152,10 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
           <div class="p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Kitchen Remodeling</h2>
             <p class="text-gray-600 mb-6">
-              Create the kitchen of your dreams with our comprehensive remodeling services. 
+              Create the kitchen of your dreams with our comprehensive remodeling services.
               From design to completion, we handle every aspect of your kitchen transformation.
             </p>
-            
+
             <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
             <ul class="text-gray-600 mb-6 space-y-2">
               <li class="flex items-center">
@@ -185,7 +183,7 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
                 Flooring and backsplash
               </li>
             </ul>
-            
+
             <a href="/contact" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
               Get Kitchen Remodel Quote →
             </a>
@@ -194,8 +192,8 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
 
         <!-- Bathroom Remodeling -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-          <img 
-            src={bathroomRemodel} 
+          <img
+            src={bathroomRemodel}
             alt="Professional bathroom remodeling service"
             width="600"
             height="300"
@@ -205,10 +203,10 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
           <div class="p-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Bathroom Remodeling</h2>
             <p class="text-gray-600 mb-6">
-              Transform your bathroom into a luxurious retreat with our complete renovation services. 
+              Transform your bathroom into a luxurious retreat with our complete renovation services.
               Modern designs, quality fixtures, and expert craftsmanship.
             </p>
-            
+
             <h3 class="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
             <ul class="text-gray-600 mb-6 space-y-2">
               <li class="flex items-center">
@@ -236,7 +234,7 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
                 Plumbing and electrical work
               </li>
             </ul>
-            
+
             <a href="/contact" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
               Get Bathroom Remodel Quote →
             </a>
