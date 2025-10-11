@@ -1,7 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import RegionsBlock from '@/components/RegionsBlock.jsx';
-import SimpleFooter from '@/components/SimpleFooter.jsx';
 
 // Import optimized WebP images
 import interiorPainting from '@/assets-optimized/interior_painting_after.webp';
@@ -293,7 +291,6 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
   </section>
 
   <!-- Service Areas -->
-  <RegionsBlock client:load />
 
   <!-- Call to Action -->
   <section class="py-16 bg-blue-900 text-white">
@@ -315,5 +312,4 @@ import bathroomRemodel from '@/assets-optimized/bathroom_remodel_after.webp';
     </div>
   </section>
 
-  <SimpleFooter />
 </Layout>
