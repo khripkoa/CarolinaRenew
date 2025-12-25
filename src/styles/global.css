@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ========================================
+   Typography System
+   ======================================== */
+@layer components {
+
+  /* Hero Titles - для главного H1 в Hero секциях */
+  .hero-title {
+    @apply text-4xl md:text-5xl lg:text-7xl;
+    @apply font-extrabold tracking-tight leading-tight;
+    @apply text-shadow-lg;
+  }
+
+  /* Page Titles - для H1 на страницах */
+  .page-title {
+    @apply text-4xl md:text-5xl font-bold mb-6;
+  }
+
+  /* Section Titles - для H2 в секциях */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-gray-900 mb-6;
+  }
+
+  /* Section Title Small - для меньших H2 */
+  .section-title-sm {
+    @apply text-3xl font-bold text-gray-900 mb-4;
+  }
+
+  /* Subsection Title - для H3 */
+  .subsection-title {
+    @apply text-2xl font-bold text-gray-900 mb-4;
+  }
+
+  /* Card Title - для заголовков в карточках */
+  .card-title {
+    @apply text-xl font-bold text-gray-900;
+  }
+
+  /* Card Title Primary - с синим цветом */
+  .card-title-primary {
+    @apply text-xl font-bold text-blue-900;
+  }
+
+  /* Lead Text - для больших вступительных параграфов */
+  .lead-text {
+    @apply text-lg md:text-xl text-gray-600 max-w-3xl;
+  }
+
+  /* Body Text - обычный текст */
+  .body-text {
+    @apply text-base text-gray-700 leading-relaxed;
+  }
+
+  /* Small Text - мелкий текст */
+  .small-text {
+    @apply text-sm text-gray-600;
+  }
+
+  /* ========================================
+     Component Utilities
+     ======================================== */
+  .btn-primary {
+    @apply px-8 py-4 bg-orange-500 text-white rounded-full font-bold text-lg hover:bg-orange-600 transition transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply px-8 py-4 bg-white text-blue-900 rounded-full font-bold text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg;
+  }
+
+  .card {
+    @apply bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition duration-300;
+  }
+
+  /* Content Visibility Optimization */
+  .render-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,129 @@
+Scanning dist folder: /Users/user/Desktop/Проекты/Carolina-renew-new/dist
+Found 4269 HTML files.
+Found 102 broken links.
+{
+  "/Charlotte/28079/": [
+    "service-areas/index.html"
+  ],
+  "/Charlotte/28104/": [
+    "service-areas/index.html"
+  ],
+  "/Charlotte/29707/": [
+    "service-areas/index.html"
+  ],
+  "/Charlotte/Matthews/": [
+    "contact/index.html"
+  ],
+  "/Charlotte/Pineville/": [
+    "contact/index.html"
+  ],
+  "/Charlotte/Huntersville/": [
+    "contact/index.html"
+  ],
+  "/Charlotte/Cornelius/": [
+    "contact/index.html"
+  ],
+  "/Charlotte/Davidson/": [
+    "contact/index.html"
+  ],
+  "/Charlotte/Harrisburg/": [
+    "contact/index.html"
+  ],
+  "/Tega-Cay/": [
+    "contact/index.html"
+  ],
+  "/Fort-Mill/Tega-Cay/": [
+    "Fort-Mill/index.html",
+    "Fort-Mill/exterior-painting/index.html",
+    "Fort-Mill/flooring/index.html",
+    "Fort-Mill/interior-painting/index.html",
+    "Fort-Mill/cabinet-services/index.html",
+    "Fort-Mill/commercial-services/index.html",
+    "Fort-Mill/29715/index.html",
+    "Fort-Mill/Baxter-Village/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/index.html",
+    "Fort-Mill/29708/index.html",
+    "Fort-Mill/exterior-painting/stucco-repair/index.html",
+    "Fort-Mill/exterior-painting/siding-repair/index.html",
+    "Fort-Mill/exterior-painting/metal-painting/index.html",
+    "Fort-Mill/exterior-painting/limewash/index.html",
+    "Fort-Mill/exterior-painting/exterior-house-painting/index.html",
+    "Fort-Mill/exterior-painting/deck-staining/index.html",
+    "Fort-Mill/flooring/garage-floor-coatings/index.html",
+    "Fort-Mill/flooring/floor-sanding/index.html",
+    "Fort-Mill/flooring/floor-refinishing/index.html",
+    "Fort-Mill/flooring/concrete-flooring/index.html",
+    "Fort-Mill/interior-painting/surface-preparation/index.html",
+    "Fort-Mill/interior-painting/painter-for-a-day/index.html",
+    "Fort-Mill/interior-painting/full-interior-painting/index.html",
+    "Fort-Mill/interior-painting/drywall-repair/index.html",
+    "Fort-Mill/interior-painting/ceiling-services/index.html",
+    "Fort-Mill/cabinet-services/uv-curing/index.html",
+    "Fort-Mill/cabinet-services/storage-solutions/index.html",
+    "Fort-Mill/cabinet-services/countertops-backsplash/index.html",
+    "Fort-Mill/cabinet-services/cabinet-refinishing/index.html",
+    "Fort-Mill/cabinet-services/cabinet-painting/index.html",
+    "Fort-Mill/commercial-services/restoration-painting/index.html",
+    "Fort-Mill/commercial-services/multi-family-painting/index.html",
+    "Fort-Mill/commercial-services/holiday-lighting/index.html",
+    "Fort-Mill/commercial-services/commercial-painting/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/index.html",
+    "Fort-Mill/Baxter-Village/commercial-services/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/index.html",
+    "Fort-Mill/Baxter-Village/flooring/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/commercial-services/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/flooring/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/surface-preparation/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/painter-for-a-day/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/full-interior-painting/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/drywall-repair/index.html",
+    "Fort-Mill/Baxter-Village/interior-painting/ceiling-services/index.html",
+    "Fort-Mill/Baxter-Village/commercial-services/restoration-painting/index.html",
+    "Fort-Mill/Baxter-Village/commercial-services/multi-family-painting/index.html",
+    "Fort-Mill/Baxter-Village/commercial-services/holiday-lighting/index.html",
+    "Fort-Mill/Baxter-Village/commercial-services/commercial-painting/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/uv-curing/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/storage-solutions/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/countertops-backsplash/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/cabinet-refinishing/index.html",
+    "Fort-Mill/Baxter-Village/cabinet-services/cabinet-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/surface-preparation/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/painter-for-a-day/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/full-interior-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/drywall-repair/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/interior-painting/ceiling-services/index.html",
+    "Fort-Mill/Baxter-Village/flooring/garage-floor-coatings/index.html",
+    "Fort-Mill/Baxter-Village/flooring/floor-sanding/index.html",
+    "Fort-Mill/Baxter-Village/flooring/floor-refinishing/index.html",
+    "Fort-Mill/Baxter-Village/flooring/concrete-flooring/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/stucco-repair/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/siding-repair/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/limewash/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/exterior-house-painting/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/deck-staining/index.html",
+    "Fort-Mill/Baxter-Village/exterior-painting/metal-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/commercial-services/restoration-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/commercial-services/multi-family-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/commercial-services/holiday-lighting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/commercial-services/commercial-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/uv-curing/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/storage-solutions/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/countertops-backsplash/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/cabinet-refinishing/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/cabinet-services/cabinet-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/flooring/garage-floor-coatings/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/flooring/floor-sanding/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/flooring/floor-refinishing/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/flooring/concrete-flooring/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/stucco-repair/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/siding-repair/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/exterior-house-painting/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/limewash/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/deck-staining/index.html",
+    "Fort-Mill/Lake-Wylie-(partial)/exterior-painting/metal-painting/index.html"
+  ]
+}

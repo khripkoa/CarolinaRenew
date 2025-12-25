@@ -1,0 +1,54 @@
+---
+interface Props {
+  location: any;
+  service?: any;
+  category?: any;
+}
+
+const { location, service, category } = Astro.props;
+
+const cityName = location.city || location.neighborhood?.name || "Charlotte";
+const neighborhoodName = location.neighborhood?.name;
+const zipCode = location.neighborhood?.zip || location.zip || "";
+const state = location.state || "NC";
+
+// Build location string without undefined values
+const locationParts = [];
+if (neighborhoodName) locationParts.push(neighborhoodName);
+locationParts.push(cityName);
+locationParts.push(state);
+if (zipCode) locationParts.push(zipCode);
+
+const locationString = locationParts.join(", ");
+
+const title = service
+  ? `${service.name} in ${cityName}, ${state}`
+  : category
+    ? `${category.category} in ${cityName}, ${state}`
+    : `Home Improvement Services in ${cityName}, ${state}`;
+
+const description = service
+  ? `Looking for ${service.name.toLowerCase()} near ${cityName}? Carolina Renew has served homeowners${zipCode ? ` in zip code ${zipCode}` : ""} since 2021.`
+  : `We achieve a "factory-new" look, using professional coatings and a controlled application process, ensuring durability and beauty.`;
+---
+
+<div class="geo-content">
+  <h2 class="text-4xl font-bold text-gray-900 mb-4">{title}</h2>
+  <p class="text-lg text-gray-700 mb-6">{description}</p>
+
+  <div class="bg-blue-50 p-6 rounded-lg border border-blue-100">
+    <h3 class="text-2xl font-semibold text-blue-900 mb-2">
+      Serving {locationString}
+    </h3>
+    <p class="text-blue-800">
+      We don't just service {cityName}—we know every neighborhood.
+      {
+        neighborhoodName &&
+          `Specifically serving the ${neighborhoodName} community.`
+      }
+      Our team specifically operates within all the areas listed, allowing us to
+      guarantee the fastest response times and the most accurate estimates for homes
+      right in your local area.
+    </p>
+  </div>
+</div>

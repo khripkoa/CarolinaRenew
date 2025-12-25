@@ -1,0 +1,198 @@
+---
+import LayoutService from "../layouts/LayoutService.astro";
+import BeforeAfter from "../components/BeforeAfter.astro";
+import { projects, categories } from "../data/portfolio";
+
+const title = "Our Portfolio | Carolina Renew";
+const description = "View our gallery of transformed kitchens and homes in Charlotte, NC. See real examples of our cabinet refinishing and painting work.";
+---
+
+<LayoutService title={title} description={description}>
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-20">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Portfolio</h1>
+      <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+        See the difference professional refinishing can make. Browse our
+        recent projects across Charlotte and surrounding areas.
+      </p>
+      <div class="flex items-center justify-center gap-8 mt-8 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl font-bold text-orange-400">{projects.length * 50}+</span>
+          <span class="text-blue-200">Projects Completed</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl font-bold text-orange-400">5.0</span>
+          <span class="text-yellow-400">★★★★★</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl font-bold text-orange-400">Since 2021</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Before & After Section -->
+  <section class="py-16 bg-white">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+          Before & After Transformations
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Drag the slider to see the dramatic difference our work makes
+        </p>
+      </div>
+      <BeforeAfter />
+    </div>
+  </section>
+
+  <!-- Category Filter -->
+  <section class="py-8 bg-gray-50 sticky top-20 z-10 border-b border-gray-200">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div 
+        class="flex flex-wrap gap-3 justify-center"
+        x-data="{ activeCategory: 'all' }"
+      >
+        {categories.map((cat) => (
+          <button
+            type="button"
+            class="px-4 py-2 rounded-full text-sm font-medium transition-all"
+            :class={`activeCategory === '${cat.slug}' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'`}
+            @click={`activeCategory = '${cat.slug}'; filterProjects('${cat.slug}')`}
+          >
+            {cat.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="py-16 bg-gray-50">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+        {projects.map((project) => (
+          <a
+            href={`/portfolio/${project.id}/`}
+            class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+            data-category={project.categorySlug}
+          >
+            <!-- Image -->
+            <div class="relative h-64 overflow-hidden">
+              <img
+                src={project.afterImage}
+                alt={project.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">
+                  {project.category}
+                </span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <h3 class="text-white text-xl font-bold mb-1">{project.title}</h3>
+                <p class="text-gray-200 text-sm flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {project.location}
+                </p>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-6">
+              <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                {project.description}
+              </p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {project.duration}
+                </div>
+                <span class="text-orange-600 font-medium text-sm group-hover:text-orange-700 flex items-center gap-1">
+                  View Project
+                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-700 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">
+        Ready for Your Transformation?
+      </h2>
+      <p class="text-xl text-blue-100 mb-8">
+        Get a free estimate and see what we can do for your home.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="tel:+19804088122"
+          class="inline-flex items-center justify-center px-8 py-4 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 transition shadow-lg hover:shadow-xl"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          Call (980) 408-8122
+        </a>
+        <a
+          href="/contact/"
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition shadow-lg"
+        >
+          Request Free Quote
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function filterProjects(category: string) {
+      const grid = document.getElementById('projects-grid');
+      if (!grid) return;
+      
+      const projects = grid.querySelectorAll('[data-category]');
+      projects.forEach((project) => {
+        const el = project as HTMLElement;
+        if (category === 'all' || el.dataset.category === category) {
+          el.style.display = 'block';
+          el.classList.add('animate-fadeIn');
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    }
+    
+    // Make function globally available
+    (window as any).filterProjects = filterProjects;
+  </script>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out;
+    }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</LayoutService>

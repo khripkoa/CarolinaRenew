@@ -1,0 +1,334 @@
+---
+import locations from "../data/locations.json";
+
+interface Props {
+    city: string;
+    neighborhood?: string;
+}
+
+const { city, neighborhood } = Astro.props;
+
+// Filter locations
+let cityLocations = [];
+
+if (neighborhood) {
+    // If neighborhood is provided, show only locations associated with it
+    // BUT also ensure the location's primary town/city matches the current city
+    cityLocations = locations.filter((l) => {
+        const hasNeighborhood = l.neighborhoods
+            ?.split(",")
+            .map((s) => s.trim())
+            .includes(neighborhood);
+
+        if (!hasNeighborhood) return false;
+
+        // Check if this location legitimately belongs to the current city
+        if (l.city === city) return true;
+
+        // If no parent city, check if current city is the FIRST town (primary)
+        if (l.towns) {
+            const townList = l.towns.split(",").map((t) => t.trim());
+            return townList[0] === city;
+        }
+
+        // Check suburbs
+        if (l.suburbs) {
+            const suburbList = l.suburbs.split(",").map((t) => t.trim());
+            return suburbList[0] === city;
+        }
+
+        return false;
+    });
+} else {
+    // For city/town pages, only show locations where the city is in the 'city' field
+    // This prevents showing sibling towns (e.g., Monroe showing Wesley Chapel)
+    cityLocations = locations.filter((l) => l.city === city);
+
+    // If no results (meaning this is a town without a parent city),
+    // then show locations where it appears in towns/suburbs
+    if (cityLocations.length === 0) {
+        cityLocations = locations.filter(
+            (l) => l.towns?.includes(city) || l.suburbs?.includes(city),
+        );
+    }
+}
+
+// Helper to format URL friendly strings (lowercase)
+const toSlug = (str: string) => str.toLowerCase().replace(/\s+/g, "-");
+
+// Aggregate unique values
+// For neighborhoods, we need to exclude those from locations where the current city
+// is a sibling town (not the primary/first town in the list)
+const neighborhoods = [
+    ...new Set(
+        cityLocations.flatMap((l) => {
+            // If this location has multiple towns and current city is not the first,
+            // don't include its neighborhoods (they belong to the primary town)
+            if (l.towns && l.towns.includes(city)) {
+                const townList = l.towns.split(",").map((t) => t.trim());
+                if (townList[0] !== city) {
+                    // Current city is a sibling, not primary - skip neighborhoods
+                    return [];
+                }
+            }
+
+            return l.neighborhoods
+                ? l.neighborhoods.split(",").map((s) => s.trim())
+                : [];
+        }),
+    ),
+]
+    .filter((item) => item !== city && item !== neighborhood)
+    .sort();
+
+const suburbs = [
+    ...new Set(
+        cityLocations.flatMap((l) => {
+            // Same logic as neighborhoods - skip if current city is a sibling town
+            if (l.towns && l.towns.includes(city)) {
+                const townList = l.towns.split(",").map((t) => t.trim());
+                if (townList[0] !== city) {
+                    return [];
+                }
+            }
+
+            return l.suburbs ? l.suburbs.split(",").map((s) => s.trim()) : [];
+        }),
+    ),
+]
+    .filter((item) => item !== city)
+    .sort();
+
+const towns = [
+    ...new Set(
+        cityLocations.flatMap((l) =>
+            l.towns ? l.towns.split(",").map((s) => s.trim()) : [],
+        ),
+    ),
+]
+    .filter((item) => item !== city)
+    .sort();
+
+// Find towns that are co-listed with the current city (siblings, not children)
+// These should NOT be shown as they're separate roots
+const siblingTowns = new Set();
+cityLocations.forEach((l) => {
+    if (l.towns && l.towns.includes(city)) {
+        // If this location has the current city in its towns field,
+        // all other towns in that field are siblings
+        l.towns.split(",").forEach((t) => {
+            const trimmed = t.trim();
+            if (trimmed !== city) {
+                siblingTowns.add(trimmed);
+            }
+        });
+    }
+});
+
+// Find suburbs that exist as their own independent root locations
+// (e.g., Tega Cay is a suburb of Fort Mill but also has its own root page)
+const independentSuburbs = new Set();
+locations.forEach((l) => {
+    // If a location has NO city and NO towns, but HAS suburbs,
+    // those suburbs are independent roots
+    if (!l.city && !l.towns && l.suburbs) {
+        l.suburbs.split(",").forEach((s) => {
+            independentSuburbs.add(s.trim());
+        });
+    }
+});
+
+// Filter suburburbs list to exclude independent roots
+// ALSO exclude ALL suburbs if the current entity is a town (not a city),
+// because [...slug].astro only generates suburb sub-pages for cities
+const isTown = cityLocations.some(
+    (l) => l.towns && l.towns.includes(city) && !l.city,
+);
+const filteredSuburbs = isTown
+    ? []
+    : suburbs.filter((suburb) => !independentSuburbs.has(suburb));
+
+// Filter out sibling towns
+const filteredTowns = towns.filter((town) => !siblingTowns.has(town));
+
+const zipCodes = [...new Set(cityLocations.map((l) => l.zip_code))].sort();
+
+const hasAreas =
+    neighborhoods.length > 0 ||
+    filteredSuburbs.length > 0 ||
+    filteredTowns.length > 0 ||
+    zipCodes.length > 0;
+---
+
+{
+    hasAreas && (
+        <section
+            id="service-areas"
+            class="bg-gradient-to-b from-gray-50 to-white py-10 border-t border-gray-200"
+        >
+            <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+                <div class="text-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-900">
+                        Serving {city} & Surrounding Areas
+                    </h2>
+                    <p class="text-gray-600 mt-2 max-w-3xl mx-auto">
+                        We don't just service {city}—we know every neighborhood.
+                        Our team specifically operates within all the Zip Codes
+                        listed below, allowing us to guarantee the fastest
+                        response times and the most accurate estimates for homes
+                        right in your local area.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    {neighborhoods.length > 0 && (
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-100 text-sm flex items-center">
+                                <svg
+                                    class="w-4 h-4 text-blue-500 mr-1.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                    />
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                </svg>
+                                Neighborhoods
+                            </h3>
+                            <ul class="columns-2 md:columns-3 lg:columns-4 gap-4 text-sm space-y-0.5">
+                                {neighborhoods.map((item) => (
+                                    <li class="break-inside-avoid group">
+                                        <a
+                                            href={`/${toSlug(city)}/${toSlug(item)}/`}
+                                            class="text-gray-600 hover:text-blue-600 hover:pl-1 transition-all flex items-start py-1.5 min-h-[44px]"
+                                        >
+                                            <span class="text-blue-400 mr-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                →
+                                            </span>
+                                            <span>{item}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {filteredSuburbs.length > 0 && (
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-100 text-sm flex items-center">
+                                <svg
+                                    class="w-4 h-4 text-green-500 mr-1.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                    />
+                                </svg>
+                                Suburbs & Communities
+                            </h3>
+                            <ul class="columns-2 md:columns-3 lg:columns-4 gap-4 text-xs space-y-1">
+                                {filteredSuburbs.map((item) => (
+                                    <li class="break-inside-avoid group">
+                                        <a
+                                            href={`/${toSlug(city)}/${toSlug(item)}/`}
+                                            class="text-gray-600 hover:text-green-600 hover:pl-1 transition-all flex items-start"
+                                        >
+                                            <span class="text-green-400 mr-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                →
+                                            </span>
+                                            <span>{item}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {filteredTowns.length > 0 && (
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-100 text-sm flex items-center">
+                                <svg
+                                    class="w-4 h-4 text-purple-500 mr-1.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                    />
+                                </svg>
+                                Nearby Towns
+                            </h3>
+                            <ul class="columns-2 md:columns-3 lg:columns-4 gap-4 text-xs space-y-1">
+                                {filteredTowns.map((item) => (
+                                    <li class="break-inside-avoid group">
+                                        <a
+                                            href={`/${toSlug(city)}/${toSlug(item)}/`}
+                                            class="text-gray-600 hover:text-purple-600 hover:pl-1 transition-all flex items-start"
+                                        >
+                                            <span class="text-purple-400 mr-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                →
+                                            </span>
+                                            <span>{item}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {zipCodes.length > 0 && (
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-3 pb-2 border-b border-gray-100 text-sm flex items-center">
+                                <svg
+                                    class="w-4 h-4 text-orange-500 mr-1.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                                    />
+                                </svg>
+                                Zip Codes
+                            </h3>
+                            <div class="columns-3 md:columns-4 lg:columns-6 gap-4 text-xs">
+                                {zipCodes.map((zip) => (
+                                    <div class="break-inside-avoid">
+                                        <a
+                                            href={`/${toSlug(city)}/${zip}/`}
+                                            class="text-gray-600 hover:text-orange-600 hover:underline transition-colors py-0.5 block"
+                                        >
+                                            {zip}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
+    )
+}

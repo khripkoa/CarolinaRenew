@@ -1,0 +1,128 @@
+[
+    {
+        "category": "Cabinet Services",
+        "slug": "cabinet-services",
+        "services": [
+            {
+                "name": "Cabinet Refinishing",
+                "slug": "cabinet-refinishing"
+            },
+            {
+                "name": "Cabinet Painting",
+                "slug": "cabinet-painting"
+            },
+            {
+                "name": "Storage Solutions",
+                "slug": "storage-solutions"
+            },
+            {
+                "name": "Countertops & Backsplash",
+                "slug": "countertops-backsplash"
+            },
+            {
+                "name": "UV Curing",
+                "slug": "uv-curing"
+            }
+        ]
+    },
+    {
+        "category": "Interior Painting",
+        "slug": "interior-painting",
+        "services": [
+            {
+                "name": "Full Interior Painting",
+                "slug": "full-interior-painting"
+            },
+            {
+                "name": "Ceiling Services",
+                "slug": "ceiling-services"
+            },
+            {
+                "name": "Drywall Repair",
+                "slug": "drywall-repair"
+            },
+            {
+                "name": "Surface Preparation",
+                "slug": "surface-preparation"
+            },
+            {
+                "name": "Painter for a Day",
+                "slug": "painter-for-a-day"
+            }
+        ]
+    },
+    {
+        "category": "Exterior Painting",
+        "slug": "exterior-painting",
+        "services": [
+            {
+                "name": "Exterior House Painting",
+                "slug": "exterior-house-painting"
+            },
+            {
+                "name": "Limewash",
+                "slug": "limewash"
+            },
+            {
+                "name": "Siding Repair",
+                "slug": "siding-repair"
+            },
+            {
+                "name": "Stucco Repair",
+                "slug": "stucco-repair"
+            },
+            {
+                "name": "Deck Staining",
+                "slug": "deck-staining"
+            },
+            {
+                "name": "Metal Painting",
+                "slug": "metal-painting"
+            }
+        ]
+    },
+    {
+        "category": "Flooring",
+        "slug": "flooring",
+        "services": [
+            {
+                "name": "Floor Refinishing",
+                "slug": "floor-refinishing"
+            },
+            {
+                "name": "Floor Sanding",
+                "slug": "floor-sanding"
+            },
+            {
+                "name": "Garage Floor Coatings",
+                "slug": "garage-floor-coatings"
+            },
+            {
+                "name": "Concrete Flooring",
+                "slug": "concrete-flooring"
+            }
+        ]
+    },
+    {
+        "category": "Commercial",
+        "slug": "commercial-services",
+        "services": [
+            {
+                "name": "Commercial Painting",
+                "slug": "commercial-painting"
+            },
+            {
+                "name": "Multi-Family Painting",
+                "slug": "multi-family-painting"
+            },
+            {
+                "name": "Restoration Painting",
+                "slug": "restoration-painting"
+            },
+            {
+                "name": "Holiday Lighting",
+                "slug": "holiday-lighting"
+            }
+        ]
+    }
+]

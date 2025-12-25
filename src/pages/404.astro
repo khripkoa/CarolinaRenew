@@ -1,0 +1,62 @@
+---
+import LayoutService from "../layouts/LayoutService.astro";
+
+const title = "Page Not Found | Carolina Renew";
+const description =
+    "The page you are looking for does not exist. Return to Carolina Renew home page.";
+---
+
+<LayoutService title={title} description={description}>
+    <div class="min-h-[60vh] flex items-center justify-center bg-gray-50 py-20">
+        <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
+            <div class="mb-8">
+                <h1 class="text-9xl font-extrabold text-gray-200 select-none">
+                    404
+                </h1>
+                <div
+                    class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0"
+                >
+                    <!-- Decorative element if needed, but keeping it clean for now -->
+                </div>
+            </div>
+
+            <h2
+                class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 -mt-12 relative z-10"
+            >
+                Oops! Page Not Found
+            </h2>
+
+            <p
+                class="text-lg text-gray-600 max-w-2xl mx-auto mb-10 relative z-10"
+            >
+                The page you are looking for might have been removed, had its
+                name changed, or is temporarily unavailable.
+            </p>
+
+            <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10"
+            >
+                <a
+                    href="/"
+                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 shadow-lg transform hover:-translate-y-0.5 transition"
+                >
+                    Return Home
+                </a>
+                <a
+                    href="/service-areas/"
+                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-gray-300 shadow-sm text-base font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 hover:text-gray-900 transition"
+                >
+                    View Service Areas
+                </a>
+            </div>
+
+            <div class="mt-12 text-sm text-gray-500">
+                Need immediate assistance? <a
+                    href="tel:+19804088122"
+                    class="text-blue-600 hover:underline font-semibold"
+                    >Call (980) 408-8122</a
+                >
+            </div>
+        </div>
+    </div>
+</LayoutService>

@@ -1,0 +1,810 @@
+---
+import LayoutService from "../layouts/LayoutService.astro";
+import GeoContent from "../components/GeoContent.astro";
+import locations from "../data/locations.json";
+import services from "../data/services.json";
+
+export async function getStaticPaths() {
+    const paths: Array<{
+        params: { slug: string };
+        props: any;
+    }> = [];
+
+    // Helper to normalize location name
+    const normalize = (str: string) =>
+        str ? str.toLowerCase().replace(/\s+/g, "-") : "";
+
+    // 1. Group data by "Root Location" (City > Town > Suburb)
+    interface RootLocation {
+        name: string;
+        type: string;
+        state: string;
+        zips: Set<string>;
+        neighborhoods: Set<string>;
+        towns: Set<string>;
+        suburbs: Set<string>;
+    }
+
+    const rootLocations: Record<string, RootLocation> = {};
+
+    locations.forEach((loc) => {
+        // Determine the primary name for this location entry
+        // Priority: City -> Towns -> Suburbs
+        // Note: Some entries have multiple towns/suburbs in string? No, looks like single values mostly, but "Cabarrus / Rowan" county.
+        // "towns": "Monroe, Wesley Chapel" -> This is comma separated.
+
+        let primaryNames = [];
+        let type = "city";
+
+        if (loc.city) {
+            primaryNames = [loc.city];
+            type = "city";
+        } else if (loc.towns) {
+            primaryNames = loc.towns.split(",").map((s) => s.trim());
+            type = "town";
+        } else if (loc.suburbs) {
+            primaryNames = loc.suburbs.split(",").map((s) => s.trim());
+            type = "suburb";
+        } else {
+            // Fallback if nothing exists (unlikely based on data)
+            return;
+        }
+
+        primaryNames.forEach((name) => {
+            if (!rootLocations[name]) {
+                rootLocations[name] = {
+                    name: name,
+                    type: type,
+                    state: loc.state,
+                    zips: new Set(),
+                    neighborhoods: new Set(),
+                    towns: new Set(),
+                    suburbs: new Set(),
+                };
+            }
+            // Add Zip
+            if (loc.zip_code) rootLocations[name].zips.add(loc.zip_code);
+
+            // Add Neighborhoods
+            if (loc.neighborhoods) {
+                loc.neighborhoods
+                    .split(",")
+                    .map((s) => s.trim())
+                    .forEach((n) => {
+                        rootLocations[name].neighborhoods.add(n);
+                    });
+            }
+
+            // If this location has a city, add its towns and suburbs to that city's root
+            if (loc.city && rootLocations[loc.city]) {
+                if (loc.towns) {
+                    loc.towns
+                        .split(",")
+                        .map((s) => s.trim())
+                        .forEach((t) => {
+                            rootLocations[loc.city].towns.add(t);
+                        });
+                }
+                if (loc.suburbs) {
+                    loc.suburbs
+                        .split(",")
+                        .map((s) => s.trim())
+                        .forEach((s) => {
+                            rootLocations[loc.city].suburbs.add(s);
+                        });
+                }
+            }
+        });
+    });
+
+    // 2. Generate Paths
+    Object.values(rootLocations).forEach((root) => {
+        const rootPath = normalize(root.name);
+
+        // Base Location Object for Props
+        const baseLocation = {
+            city: root.name,
+            state: root.state,
+            zip: Array.from(root.zips)[0], // Default zip (fallback)
+            type: root.type,
+        };
+
+        // A. Root Page
+        paths.push({
+            params: { slug: rootPath },
+            props: { location: baseLocation, type: "location" },
+        });
+
+        // Root + Services
+        services.forEach((category) => {
+            paths.push({
+                params: { slug: `${rootPath}/${category.slug}` },
+                props: { location: baseLocation, category, type: "category" },
+            });
+            category.services.forEach((service) => {
+                paths.push({
+                    params: {
+                        slug: `${rootPath}/${category.slug}/${service.slug}`,
+                    },
+                    props: {
+                        location: baseLocation,
+                        category,
+                        service,
+                        type: "service",
+                    },
+                });
+            });
+        });
+
+        // B. Neighborhood Pages
+        root.neighborhoods.forEach((hoodName) => {
+            // Skip if neighborhood name is the same as the root location
+            // This prevents /Matthews/Matthews/ type URLs
+            if (hoodName === root.name) {
+                return;
+            }
+
+            const hoodPath = `${rootPath}/${normalize(hoodName)}`;
+
+            // Find the correct zip for this neighborhood
+            // We iterate over the raw locations to find where this hoodName appears
+            const matchingLoc = locations.find(
+                (l) =>
+                    l.neighborhoods &&
+                    l.neighborhoods
+                        .split(",")
+                        .map((s) => s.trim())
+                        .includes(hoodName) &&
+                    (l.city === root.name ||
+                        l.towns?.includes(root.name) ||
+                        l.suburbs?.includes(root.name)),
+            );
+
+            const hoodZip = matchingLoc
+                ? matchingLoc.zip_code
+                : baseLocation.zip;
+
+            const hoodLocation = {
+                ...baseLocation,
+                zip: hoodZip, // Use specific zip
+                neighborhood: { name: hoodName, zip: hoodZip },
+            };
+
+            paths.push({
+                params: { slug: hoodPath },
+                props: { location: hoodLocation, type: "location" },
+            });
+
+            // Neighborhood + Services
+            services.forEach((category) => {
+                paths.push({
+                    params: { slug: `${hoodPath}/${category.slug}` },
+                    props: {
+                        location: hoodLocation,
+                        category,
+                        type: "category",
+                    },
+                });
+                category.services.forEach((service) => {
+                    paths.push({
+                        params: {
+                            slug: `${hoodPath}/${category.slug}/${service.slug}`,
+                        },
+                        props: {
+                            location: hoodLocation,
+                            category,
+                            service,
+                            type: "service",
+                        },
+                    });
+                });
+            });
+        });
+
+        // C. Towns Pages (similar to neighborhoods)
+        Array.from<string>(root.towns || []).forEach((townName) => {
+            const townPath = `${rootPath}/${normalize(townName)}`;
+
+            const matchingLoc = locations.find(
+                (l) =>
+                    l.towns &&
+                    l.towns
+                        .split(",")
+                        .map((s) => s.trim())
+                        .includes(townName) &&
+                    (l.city === root.name ||
+                        l.towns?.includes(root.name) ||
+                        l.suburbs?.includes(root.name)),
+            );
+
+            const townZip = matchingLoc
+                ? matchingLoc.zip_code
+                : Array.from(root.zips)[0] || "";
+
+            const townLocation = {
+                city: root.name,
+                zip: townZip,
+                neighborhood: {
+                    name: townName,
+                    zip: townZip,
+                },
+            };
+
+            paths.push({
+                params: { slug: townPath },
+                props: {
+                    location: townLocation,
+                    category: null,
+                    service: null,
+                    type: "neighborhood",
+                },
+            });
+
+            // Town + Services
+            services.forEach((category) => {
+                paths.push({
+                    params: { slug: `${townPath}/${category.slug}` },
+                    props: {
+                        location: townLocation,
+                        category,
+                        type: "category",
+                    },
+                });
+                category.services.forEach((service) => {
+                    paths.push({
+                        params: {
+                            slug: `${townPath}/${category.slug}/${service.slug}`,
+                        },
+                        props: {
+                            location: townLocation,
+                            category,
+                            service,
+                            type: "service",
+                        },
+                    });
+                });
+            });
+        });
+
+        // D. Suburbs Pages (similar to neighborhoods)
+        Array.from<string>(root.suburbs || []).forEach((suburbName) => {
+            const suburbPath = `${rootPath}/${normalize(suburbName)}`;
+
+            const matchingLoc = locations.find(
+                (l) =>
+                    l.suburbs &&
+                    l.suburbs
+                        .split(",")
+                        .map((s) => s.trim())
+                        .includes(suburbName) &&
+                    (l.city === root.name ||
+                        l.towns?.includes(root.name) ||
+                        l.suburbs?.includes(root.name)),
+            );
+
+            const suburbZip = matchingLoc
+                ? matchingLoc.zip_code
+                : Array.from(root.zips)[0] || "";
+
+            const suburbLocation = {
+                city: root.name,
+                zip: suburbZip,
+                neighborhood: {
+                    name: suburbName,
+                    zip: suburbZip,
+                },
+            };
+
+            paths.push({
+                params: { slug: suburbPath },
+                props: {
+                    location: suburbLocation,
+                    category: null,
+                    service: null,
+                    type: "neighborhood",
+                },
+            });
+
+            // Suburb + Services
+            services.forEach((category) => {
+                paths.push({
+                    params: { slug: `${suburbPath}/${category.slug}` },
+                    props: {
+                        location: suburbLocation,
+                        category,
+                        type: "category",
+                    },
+                });
+                category.services.forEach((service) => {
+                    paths.push({
+                        params: {
+                            slug: `${suburbPath}/${category.slug}/${service.slug}`,
+                        },
+                        props: {
+                            location: suburbLocation,
+                            category,
+                            service,
+                            type: "service",
+                        },
+                    });
+                });
+            });
+        });
+
+        // E. Zip Code Pages
+        root.zips.forEach((zip) => {
+            const zipPath = `${rootPath}/${zip}`;
+            const zipLocation = { ...baseLocation, zip: zip };
+
+            // Zip page
+            paths.push({
+                params: { slug: zipPath },
+                props: { location: zipLocation, type: "location", isZip: true },
+            });
+
+            // Zip + Services
+            services.forEach((category) => {
+                paths.push({
+                    params: { slug: `${zipPath}/${category.slug}` },
+                    props: {
+                        location: zipLocation,
+                        category,
+                        type: "category",
+                        isZip: true,
+                    },
+                });
+                category.services.forEach((service) => {
+                    paths.push({
+                        params: {
+                            slug: `${zipPath}/${category.slug}/${service.slug}`,
+                        },
+                        props: {
+                            location: zipLocation,
+                            category,
+                            service,
+                            type: "service",
+                            isZip: true,
+                        },
+                    });
+                });
+            });
+        });
+    });
+
+    // F. State Pages
+    const uniqueStates = new Set<string>();
+    locations.forEach((loc) => {
+        if (loc.state) uniqueStates.add(loc.state);
+    });
+
+    uniqueStates.forEach((state) => {
+        paths.push({
+            params: { slug: state },
+            props: {
+                location: {
+                    city:
+                        state === "NC"
+                            ? "North Carolina"
+                            : state === "SC"
+                              ? "South Carolina"
+                              : state,
+                    state: state,
+                    zip: "", // Generic
+                    type: "state",
+                },
+                type: "state",
+            },
+        });
+
+        // State + Services
+        services.forEach((category) => {
+            paths.push({
+                params: { slug: `${state}/${category.slug}` },
+                props: {
+                    location: {
+                        city:
+                            state === "NC"
+                                ? "North Carolina"
+                                : state === "SC"
+                                  ? "South Carolina"
+                                  : state,
+                        state: state,
+                        zip: "",
+                        type: "state",
+                    },
+                    category,
+                    type: "category",
+                },
+            });
+            category.services.forEach((service) => {
+                paths.push({
+                    params: {
+                        slug: `${state}/${category.slug}/${service.slug}`,
+                    },
+                    props: {
+                        location: {
+                            city:
+                                state === "NC"
+                                    ? "North Carolina"
+                                    : state === "SC"
+                                      ? "South Carolina"
+                                      : state,
+                            state: state,
+                            zip: "",
+                            type: "state",
+                        },
+                        category,
+                        service,
+                        type: "service",
+                    },
+                });
+            });
+        });
+    });
+
+    // G. County Pages
+    const uniqueCounties = new Set<string>();
+    locations.forEach((loc) => {
+        if (loc.county) {
+            loc.county.split("/").forEach((c) => uniqueCounties.add(c.trim()));
+        }
+    });
+
+    uniqueCounties.forEach((county: string) => {
+        const countySlug = `${normalize(county)}-County`;
+        paths.push({
+            params: { slug: countySlug },
+            props: {
+                location: {
+                    city: `${county} County`,
+                    state: "NC", // Defaulting to NC for now, or we need to map county to state if possible.
+                    // Most are NC, some might be SC. Let's try to find a location with this county to get the state.
+                    // This is a bit loose but works for this dataset.
+                    zip: "",
+                    type: "county",
+                },
+                type: "county",
+            },
+        });
+
+        // County + Services
+        services.forEach((category) => {
+            paths.push({
+                params: { slug: `${countySlug}/${category.slug}` },
+                props: {
+                    location: {
+                        city: `${county} County`,
+                        state: "NC",
+                        zip: "",
+                        type: "county",
+                    },
+                    category,
+                    type: "category",
+                },
+            });
+            category.services.forEach((service) => {
+                paths.push({
+                    params: {
+                        slug: `${countySlug}/${category.slug}/${service.slug}`,
+                    },
+                    props: {
+                        location: {
+                            city: `${county} County`,
+                            state: "NC",
+                            zip: "",
+                            type: "county",
+                        },
+                        category,
+                        service,
+                        type: "service",
+                    },
+                });
+            });
+        });
+    });
+
+    return paths;
+}
+
+import Hero from "../components/Hero.astro";
+import Reviews from "../components/Reviews.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import PortfolioGrid from "../components/PortfolioGrid.astro";
+import ServiceAreas from "../components/ServiceAreas.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import SchemaMarkup from "../components/SchemaMarkup.astro";
+import PricingInfo from "../components/PricingInfo.astro";
+import SocialProofCounter from "../components/SocialProofCounter.astro";
+import ServiceCategories from "../components/ServiceCategories.astro";
+
+// ... (imports)
+
+// ... (getStaticPaths)
+
+const { location, category, service, type, isZip } = Astro.props;
+
+// Check if this is a nested neighborhood (has parent city in path)
+const pathSegments = Astro.url.pathname.split("/").filter(Boolean);
+const isNestedNeighborhood =
+    pathSegments.length >= 2 && location.neighborhood?.name;
+
+// Normalize for comparison
+const normalize = (str: string) => str.replace(/\s+/g, "-");
+
+// Check if we have a parent city path segment (URL structure: /ParentCity/Neighborhood/)
+// Example: /Charlotte/Matthews/ or /Matthews/Matthews/
+const hasNestedPath = isNestedNeighborhood && pathSegments.length >= 2;
+const parentCitySegment = hasNestedPath ? pathSegments[0] : null;
+const neighborhoodSegment = hasNestedPath
+    ? pathSegments[pathSegments.length - 1]
+    : null;
+
+// Add parent context if:
+// 1. It's a nested neighborhood AND
+// 2. The parent city segment exists AND is different from the neighborhood segment
+const shouldAddParentContext =
+    hasNestedPath &&
+    parentCitySegment &&
+    parentCitySegment !== normalize(location.neighborhood.name);
+
+const displayLocation =
+    isZip && location.zip
+        ? `${location.neighborhood?.name || location.city} ${location.zip}`
+        : shouldAddParentContext
+          ? `${location.neighborhood.name} (${location.city} area)`
+          : location.neighborhood?.name || location.city;
+
+// Construct dynamic titles for Hero
+let heroTitle = "";
+let heroSubtitle = "";
+
+if (type === "state") {
+    heroTitle = service
+        ? `${service.name} in ${location.city}`
+        : category
+          ? `Premier ${category.category} in ${location.city}`
+          : `Home Improvement Services in ${location.city}`;
+    heroSubtitle = `Serving homeowners across the entire state of ${location.city}. Professional Cabinet Refinishing & Painting.`;
+} else if (type === "county") {
+    heroTitle = service
+        ? `${service.name} in ${location.city}`
+        : category
+          ? `Premier ${category.category} in ${location.city}`
+          : `Home Improvement Services in ${location.city}`;
+    heroSubtitle = `Proudly serving all communities within ${location.city}.`;
+} else {
+    heroTitle = service
+        ? `${service.name} in ${displayLocation}`
+        : category
+          ? `Premier ${category.category} in ${displayLocation}`
+          : `Home Improvement Experts in ${displayLocation}`;
+
+    heroSubtitle = service
+        ? `Transform your home with our professional ${service.name.toLowerCase()} services. Serving ${displayLocation} and surrounding areas.`
+        : `Specializing in Cabinet Refinishing, Interior & Exterior Painting. Trusted by homeowners in ${isZip && location.zip ? location.zip : location.zip || location.city} since 2021.`;
+}
+
+const title = service
+    ? `${service.name} in ${displayLocation}`
+    : category
+      ? `${category.category} in ${displayLocation}`
+      : `Home Improvement Experts in ${displayLocation}`;
+const description = heroSubtitle;
+const heroBgImage = "/images/hero-kitchen.png";
+---
+
+<LayoutService
+    title={title}
+    description={description}
+    currentCity={location.city || location.towns?.[0] || location.suburbs?.[0]}
+    preloadImage={heroBgImage}
+>
+    <SchemaMarkup
+        location={location}
+        service={service}
+        category={category}
+        description={description}
+    />
+
+    <Hero
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        location={location}
+        bgImage={heroBgImage}
+    />
+
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 pt-6 pb-2">
+        <Breadcrumbs
+            location={location}
+            category={category}
+            service={service}
+            isZip={isZip}
+        />
+    </div>
+
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+        <SocialProofCounter
+            city={location.neighborhood?.name || location.city}
+        />
+    </div>
+
+    <Reviews location={location} />
+
+    {
+        !isZip && (
+            <ServiceAreas
+                city={
+                    location.city ||
+                    location.towns?.[0] ||
+                    location.suburbs?.[0]
+                }
+                neighborhood={location.neighborhood?.name}
+            />
+        )
+    }
+
+    <ProcessSteps />
+
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 py-12">
+        <GeoContent location={location} service={service} category={category} />
+
+        <!-- Content Blocks -->
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="lg:col-span-2 space-y-8">
+                <section class="prose lg:prose-xl">
+                    <h3>
+                        Why Choose Us in {
+                            location.neighborhood
+                                ? location.neighborhood.name
+                                : location.city
+                        }?
+                    </h3>
+                    <p>
+                        Carolina Renew is dedicated to providing top-tier {
+                            category
+                                ? category.category.toLowerCase()
+                                : "home improvement"
+                        } services to the {location.city} area. We understand the
+                        specific needs of homes in {location.state}.
+                    </p>
+                    <p>
+                        Whether you are in {location.zip} or surrounding areas, our
+                        team is ready to help.
+                    </p>
+                </section>
+
+                <!-- Zip Code Info for Neighborhoods/Towns/Suburbs -->
+                {
+                    location.neighborhood?.zip && (
+                        <section class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                            <h3 class="text-xl font-bold text-blue-900 mb-3">
+                                Service Area Information
+                            </h3>
+                            <div class="space-y-2 text-gray-700">
+                                <p>
+                                    <strong>Location:</strong>{" "}
+                                    {location.neighborhood.name}
+                                </p>
+                                <p>
+                                    <strong>Zip Code:</strong>{" "}
+                                    {location.neighborhood.zip}
+                                </p>
+                                <p>
+                                    <strong>City:</strong> {location.city}
+                                </p>
+                                <p class="text-sm text-gray-600 mt-4">
+                                    We provide professional home improvement
+                                    services throughout{" "}
+                                    {location.neighborhood.name} and surrounding
+                                    areas. Call us today for a free estimate!
+                                </p>
+                            </div>
+                        </section>
+                    )
+                }
+
+                <!-- Service List if Category or Location Page -->
+                {
+                    type !== "service" && (
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {(type === "category"
+                                ? category.services
+                                : services
+                            ).map((item: any) => (
+                                <a
+                                    href={`${Astro.url.pathname}${item.slug}/`}
+                                    class="block p-6 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition"
+                                >
+                                    <h4 class="font-bold text-lg text-blue-900">
+                                        {item.name}
+                                    </h4>
+                                    <p class="text-gray-600 text-sm mt-2">
+                                        {type === "category"
+                                            ? "Professional service"
+                                            : item.category}
+                                    </p>
+                                    <span class="text-orange-600 text-sm font-medium">
+                                        Learn More &rarr;
+                                    </span>
+                                </a>
+                            ))}
+                        </div>
+                    )
+                }
+            </div>
+
+            <!-- Sidebar / Pricing or FAQ -->
+            <div class="lg:col-span-1">
+                {
+                    service ? (
+                        <PricingInfo service={service.name} />
+                    ) : (
+                        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                            <h3 class="text-xl font-bold text-blue-900 mb-4">
+                                Frequently Asked Questions
+                            </h3>
+                            <div class="space-y-4">
+                                <details class="group">
+                                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-800">
+                                        <span>
+                                            Do you offer free estimates?
+                                        </span>
+                                        <span class="transition group-open:rotate-180">
+                                            <svg
+                                                fill="none"
+                                                height="24"
+                                                shape-rendering="geometricPrecision"
+                                                stroke="currentColor"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="1.5"
+                                                viewBox="0 0 24 24"
+                                                width="24"
+                                            >
+                                                <path d="M6 9l6 6 6-6" />
+                                            </svg>
+                                        </span>
+                                    </summary>
+                                    <p class="text-gray-600 mt-3 group-open:animate-fadeIn">
+                                        Yes! We provide free, no-obligation
+                                        estimates for all our services in{" "}
+                                        {location.city}.
+                                    </p>
+                                </details>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+
+    {
+        (() => {
+            let basePath = "/nc";
+            if (location) {
+                if (location.type === "state") {
+                    basePath = `/${location.state.toLowerCase()}`;
+                } else if (location.type === "county") {
+                    basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}`;
+                } else if (
+                    location.type === "city" ||
+                    location.type === "town" ||
+                    location.type === "suburb"
+                ) {
+                    basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}`;
+                } else if (location.type === "neighborhood") {
+                    basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}/${location.neighborhood.name.toLowerCase().replace(/\s+/g, "-")}`;
+                } else if (isZip) {
+                    basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}/${location.zip}`;
+                }
+            }
+            return <PortfolioGrid basePath={basePath} />;
+        })()
+    }
+    <ServiceCategories
+        citySlug={location.city?.toLowerCase().replace(/\s+/g, "-") || ""}
+        city={location.neighborhood?.name || location.city}
+    />
+    <Reviews location={location} />
+</LayoutService>

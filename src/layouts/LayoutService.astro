@@ -1,0 +1,555 @@
+---
+import Layout from "./Layout.astro";
+import StickyCallButton from "../components/StickyCallButton.astro";
+import ExitIntentPopup from "../components/ExitIntentPopup.astro";
+import locations from "../data/locations.json";
+import services from "../data/services.json";
+import CookieConsent from "../components/CookieConsent.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  description?: string;
+  currentCity?: string;
+  preloadImage?: string;
+}
+
+const {
+  title,
+  description,
+  currentCity = "Charlotte",
+  preloadImage,
+} = Astro.props;
+
+// Helper to map state names to abbreviations for URLs
+const getStateSlug = (cityOrState: string): string => {
+  const stateMap: Record<string, string> = {
+    "North Carolina": "NC",
+    "South Carolina": "SC",
+  };
+  return stateMap[cityOrState] || cityOrState.replace(/\s+/g, "-");
+};
+
+const citySlug = getStateSlug(currentCity);
+
+// Extract unique cities/towns for the dropdown with slugs
+const locationMap = new Map();
+locations.forEach((l) => {
+  const addLocation = (name: string) => {
+    const trimmed = name.trim();
+    // Use lowercase for slug to match page generation in [...slug].astro
+    const slug = trimmed.toLowerCase().replace(/\s+/g, "-");
+    locationMap.set(trimmed, slug);
+  };
+  if (l.city) {
+    addLocation(l.city);
+  } else if (l.towns) {
+    l.towns.split(",").forEach(addLocation);
+  } else if (l.suburbs) {
+    l.suburbs.split(",").forEach(addLocation);
+  }
+});
+
+const uniqueLocations = Array.from(locationMap.entries()).sort((a, b) =>
+  a[0].localeCompare(b[0]),
+);
+// [['Charlotte', 'Charlotte'], ['Matthews', 'Matthews'], ...]
+---
+
+<Layout title={title} description={description} preloadImage={preloadImage}>
+  <!-- Trust Bar (Header) -->
+  <!-- Trust Bar (Header) -->
+  <div
+    class="bg-blue-900 text-white py-2.5 text-xs md:text-sm text-center font-medium tracking-wide relative z-50"
+  >
+    <div class="flex justify-center items-center gap-4 md:gap-8 opacity-90">
+      <span class="hidden md:flex items-center gap-1.5"
+        >Serving NC & SC Since 2021</span
+      >
+      <span class="hidden md:flex items-center gap-1.5">•</span>
+      <span class="flex items-center gap-1.5">
+        <svg
+          class="w-4 h-4 text-yellow-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          ></path>
+        </svg>
+        Satisfaction Guaranteed
+      </span>
+    </div>
+  </div>
+  <!-- Navigation -->
+  <header
+    class="sticky top-0 z-40 w-full transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm"
+    x-data="{ scrolled: false, mobileMenuOpen: false }"
+    @scroll.window="scrolled = (window.pageYOffset > 20)"
+  >
+    <div
+      class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 h-20 flex items-center justify-between"
+    >
+      <!-- Logo -->
+      <a href="/" class="flex items-center group">
+        <img
+          src="/images/logo.webp"
+          alt="Carolina Renew Home Improvement"
+          class="h-14 md:h-16 w-auto transition-transform group-hover:scale-105"
+          width="220"
+          height="64"
+          loading="eager"
+        />
+      </a>
+
+      <!-- Desktop Nav & CTA -->
+      <div class="flex items-center gap-8">
+        <!-- Desktop Menu Links (Hidden on Mobile) -->
+        <nav class="hidden lg:flex items-center gap-6 mr-4">
+          <a
+            href="/about/"
+            class="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
+            >About</a
+          >
+          <a
+            href="/process/"
+            class="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
+            >Process</a
+          >
+          <a
+            href="/portfolio/"
+            class="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
+            >Portfolio</a
+          >
+          <!-- Reviews link temporarily hidden
+          <a
+            href="/reviews/"
+            class="text-sm font-medium text-gray-700 hover:text-blue-600 transition"
+            >Reviews</a
+          >
+          -->
+        </nav>
+
+        <!-- City Switcher (Desktop) -->
+        <div class="hidden lg:flex items-center gap-2">
+          <svg
+            class="w-4 h-4 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg
+          >
+          <select
+            class="bg-transparent text-sm font-medium text-gray-700 focus:ring-0 border-none cursor-pointer hover:text-blue-600 transition py-0 pl-0 pr-8"
+            onchange="if(this.value) window.location.href = this.value"
+          >
+            {
+              uniqueLocations.map(([cityName, citySlug]) => (
+                <option
+                  value={`/${citySlug}/`}
+                  selected={cityName === currentCity}
+                >
+                  {" "}
+                  {cityName}{" "}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a
+            href="tel:+19804088122"
+            class="hidden lg:flex flex-col items-end text-right mr-2"
+          >
+            <span class="text-xs text-gray-500 font-medium"
+              >Questions? Call Us</span
+            >
+            <span
+              class="text-lg font-bold text-gray-900 leading-none hover:text-blue-700 transition"
+              >(980) 408-8122</span
+            >
+          </a>
+          <a
+            href="tel:+19804088122"
+            class="hidden md:inline-flex items-center px-6 py-3 border border-transparent text-sm font-bold rounded-xl shadow-lg text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transform hover:-translate-y-0.5 transition"
+          >
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              ></path>
+            </svg> Call for Free Quote
+          </a>
+
+          <!-- Mobile Menu Button -->
+          <button
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                x-show="!mobileMenuOpen"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+              <path
+                x-show="mobileMenuOpen"
+                x-cloak
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div
+      x-show="mobileMenuOpen"
+      x-cloak
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl"
+    >
+      <div class="flex flex-col p-4 space-y-4">
+        <a
+          href="/about/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >About Us</a
+        >
+        <a
+          href="/process/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >Our Process</a
+        >
+        <a
+          href="/portfolio/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >Portfolio</a
+        >
+        <!-- Reviews link temporarily hidden
+        <a
+          href="/reviews/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >Reviews</a
+        >
+        -->
+        <a
+          href="/service-areas/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >Service Areas</a
+        >
+        <a
+          href="/contact/"
+          class="text-base font-medium text-gray-700 hover:text-blue-600 py-2 border-b border-gray-50"
+          >Contact</a
+        >
+
+        <!-- Mobile City Switcher -->
+        <div class="pt-2">
+          <label
+            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2"
+            >Select Location</label
+          >
+          <select
+            class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            onchange="if(this.value) window.location.href = this.value"
+          >
+            {
+              uniqueLocations.map(([cityName, citySlug]) => (
+                <option
+                  value={`/${citySlug}/`}
+                  selected={cityName === currentCity}
+                >
+                  {cityName}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <a
+          href="tel:+19804088122"
+          class="mt-4 w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+            ></path>
+          </svg>
+          Call (980) 408-8122
+        </a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="w-full
+mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <!-- Breadcrumbs -->
+      <!-- We need to pass
+props to Breadcrumbs, but LayoutService doesn't have them all directly exposed
+as props in the current interface. The page passes children. Wait, Breadcrumbs
+needs specific data (location, category, service). LayoutService receives
+`title` and `description`. Option 1: Pass these props to LayoutService. Option
+2: Put Breadcrumbs in the page file `[...slug].astro` instead of Layout. Let's
+go with Option 2 for Breadcrumbs as it has direct access to the data. But
+SchemaMarkup should be in the Head. LayoutService wraps the content.
+LayoutService uses `Layout.astro`. Let's modify `[...slug].astro` to include
+Breadcrumbs and SchemaMarkup. LayoutService is just a wrapper. -->
+      <slot />
+    </div>
+  </main>
+  <!-- Sticky CTA (Mobile) -->
+  <div
+    class="md:hidden fixed bottom-0
+left-0 right-0 bg-white border-t border-gray-200 p-4 flex gap-2 z-50"
+  >
+    <a
+      href="tel:+19804088122"
+      class="flex-1 bg-blue-600 text-white text-center py-3
+rounded font-bold shadow"
+      >Call Now</a
+    >
+    <a
+      href="#contact"
+      class="flex-1
+bg-orange-600 text-white text-center py-3 rounded font-bold shadow"
+      >Get Quote</a
+    >
+  </div>
+  <footer
+    class="bg-gray-900 text-white pt-16 pb-8 mt-auto border-t border-gray-800"
+  >
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <!-- Brand Column -->
+        <div>
+          <h3 class="text-2xl font-bold mb-4 text-white tracking-tight">
+            Carolina Renew
+          </h3>
+          <p class="text-gray-400 mb-6 leading-relaxed text-sm">
+            Transforming homes across North & South Carolina with premium
+            refinishing and painting services since 2021.
+          </p>
+          <div class="flex gap-4">
+            <a
+              href="tel:+19804088122"
+              class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 group"
+              aria-label="Call Us"
+            >
+              <svg
+                class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="mailto:info@carolinarenew.com"
+              class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 group"
+              aria-label="Email Us"
+            >
+              <svg
+                class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Services Column -->
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-white">Our Services</h3>
+          <ul class="space-y-3">
+            {
+              services.slice(0, 6).map((category) => (
+                <li>
+                  <a
+                    href={`/${citySlug}/${category.slug}/`}
+                    class="text-gray-400 hover:text-white transition-colors duration-200 text-sm flex items-center group"
+                  >
+                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {category.category}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-white">Company</h3>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="/about/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a
+                href="/process/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >Our Process</a
+              >
+            </li>
+            <li>
+              <a
+                href="/portfolio/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >Portfolio</a
+              >
+            </li>
+            <!-- Reviews link temporarily hidden
+            <li>
+              <a
+                href="/reviews/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >Reviews</a
+              >
+            </li>
+            -->
+            <li>
+              <a
+                href="/service-areas/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >Service Areas</a
+              >
+            </li>
+            <li>
+              <a
+                href="/contact/"
+                class="text-gray-400 hover:text-white transition-colors duration-200 text-sm block"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-white">Contact Us</h3>
+          <div class="space-y-4">
+            <a href="tel:+19804088122" class="block group">
+              <span
+                class="text-xs text-gray-500 uppercase tracking-wider font-semibold group-hover:text-blue-400 transition-colors"
+                >Phone</span
+              >
+              <span
+                class="block text-xl font-bold text-white mt-1 group-hover:text-blue-400 transition-colors"
+                >(980) 408-8122</span
+              >
+            </a>
+            <a href="mailto:info@carolinarenew.com" class="block group">
+              <span
+                class="text-xs text-gray-500 uppercase tracking-wider font-semibold group-hover:text-blue-400 transition-colors"
+                >Email</span
+              >
+              <span
+                class="block text-gray-300 mt-1 group-hover:text-white transition-colors"
+                >info@carolinarenew.com</span
+              >
+            </a>
+            <div>
+              <span
+                class="text-xs text-gray-500 uppercase tracking-wider font-semibold"
+                >Hours</span
+              >
+              <p class="text-gray-300 mt-1 text-sm">
+                Mon-Fri: 8am - 6pm<br />
+                Sat: 9am - 5pm
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div
+        class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500"
+      >
+        <div class="flex flex-col md:flex-row items-center gap-4">
+          <p>
+            &copy; {new Date().getFullYear()} Carolina Renew. All rights reserved.
+          </p>
+          <div class="hidden md:flex gap-4">
+            <a href="/privacy/" class="hover:text-gray-300 transition-colors"
+              >Privacy Policy</a
+            >
+            <a href="/terms/" class="hover:text-gray-300 transition-colors"
+              >Terms of Service</a
+            >
+            <a
+              href="/sitemap-index.xml"
+              class="hover:text-gray-300 transition-colors">Sitemap</a
+            >
+          </div>
+        </div>
+        <div class="flex gap-6">
+          <span class="hidden md:inline text-gray-700">|</span>
+          <p>Proudly serving {currentCity} & surrounding areas</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <StickyCallButton />
+  <CookieConsent />
+  <ExitIntentPopup />
+</Layout>

@@ -1,0 +1,118 @@
+---
+interface Props {
+  location: any;
+  service?: any;
+  category?: any;
+  description?: string;
+}
+
+const { location, service, category, description } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  name: service
+    ? `Carolina Renew - ${service.name} in ${location.city}`
+    : `Carolina Renew - ${location.city}`,
+  description:
+    description ||
+    `Professional home improvement services in ${location.city}.`,
+  url: Astro.url.href,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "11734 Fernhurst Ln",
+    addressLocality: "Charlotte",
+    addressRegion: "NC",
+    postalCode: "28277",
+    addressCountry: "US",
+  },
+  areaServed: {
+    "@type": "GeoCircle",
+    geoMidpoint: {
+      "@type": "GeoCoordinates",
+      latitude: "35.0526", // Approx lat for 28277
+      longitude: "-80.8135", // Approx long for 28277
+    },
+    geoRadius: "50000",
+  },
+  telephone: "(980) 408-8122",
+};
+
+// Breadcrumb Schema
+const breadcrumbList = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", Astro.url).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: location.city,
+      item: new URL(
+        `/${location.city.toLowerCase().replace(/\s+/g, "-")}/`,
+        Astro.url,
+      ).href,
+    },
+  ],
+};
+
+let position = 3;
+
+if (location.neighborhood) {
+  breadcrumbList.itemListElement.push({
+    "@type": "ListItem",
+    position: position++,
+    name: location.neighborhood.name,
+    item: new URL(
+      `/${location.city.toLowerCase().replace(/\s+/g, "-")}/${location.neighborhood.name.toLowerCase().replace(/\s+/g, "-")}/`,
+      Astro.url,
+    ).href,
+  });
+}
+
+if (category) {
+  // Base path depends on location context
+  let basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}/`;
+  if (location.neighborhood) {
+    basePath += `${location.neighborhood.name.toLowerCase().replace(/\s+/g, "-")}/`;
+  }
+
+  breadcrumbList.itemListElement.push({
+    "@type": "ListItem",
+    position: position++,
+    name: category.category,
+    item: new URL(`${basePath}${category.slug}/`, Astro.url).href,
+  });
+}
+
+if (service) {
+  // Similar logic, ensure full path
+  let basePath = `/${location.city.toLowerCase().replace(/\s+/g, "-")}/`;
+  if (location.neighborhood) {
+    basePath += `${location.neighborhood.name.toLowerCase().replace(/\s+/g, "-")}/`;
+  }
+  // If category exists, it's in the path? My routing logic puts category in path: /Loc/Category/Service
+  // So we need to include category in the URL construction if it exists.
+  if (category) {
+    basePath += `${category.slug}/`;
+  }
+
+  breadcrumbList.itemListElement.push({
+    "@type": "ListItem",
+    position: position++,
+    name: service.name,
+    item: new URL(`${basePath}${service.slug}/`, Astro.url).href,
+  });
+}
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify([schema, breadcrumbList])}
+/>

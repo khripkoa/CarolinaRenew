@@ -1,0 +1,399 @@
+---
+import "@fontsource/inter";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  preloadImage?: string;
+}
+
+const {
+  title,
+  description = "Carolina Renew - Premier Home Improvement Services in NC & SC",
+  preloadImage,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://www.google.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://www.googletagmanager.com"
+      crossorigin
+    />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="canonical" href={Astro.url.href} />
+
+    <!-- Organization Schema Markup -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "Carolina Renew",
+        image: "https://carolinarenew.com/images/logo.png",
+        url: "https://carolinarenew.com",
+        telephone: "+19804088122",
+        priceRange: "$$",
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Sunday",
+            opens: "09:00",
+            closes: "21:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Monday",
+            opens: "09:00",
+            closes: "21:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Tuesday",
+            opens: "09:00",
+            closes: "21:30",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Wednesday",
+            opens: "09:00",
+            closes: "21:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Thursday",
+            opens: "09:00",
+            closes: "21:30",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Friday",
+            opens: "09:00",
+            closes: "21:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Saturday",
+            opens: "09:00",
+            closes: "21:00",
+          },
+        ],
+        areaServed: [
+          { "@type": "City", name: "Charlotte" },
+          { "@type": "City", name: "Cornelius" },
+          { "@type": "City", name: "Fort Mill" },
+          { "@type": "City", name: "Rock Hill" },
+          { "@type": "City", name: "Pineville" },
+          { "@type": "City", name: "Harrisburg" },
+          { "@type": "City", name: "Catawba" },
+          { "@type": "City", name: "Matthews" },
+          { "@type": "City", name: "Indian Trail" },
+          { "@type": "City", name: "Monroe" },
+          { "@type": "City", name: "Waxhaw" },
+        ],
+        sameAs: [
+          "https://www.instagram.com/stanhandyman24/",
+          "https://www.google.com/search?kgmid=/g/11wqrltszk&q=Carolina+Renew",
+        ],
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "5.0",
+          bestRating: "5",
+          ratingCount: "150",
+          reviewCount: "150",
+        },
+        review: [
+          {
+            "@type": "Review",
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: "5",
+              bestRating: "5",
+            },
+            author: { "@type": "Person", name: "Sarah M." },
+            reviewBody:
+              "Carolina Renew transformed our kitchen cabinets! They look brand new. The team was professional and clean.",
+            datePublished: "2025-11-15",
+          },
+          {
+            "@type": "Review",
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: "5",
+              bestRating: "5",
+            },
+            author: { "@type": "Person", name: "Michael B." },
+            reviewBody:
+              "Great experience from start to finish. The quote was detailed and accurate.",
+            datePublished: "2025-10-02",
+          },
+        ],
+        makesOffer: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Cabinet Refinishing & Painting",
+              description:
+                "Professional cabinet refinishing and painting in Charlotte NC and surrounding areas",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Interior Painting" },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: "Exterior Painting" },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Custom Storage Solutions",
+              description:
+                "Custom closet, garage, and pantry organization systems",
+            },
+          },
+        ],
+      })}
+    />
+
+    <!-- LocalBusiness Schema -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        name: "Carolina Renew",
+        image: "https://carolinarenew.com/images/logo.png",
+        url: "https://carolinarenew.com",
+        telephone: "+19804088122",
+        email: "info@carolinarenew.com",
+        priceRange: "$$",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "11734 Fernhurst Ln",
+          addressLocality: "Charlotte",
+          addressRegion: "NC",
+          postalCode: "28277",
+          addressCountry: "US",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: "35.0526",
+          longitude: "-80.8135",
+        },
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "08:00",
+            closes: "18:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Saturday",
+            opens: "09:00",
+            closes: "17:00",
+          },
+        ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Home Improvement Services",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Cabinet Refinishing" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Cabinet Painting" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Interior Painting" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: "Exterior Painting" },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Custom Storage Solutions",
+              },
+            },
+          ],
+        },
+      })}
+    />
+
+    <!-- WebSite Schema with SearchAction -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Carolina Renew",
+        url: "https://carolinarenew.com",
+        potentialAction: {
+          "@type": "SearchAction",
+          target:
+            "https://carolinarenew.com/service-areas/?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      })}
+    />
+
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Critical CSS - Inline for instant rendering -->
+    <style is:inline>
+      /* Font display swap */
+      @font-face {
+        font-family: "Inter";
+        font-display: swap;
+      }
+
+      /* Critical Hero styles */
+      .hero-title {
+        font-size: 2.25rem;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      @media (min-width: 768px) {
+        .hero-title {
+          font-size: 3rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero-title {
+          font-size: 4.5rem;
+        }
+      }
+
+      /* Essential layout */
+      .relative {
+        position: relative;
+      }
+      .absolute {
+        position: absolute;
+      }
+      .flex {
+        display: flex;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+
+      /* Critical colors */
+      .bg-gray-900 {
+        background-color: rgb(17 24 39);
+      }
+      .text-white {
+        color: rgb(255 255 255);
+      }
+
+      /* Prevent layout shift */
+      .min-h-screen {
+        min-height: 100vh;
+      }
+
+      /* Hide x-cloak */
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+
+    <!-- Preload critical fonts -->
+    <link
+      rel="preload"
+      href="/_astro/inter-latin-400-normal.C38fXH4l.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/_astro/inter-latin-700-normal.Yt3aPRUw.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    {
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadImage}
+          fetchpriority="high"
+        />
+      )
+    }
+
+    <!-- Google Tag Manager -->
+    <script type="text/partytown">
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-XXXXXXX");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Alpine.js with defer for better performance -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body class="font-sans antialiased text-gray-900 bg-white">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+    <slot />
+  </body>
+</html>
+```

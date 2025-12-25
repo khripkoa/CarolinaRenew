@@ -1,0 +1,107 @@
+---
+import LayoutService from "../layouts/LayoutService.astro";
+import ValueProp from "../components/ValueProp.astro";
+
+const title =
+    "About Carolina Renew | Charlotte's Premier Cabinet Refinishing & Painting";
+const description =
+    "Learn about Carolina Renew, a family-owned business transforming homes in Charlotte, NC since 2021. We specialize in cabinet refinishing and interior painting.";
+---
+
+<LayoutService title={title} description={description}>
+    <div class="bg-blue-900 text-white py-20">
+        <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 text-center">
+            <h1 class="page-title">About Carolina Renew</h1>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                Transforming homes with precision, passion, and a commitment to
+                excellence.
+            </p>
+        </div>
+    </div>
+
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg mx-auto text-gray-600">
+                <h2 class="section-title-sm">Our Story</h2>
+                <p class="mb-6">
+                    Founded in 2021, Carolina Renew began with a simple mission:
+                    to provide homeowners in the Charlotte area with a
+                    high-quality, cost-effective alternative to full kitchen
+                    renovations. We recognized that many solid wood cabinets
+                    were being torn out simply because of outdated finishes,
+                    filling up landfills and draining bank accounts.
+                </p>
+                <p class="mb-6">
+                    What started as a specialized cabinet refinishing service
+                    has grown into a full-service home improvement company,
+                    offering interior and exterior painting, custom storage
+                    solutions, and more. Despite our growth, our core values
+                    remain the same: integrity, craftsmanship, and customer
+                    satisfaction.
+                </p>
+
+                <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">
+                    Why Choose Us?
+                </h2>
+                <ul class="space-y-4 list-none pl-0">
+                    <li class="flex items-start">
+                        <svg
+                            class="w-6 h-6 text-green-500 mr-3 mt-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"></path></svg
+                        >
+                        <span
+                            ><strong>Local & Family Owned:</strong> We are your neighbors,
+                            not a franchise. We care about our community and our
+                            reputation.</span
+                        >
+                    </li>
+                    <li class="flex items-start">
+                        <svg
+                            class="w-6 h-6 text-green-500 mr-3 mt-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"></path></svg
+                        >
+                        <span
+                            ><strong>Specialized Expertise:</strong> We don't just
+                            "paint" cabinets; we use industrial-grade coatings and
+                            equipment for a factory-like finish.</span
+                        >
+                    </li>
+                    <li class="flex items-start">
+                        <svg
+                            class="w-6 h-6 text-green-500 mr-3 mt-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"></path></svg
+                        >
+                        <span
+                            ><strong>Satisfaction Guaranteed:</strong> We stand behind
+                            our work with comprehensive warranties and a commitment
+                            to making it right.</span
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <ValueProp />
+</LayoutService>

@@ -1,0 +1,115 @@
+---
+import { Image } from "astro:assets";
+
+// Portfolio projects - link to /portfolio/ page, not services
+const projects = [
+  {
+    title: "Modern Kitchen Transformation",
+    category: "Cabinet Refinishing",
+    image: "/images/portfolio-kitchen.png",
+    description: "Complete cabinet color change from oak to navy blue",
+  },
+  {
+    title: "Exterior Makeover",
+    category: "Exterior Painting",
+    image: "/images/portfolio-exterior.jpg",
+    description: "Full exterior repaint with trim restoration",
+  },
+  {
+    title: "Living Room Refresh",
+    category: "Interior Painting",
+    image: "/images/portfolio-living-room.jpg",
+    description: "Accent wall and ceiling refresh",
+  },
+  {
+    title: "Custom Storage Solution",
+    category: "Storage",
+    image: "/images/portfolio-storage.jpg",
+    description: "Built-in closet organization system",
+  },
+];
+---
+
+<div>
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h3 class="text-3xl font-bold text-gray-900">Recent Projects</h3>
+      <p class="text-gray-600 mt-2">
+        See the difference we make in homes across NC & SC.
+      </p>
+    </div>
+    <a
+      href="/portfolio/"
+      class="hidden md:inline-flex items-center text-orange-600 font-medium hover:text-orange-700"
+    >
+      View All Projects
+      <svg
+        class="w-4 h-4 ml-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {
+      projects.map((project) => (
+        <a
+          href="/portfolio/"
+          class="group relative overflow-hidden rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 block"
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            class="w-full h-64 object-cover"
+            style="aspect-ratio: 4/3;"
+            width={600}
+            height={450}
+            format="avif"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <span class="block text-xs font-bold text-orange-400 uppercase tracking-wider mb-1">
+              {project.category}
+            </span>
+            <h4 class="text-white font-bold text-lg leading-tight">
+              {project.title}
+            </h4>
+            <p class="text-gray-300 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              View Portfolio &rarr;
+            </p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="mt-8 text-center md:hidden">
+    <a
+      href="/portfolio/"
+      class="inline-flex items-center justify-center px-6 py-3 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 transition"
+    >
+      View All Projects
+      <svg
+        class="w-4 h-4 ml-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</div>

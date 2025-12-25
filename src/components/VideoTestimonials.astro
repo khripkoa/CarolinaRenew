@@ -1,0 +1,173 @@
+---
+// VideoTestimonials - Showcase customer video testimonials
+---
+
+<section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                See What Our Customers Say
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Don't just take our word for it. Watch real homeowners share
+                their experience with Carolina Renew.
+            </p>
+        </div>
+
+        <div
+            x-data="{
+        currentVideo: null,
+        videos: [
+          {
+            id: 1,
+            thumbnail: '/images/video-kitchen.jpg',
+            title: 'Kitchen Cabinet Refinishing',
+            customer: 'Sarah M.',
+            location: 'SouthPark, Charlotte',
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Placeholder
+          },
+          {
+            id: 2,
+            thumbnail: '/images/video-exterior.jpg',
+            title: 'Complete Exterior Makeover',
+            customer: 'Michael B.',
+            location: 'University City, Charlotte',
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Placeholder
+          },
+          {
+            id: 3,
+            thumbnail: '/images/video-interior.jpg',
+            title: 'Whole Home Interior',
+            customer: 'Emily R.',
+            location: 'Fort Mill, SC',
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Placeholder
+          }
+        ]
+      }"
+        >
+            <!-- Video Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <template x-for="video in videos" :key="video.id">
+                    <div
+                        class="group cursor-pointer"
+                        @click="currentVideo = video"
+                    >
+                        <div
+                            class="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105"
+                        >
+                            <!-- Thumbnail -->
+                            <img
+                                :src="video.thumbnail"
+                                :alt="video.title"
+                                class="w-full h-64 object-cover"
+                                loading="lazy"
+                            />
+
+                            <!-- Play Button Overlay -->
+                            <div
+                                class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition"
+                            >
+                                <div
+                                    class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition"
+                                >
+                                    <svg
+                                        class="w-8 h-8 text-blue-600 ml-1"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                                        ></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Info -->
+                        <div class="mt-4">
+                            <h3
+                                class="font-bold text-gray-900 text-lg"
+                                x-text="video.title"
+                            >
+                            </h3>
+                            <p class="text-sm text-gray-600">
+                                <span x-text="video.customer"></span> • <span
+                                    x-text="video.location"></span>
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Video Modal -->
+            <div
+                x-show="currentVideo !== null"
+                x-cloak
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+                @click="currentVideo = null"
+                @keydown.escape.window="currentVideo = null"
+            >
+                <div class="relative max-w-5xl w-full" @click.stop>
+                    <!-- Close Button -->
+                    <button
+                        @click="currentVideo = null"
+                        class="absolute -top-12 right-0 text-white hover:text-gray-300 transition"
+                        aria-label="Close"
+                    >
+                        <svg
+                            class="w-8 h-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Video Player -->
+                    <div
+                        class="relative pt-[56.25%] bg-black rounded-lg overflow-hidden shadow-2xl"
+                    >
+                        <iframe
+                            x-show="currentVideo"
+                            :src="currentVideo?.videoUrl"
+                            class="absolute inset-0 w-full h-full"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+
+                    <!-- Video Title -->
+                    <div class="mt-4 text-center">
+                        <h3
+                            class="text-white text-xl font-bold"
+                            x-text="currentVideo?.title"
+                        >
+                        </h3>
+                        <p
+                            class="text-gray-300 text-sm"
+                            x-text="`${currentVideo?.customer} • ${currentVideo?.location}`"
+                        >
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>

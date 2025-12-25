@@ -1,16 +1,94 @@
 ---
+import LayoutService from "../layouts/LayoutService.astro";
+import GeoContent from "../components/GeoContent.astro";
+import locations from "../data/locations.json";
+import Hero from "../components/Hero.astro";
+import ValueProp from "../components/ValueProp.astro";
+import CostCalculator from "../components/CostCalculator.astro";
+import BeforeAfter from "../components/BeforeAfter.astro";
+import EmailCapture from "../components/EmailCapture.astro";
+import Reviews from "../components/Reviews.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import PortfolioGrid from "../components/PortfolioGrid.astro";
+import ServiceAreas from "../components/ServiceAreas.astro";
+import ExitIntent from "../components/ExitIntent.astro";
+import GoogleMapsWidget from "../components/GoogleMapsWidget.astro";
+import ServiceCategories from "../components/ServiceCategories.astro";
 
+// Default to Charlotte
+const charlotte = locations.find((l) => l.city === "Charlotte");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<LayoutService
+  title="Cabinet Refinishing Charlotte, NC | Expert Kitchen Painters"
+  description="Transform your kitchen with expert cabinet refinishing in Charlotte, NC. Save 70% vs replacement. Factory finish quality. Get a free quote today!"
+  currentCity="Charlotte"
+  preloadImage="/images/hero-kitchen.png"
+>
+  <Hero
+    title="Transform Your Kitchen Without the Remodel Cost"
+    subtitle="Charlotte's Most Trusted Cabinet Refinishing & Painting Experts. Get a factory-new look in just 3-5 days."
+    location={{ city: "Charlotte", zip: "28202" }}
+    bgImage="/images/hero-kitchen.png"
+  />
+
+  <div class="render-auto">
+    <ValueProp />
+  </div>
+
+  <div class="render-auto">
+    <ServiceCategories citySlug="charlotte" city="Charlotte" />
+  </div>
+
+  <div class="render-auto">
+    <CostCalculator />
+  </div>
+
+  <div class="render-auto">
+    <BeforeAfter />
+  </div>
+
+  <div class="render-auto">
+    <EmailCapture />
+  </div>
+
+  <div class="render-auto">
+    <div class="py-12 bg-gray-50">
+      <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900">
+            Our Recent Projects in Charlotte
+          </h2>
+          <p class="text-gray-600 mt-2">
+            See the quality of our work in homes near you.
+          </p>
+        </div>
+        <PortfolioGrid basePath="/charlotte" />
+      </div>
+    </div>
+  </div>
+
+  <div class="render-auto">
+    <Reviews location={charlotte} />
+  </div>
+
+  <div class="render-auto">
+    <ProcessSteps />
+  </div>
+
+  <div class="render-auto">
+    <ServiceAreas city="Charlotte" />
+  </div>
+
+  <div class="render-auto">
+    <GoogleMapsWidget />
+  </div>
+
+  <div class="render-auto">
+    <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 py-12">
+      <GeoContent location={charlotte} />
+    </div>
+  </div>
+
+  <ExitIntent />
+</LayoutService>

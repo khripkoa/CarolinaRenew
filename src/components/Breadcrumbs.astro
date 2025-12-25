@@ -1,0 +1,108 @@
+---
+interface Props {
+  location: any;
+  category?: any;
+  service?: any;
+  isZip?: boolean;
+}
+
+const { location, category, service, isZip } = Astro.props;
+
+// Helper to map state names to abbreviations for URLs (always lowercase)
+const getStateSlug = (cityOrState: string): string => {
+  const stateMap: Record<string, string> = {
+    "North Carolina": "NC",
+    "South Carolina": "SC",
+  };
+  const slug = stateMap[cityOrState] || cityOrState.replace(/\s+/g, "-");
+  return slug.toLowerCase();
+};
+
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: location.city, href: `/${getStateSlug(location.city)}/` },
+];
+
+if (location.neighborhood) {
+  crumbs.push({
+    name: location.neighborhood.name,
+    href: `/${getStateSlug(location.city)}/${location.neighborhood.name.replace(/\s+/g, "-")}/`,
+  });
+
+  // Zip is a property of the neighborhood, not a sub-page in our routing.
+  // So we do not add it as a breadcrumb step.
+} else if (isZip) {
+  // Add Zip code crumb ONLY for Zip pages
+  crumbs.push({
+    name: location.zip,
+    href: `/${getStateSlug(location.city)}/${location.zip}/`,
+  });
+}
+
+if (category) {
+  // We need to reconstruct the base path for the category link
+  // It should be the current location path + category slug
+  // The last crumb added (location-based) has the href we need.
+  const basePath = crumbs[crumbs.length - 1].href;
+  crumbs.push({
+    name: category.category,
+    href: `${basePath}${category.slug}/`,
+  });
+}
+
+if (service) {
+  // If we have a service, the previous crumb was category (if present) or location.
+  // Wait, my routing logic adds category path if category is present.
+  // But if I am on /Location/Service/ (direct), then category is NOT in the URL, but it IS in the props?
+  // In my `getStaticPaths`, I passed `category` prop even for direct service links?
+  // No, I generated:
+  // 1. /Location/Category/
+  // 2. /Location/Category/Service/
+
+  // So the URL structure IS /Location/Category/Service/
+  // So the breadcrumb should follow that.
+
+  // If I change the routing to be /Location/Service/ (skipping category), then I need to adjust.
+  // The user asked for: domain.com/{Location_Path}/{Category?}/{Service?}/
+  // My implementation does: /Location/Category/Service/
+
+  // So, if service is present, category is also present in the path.
+  const basePath = crumbs[crumbs.length - 1].href;
+  crumbs.push({ name: service.name, href: `${basePath}${service.slug}/` }); // This might double up if category was added.
+
+  // Correction:
+  // If category is present, it added a crumb.
+  // Then service adds a crumb relative to that.
+  // But wait, `href` construction above:
+  // `basePath` from last crumb (Category) is `/.../category-slug/`
+  // So `href` becomes `/.../category-slug/service-slug/` -> Correct.
+}
+
+// Remove the last href to make it non-clickable (current page)
+// crumbs[crumbs.length - 1].href = null;
+// Actually, standard is to have it text only.
+---
+
+<nav aria-label="Breadcrumb" class="flex text-sm text-gray-500 mb-6">
+  <ol class="flex items-center space-x-2">
+    {
+      crumbs.map((crumb, index) => (
+        <li class="flex items-center">
+          {index > 0 && <span class="mx-2 text-gray-400">/</span>}
+          {index === crumbs.length - 1 ? (
+            <span class="font-medium text-gray-900" aria-current="page">
+              {crumb.name}
+            </span>
+          ) : (
+            <a
+              href={crumb.href}
+              class="hover:text-blue-600 hover:underline transition-colors"
+            >
+              {crumb.name}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

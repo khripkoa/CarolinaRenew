@@ -1,0 +1,565 @@
+---
+export const prerender = false;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Admin - Leads | Carolina Renew</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            /* Fallback styles if Tailwind CDN fails */
+            body {
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                margin: 0;
+                background: #f3f4f6;
+                min-height: 100vh;
+            }
+            .hidden {
+                display: none !important;
+            }
+            #app {
+                padding: 2rem;
+            }
+            #login-section {
+                max-width: 28rem;
+                margin: 0 auto;
+                background: white;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 2rem;
+            }
+            #login-section h1 {
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+            #login-section input {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                border: 1px solid #d1d5db;
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                box-sizing: border-box;
+            }
+            #login-section button {
+                width: 100%;
+                background: #2563eb;
+                color: white;
+                font-weight: bold;
+                padding: 0.75rem 1rem;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+            }
+            #login-section button:hover {
+                background: #1d4ed8;
+            }
+            #dashboard-section {
+                max-width: 80rem;
+                margin: 0 auto;
+            }
+            #dashboard-section h1 {
+                font-size: 1.875rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+            }
+            .flex {
+                display: flex;
+            }
+            .gap-4 {
+                gap: 1rem;
+            }
+            .gap-6 {
+                gap: 1.5rem;
+            }
+            .items-center {
+                align-items: center;
+            }
+            .justify-between {
+                justify-content: space-between;
+            }
+            .mb-8 {
+                margin-bottom: 2rem;
+            }
+            .mt-2 {
+                margin-top: 0.5rem;
+            }
+            .grid {
+                display: grid;
+            }
+            .grid-cols-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .bg-white {
+                background: white;
+            }
+            .rounded-xl {
+                border-radius: 0.75rem;
+            }
+            .shadow {
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            .p-6 {
+                padding: 1.5rem;
+            }
+            .text-gray-500 {
+                color: #6b7280;
+            }
+            .text-gray-900 {
+                color: #111827;
+            }
+            .text-sm {
+                font-size: 0.875rem;
+            }
+            .text-3xl {
+                font-size: 1.875rem;
+            }
+            .font-bold {
+                font-weight: bold;
+            }
+            .font-medium {
+                font-weight: 500;
+            }
+            .text-green-600 {
+                color: #059669;
+            }
+            .text-blue-600 {
+                color: #2563eb;
+            }
+            .text-orange-600 {
+                color: #ea580c;
+            }
+            .text-red-500 {
+                color: #ef4444;
+            }
+            .text-center {
+                text-align: center;
+            }
+            .px-4 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .py-2 {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            .rounded-lg {
+                border-radius: 0.5rem;
+            }
+            .bg-gray-100 {
+                background: #f3f4f6;
+            }
+            .bg-green-600 {
+                background: #059669;
+            }
+            .bg-red-100 {
+                background: #fee2e2;
+            }
+            .text-red-700 {
+                color: #b91c1c;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                padding: 0.75rem 1.5rem;
+                text-align: left;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            th {
+                background: #f9fafb;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                color: #6b7280;
+            }
+            tr:hover {
+                background: #f9fafb;
+            }
+            @media (max-width: 768px) {
+                .grid-cols-4 {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100 min-h-screen">
+        <div id="app" class="p-8">
+            <!-- Login Form -->
+            <div
+                id="login-section"
+                class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8"
+            >
+                <h1 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                    🔐 Admin Login
+                </h1>
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-2"
+                            >Password</label
+                        >
+                        <input
+                            type="password"
+                            id="password"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter admin password"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition"
+                    >
+                        Login
+                    </button>
+                    <p
+                        id="login-error"
+                        class="text-red-500 text-sm text-center hidden"
+                    >
+                        Invalid password
+                    </p>
+                </form>
+            </div>
+
+            <!-- Dashboard (hidden by default) -->
+            <div id="dashboard-section" class="hidden">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900">
+                                📋 Leads Dashboard
+                            </h1>
+                            <p class="text-gray-600 mt-1">
+                                View and manage all form submissions
+                            </p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button
+                                id="refresh-btn"
+                                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition flex items-center gap-2"
+                            >
+                                🔄 Refresh
+                            </button>
+                            <button
+                                id="export-btn"
+                                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                            >
+                                📥 Export CSV
+                            </button>
+                            <button
+                                id="logout-btn"
+                                class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-gray-500 text-sm font-medium">
+                                Total Leads
+                            </h3>
+                            <p
+                                id="stat-total"
+                                class="text-3xl font-bold text-gray-900 mt-2"
+                            >
+                                0
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-gray-500 text-sm font-medium">
+                                Today
+                            </h3>
+                            <p
+                                id="stat-today"
+                                class="text-3xl font-bold text-green-600 mt-2"
+                            >
+                                0
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-gray-500 text-sm font-medium">
+                                This Week
+                            </h3>
+                            <p
+                                id="stat-week"
+                                class="text-3xl font-bold text-blue-600 mt-2"
+                            >
+                                0
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-gray-500 text-sm font-medium">
+                                Hero Forms
+                            </h3>
+                            <p
+                                id="stat-hero"
+                                class="text-3xl font-bold text-orange-600 mt-2"
+                            >
+                                0
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Leads Table -->
+                    <div class="bg-white rounded-xl shadow overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Date</th
+                                        >
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Name</th
+                                        >
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Contact</th
+                                        >
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Service</th
+                                        >
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Zip</th
+                                        >
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >Source</th
+                                        >
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    id="leads-table"
+                                    class="bg-white divide-y divide-gray-200"
+                                >
+                                    <tr>
+                                        <td
+                                            colspan="6"
+                                            class="px-6 py-8 text-center text-gray-500"
+                                        >
+                                            Loading leads...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden text-center py-12">
+                        <div class="text-6xl mb-4">📭</div>
+                        <h3 class="text-xl font-medium text-gray-900">
+                            No leads yet
+                        </h3>
+                        <p class="text-gray-500 mt-2">
+                            Leads will appear here when visitors submit forms
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const loginSection = document.getElementById("login-section");
+            const dashboardSection =
+                document.getElementById("dashboard-section");
+            const loginForm = document.getElementById("login-form");
+            const loginError = document.getElementById("login-error");
+            const passwordInput = document.getElementById("password");
+            const leadsTable = document.getElementById("leads-table");
+            const emptyState = document.getElementById("empty-state");
+
+            let currentPassword = localStorage.getItem("admin_password") || "";
+
+            // Check if already logged in
+            if (currentPassword) {
+                checkPassword(currentPassword);
+            }
+
+            async function checkPassword(password) {
+                try {
+                    const response = await fetch(
+                        `/api/leads/?password=${encodeURIComponent(password)}`,
+                    );
+                    if (response.ok) {
+                        currentPassword = password;
+                        localStorage.setItem("admin_password", password);
+                        showDashboard();
+                        loadLeads();
+                        return true;
+                    } else {
+                        localStorage.removeItem("admin_password");
+                        return false;
+                    }
+                } catch {
+                    return false;
+                }
+            }
+
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const password = passwordInput.value;
+                const valid = await checkPassword(password);
+                if (!valid) {
+                    loginError.classList.remove("hidden");
+                }
+            });
+
+            function showDashboard() {
+                loginSection.classList.add("hidden");
+                dashboardSection.classList.remove("hidden");
+            }
+
+            async function loadLeads() {
+                try {
+                    const response = await fetch(
+                        `/api/leads/?password=${encodeURIComponent(currentPassword)}`,
+                    );
+                    const data = await response.json();
+
+                    if (data.leads && data.leads.length > 0) {
+                        renderLeads(data.leads);
+                        updateStats(data.leads);
+                        emptyState.classList.add("hidden");
+                    } else {
+                        leadsTable.innerHTML = "";
+                        emptyState.classList.remove("hidden");
+                        updateStats([]);
+                    }
+                } catch (error) {
+                    console.error("Error loading leads:", error);
+                }
+            }
+
+            function renderLeads(leads) {
+                leadsTable.innerHTML = leads
+                    .map(
+                        (lead) => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${formatDate(lead.timestamp)}</div>
+                        <div class="text-xs text-gray-500">${formatTime(lead.timestamp)}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">${lead.name || "—"}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">${lead.email}</div>
+                        <div class="text-sm text-gray-500">${lead.phone || ""}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                            ${lead.service || "N/A"}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${lead.zip || "—"}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full ${lead.source === "hero" ? "bg-orange-100 text-orange-800" : "bg-gray-100 text-gray-800"}">
+                            ${lead.source}
+                        </span>
+                    </td>
+                </tr>
+            `,
+                    )
+                    .join("");
+            }
+
+            function updateStats(leads) {
+                const now = new Date();
+                const today = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate(),
+                );
+                const weekAgo = new Date(
+                    today.getTime() - 7 * 24 * 60 * 60 * 1000,
+                );
+
+                document.getElementById("stat-total").textContent =
+                    leads.length;
+                document.getElementById("stat-today").textContent =
+                    leads.filter((l) => new Date(l.timestamp) >= today).length;
+                document.getElementById("stat-week").textContent = leads.filter(
+                    (l) => new Date(l.timestamp) >= weekAgo,
+                ).length;
+                document.getElementById("stat-hero").textContent = leads.filter(
+                    (l) => l.source === "hero",
+                ).length;
+            }
+
+            function formatDate(timestamp) {
+                return new Date(timestamp).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                });
+            }
+
+            function formatTime(timestamp) {
+                return new Date(timestamp).toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                });
+            }
+
+            // Refresh button
+            document
+                .getElementById("refresh-btn")
+                .addEventListener("click", loadLeads);
+
+            // Export button
+            document
+                .getElementById("export-btn")
+                .addEventListener("click", async () => {
+                    try {
+                        const response = await fetch("/api/leads/", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ password: currentPassword }),
+                        });
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = `leads_${new Date().toISOString().split("T")[0]}.csv`;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    } catch (error) {
+                        alert("Export failed");
+                    }
+                });
+
+            // Logout button
+            document
+                .getElementById("logout-btn")
+                .addEventListener("click", () => {
+                    localStorage.removeItem("admin_password");
+                    currentPassword = "";
+                    dashboardSection.classList.add("hidden");
+                    loginSection.classList.remove("hidden");
+                    passwordInput.value = "";
+                });
+        </script>
+    </body>
+</html>

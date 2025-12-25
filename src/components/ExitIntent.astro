@@ -1,0 +1,158 @@
+---
+// ExitIntent - Captures users attempting to leave with special offer
+---
+
+<div
+    x-data="{
+    showModal: false,
+    hasShown: false,
+    email: '',
+    consent: false,
+    handleMouseLeave(e) {
+      // Only trigger if mouse is leaving from top and we haven't shown it yet
+      if (e.clientY <= 50 && !this.hasShown && !localStorage.getItem('exitIntentShown')) {
+        this.showModal = true;
+        this.hasShown = true;
+      }
+    },
+    closeModal() {
+      this.showModal = false;
+      // Don't show again for 7 days
+      const expiryDate = new Date();
+      expiryDate.setDate(expiryDate.getDate() + 7);
+      localStorage.setItem('exitIntentShown', expiryDate.toISOString());
+    },
+    submitEmail() {
+      console.log('Exit
+
+ intent email captured:', this.email);
+      this.closeModal();
+      alert('Thank you! Check your email for your 10% discount code.');
+    }
+  }"
+    @mouseleave.document="handleMouseLeave($event)"
+    x-init="hasShown = !!localStorage.getItem('exitIntentShown')"
+>
+    <!-- Modal Overlay -->
+    <div
+        x-show="showModal"
+        x-cloak
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+        @click="closeModal()"
+    >
+        <!-- Modal Content -->
+        <div
+            @click.stop
+            x-transition:enter="transition ease-out duration-300 delay-100"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative"
+        >
+            <!-- Close Button -->
+            <button
+                @click="closeModal()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+                aria-label="Close"
+            >
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Content -->
+            <div class="text-center mb-6">
+                <div
+                    class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4"
+                >
+                    <span class="text-3xl">🎁</span>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">
+                    Wait! Don't Leave Yet
+                </h2>
+                <p class="text-lg text-gray-600 mb-2">
+                    Get <span class="text-orange-600 font-bold text-2xl"
+                        >10% OFF</span
+                    > your first project
+                </p>
+                <p class="text-gray-600">
+                    Plus exclusive home improvement tips delivered to your
+                    inbox!
+                </p>
+            </div>
+
+            <!-- Email Form -->
+            <form @submit.prevent="submitEmail()" class="space-y-4">
+                <div>
+                    <input
+                        type="email"
+                        x-model="email"
+                        required
+                        placeholder="Enter your email address"
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-center"
+                    />
+                </div>
+                <div class="flex items-start gap-2 text-left">
+                    <div class="flex items-center h-5">
+                        <input
+                            id="exit-consent"
+                            name="consent"
+                            type="checkbox"
+                            x-model="consent"
+                            required
+                            class="focus:ring-orange-500 h-4 w-4 text-orange-600 border-gray-300 rounded"
+                        />
+                    </div>
+                    <div class="ml-2 text-xs text-gray-500">
+                        <label
+                            for="exit-consent"
+                            class="font-medium text-gray-700"
+                            >I agree to the Terms</label
+                        >
+                        <p>
+                            By checking this box, I agree to the <a
+                                href="/privacy/"
+                                class="text-orange-600 hover:text-orange-500 underline"
+                                >Privacy Policy</a
+                            > and consent to receive emails.
+                        </p>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-lg hover:from-orange-600 hover:to-red-600 transform hover:scale-105 transition duration-200 shadow-lg hover:shadow-xl"
+                >
+                    Claim My 10% Discount
+                </button>
+            </form>
+
+            <p class="mt-4 text-xs text-gray-500 text-center">
+                🔒 We respect your privacy. No spam, guaranteed.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>

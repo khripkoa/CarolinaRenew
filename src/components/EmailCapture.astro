@@ -1,0 +1,166 @@
+---
+// EmailCapture - Lightweight lead capture widget
+---
+
+<section class="py-12 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            x-data="{ submitted: false, email: '', zip: '', consent: false }"
+            class="bg-white rounded-2xl shadow-lg p-8 md:p-10"
+        >
+            <!-- Form State -->
+            <div x-show="!submitted">
+                <div class="text-center mb-6">
+                    <h3
+                        class="text-2xl md:text-3xl font-bold text-gray-900 mb-2"
+                    >
+                        Get Your Free Home Painting Guide
+                    </h3>
+                    <p class="text-gray-600">
+                        Expert tips, cost breakdowns, and exclusive discounts
+                        delivered to your inbox.
+                    </p>
+                </div>
+
+                <form
+                    @submit.prevent="
+                        fetch('/api/telegram-webhook', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email: email,
+                                zip: zip,
+                                source: 'email-capture',
+                                service: 'Free Painting Guide'
+                            })
+                        }).then(() => {
+                            submitted = true;
+                        }).catch(() => {
+                            submitted = true;
+                        });
+                    "
+                    class="w-full flex flex-col gap-2"
+                >
+                    <div class="flex flex-col md:flex-row gap-4 items-end">
+                        <div class="flex-1 w-full">
+                            <label
+                                for="email-capture"
+                                class="block text-sm font-medium text-gray-700 mb-2"
+                            >
+                                Email Address
+                            </label>
+                            <input
+                                id="email-capture"
+                                type="email"
+                                x-model="email"
+                                required
+                                placeholder="you@example.com"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            />
+                        </div>
+
+                        <div class="w-full md:w-32">
+                            <label
+                                for="zip-capture"
+                                class="block text-sm font-medium text-gray-700 mb-2"
+                            >
+                                Zip Code
+                            </label>
+                            <input
+                                id="zip-capture"
+                                type="text"
+                                x-model="zip"
+                                required
+                                pattern="[0-9]{5}"
+                                placeholder="28202"
+                                maxlength="5"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition duration-200 shadow-lg hover:shadow-xl"
+                        >
+                            Get Free Guide
+                        </button>
+                    </div>
+
+                    <div class="flex items-start gap-2 mt-2">
+                        <div class="flex items-center h-5">
+                            <input
+                                id="email-consent"
+                                name="consent"
+                                type="checkbox"
+                                x-model="consent"
+                                required
+                                class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                            />
+                        </div>
+                        <div class="ml-2 text-xs text-gray-500">
+                            <label
+                                for="email-consent"
+                                class="font-medium text-gray-700"
+                                >I agree to the Terms</label
+                            >
+                            <p>
+                                By checking this box, I agree to the <a
+                                    href="/privacy/"
+                                    class="text-blue-600 hover:text-blue-800 underline"
+                                    >Privacy Policy</a
+                                > and consent to receive emails.
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <p class="mt-4 text-xs text-gray-500 text-center">
+                🔒 We respect your privacy. Unsubscribe anytime. No spam,
+                guaranteed.
+            </p>
+        </div>
+
+        <!-- Success State -->
+        <div x-show="submitted" x-cloak class="text-center py-8">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4"
+            >
+                <svg
+                    class="w-8 h-8 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                Check Your Email!
+            </h3>
+            <p class="text-gray-600 max-w-md mx-auto">
+                We've sent your free guide to <span
+                    x-text="email"
+                    class="font-semibold text-blue-600"></span>. It should
+                arrive in the next few minutes.
+            </p>
+            <p class="mt-4 text-sm text-gray-500">
+                Want to get started right away? <a
+                    href="tel:+19804088122"
+                    class="text-blue-600 hover:text-blue-700 font-medium"
+                    >Call us at (980) 408-8122</a
+                >
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>

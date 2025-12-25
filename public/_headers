@@ -1,0 +1,22 @@
+# Netlify Headers
+# https://docs.netlify.com/routing/headers/
+
+# Cache fonts and images for 1 year (immutable)
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML should revalidate immediately to show content updates
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Default for everything else
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
