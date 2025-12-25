@@ -294,6 +294,18 @@ const {
                     })
                   });
                   
+                  // GA4 Event Tracking via GTM dataLayer
+                  if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({
+                      'event': 'generate_lead',
+                      'lead_service': this.service,
+                      'lead_zip': this.zip,
+                      'lead_source': this.utm_source || 'direct',
+                      'lead_medium': this.utm_medium || 'none',
+                      'lead_campaign': this.utm_campaign || 'none'
+                    });
+                  }
+                  
                   alert('Thank you! Your quote request has been received. We will contact you shortly.');
                   this.step = 1;
                   this.service = 'Cabinet Refinishing';
