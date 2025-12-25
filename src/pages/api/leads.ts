@@ -18,7 +18,7 @@ export const GET: APIRoute = async ({ request }) => {
     // Simple password protection via query param
     const url = new URL(request.url);
     const password = url.searchParams.get("password");
-    const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || "carolina2024";
+    const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
 
     if (password !== ADMIN_PASSWORD) {
         return new Response(
@@ -38,7 +38,6 @@ export const GET: APIRoute = async ({ request }) => {
             }
         } catch (blobError) {
             // Netlify Blobs not available (local dev without netlify dev)
-            console.log("Netlify Blobs not available, returning empty leads");
             leads = [];
         }
 
@@ -62,7 +61,7 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
     const password = data.password;
-    const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || "carolina2024";
+    const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD;
 
     if (password !== ADMIN_PASSWORD) {
         return new Response(

@@ -23,9 +23,7 @@
       localStorage.setItem('exitIntentShown', expiryDate.toISOString());
     },
     submitEmail() {
-      console.log('Exit
-
- intent email captured:', this.email);
+      // Email captured - in production, send to API
       this.closeModal();
       alert('Thank you! Check your email for your 10% discount code.');
     }
